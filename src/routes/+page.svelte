@@ -2,6 +2,7 @@
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { Button, Card, Banner } from "$lib/ui";
+  import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
   import BookOpen from "@lucide/svelte/icons/book-open";
   import ShieldCheck from "@lucide/svelte/icons/shield-check";
@@ -159,6 +160,9 @@
     <div class="cta-buttons">
       <Button href="/calculate" size="lg">Start a calculation</Button>
       <Button href="/methodology" variant="ghost" size="lg">Browse methodology</Button>
+    </div>
+    <div class="cta-install">
+      <InstallPwaButton />
     </div>
   </div>
 </section>
@@ -385,5 +389,10 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
+  }
+  .cta-install {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
   }
 </style>
