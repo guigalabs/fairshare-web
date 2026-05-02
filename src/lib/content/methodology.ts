@@ -62,7 +62,7 @@ export const METHODOLOGY: MethodologyEntry[] = [
     slug: "fixed-shares",
     title: "Fixed shares (الفروض)",
     description:
-      "The six prescribed Quranic fractions — 1/2, 1/4, 1/8, 2/3, 1/3, 1/6 — and which heirs receive which.",
+      "The six prescribed Quranic fractions (1/2, 1/4, 1/8, 2/3, 1/3, 1/6) and which heirs receive which.",
     readingMinutes: 6,
   },
   {
@@ -119,7 +119,7 @@ export const METHODOLOGY: MethodologyEntry[] = [
     slug: "grandfather-with-siblings",
     title: "Grandfather with siblings (الجد مع الإخوة)",
     description:
-      "When a grandfather inherits alongside the deceased's siblings — does he block them (Hanafi) or share with them (Maliki/Shafi'i/Hanbali)?",
+      "When a grandfather inherits alongside the deceased's siblings, does he block them (Hanafi) or share with them (Maliki/Shafi'i/Hanbali)?",
     readingMinutes: 6,
   },
 ];

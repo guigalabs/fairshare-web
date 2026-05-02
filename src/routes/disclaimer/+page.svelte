@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Disclaimer — FairShare</title>
+  <title>Disclaimer · FairShare</title>
   <meta
     name="description"
     content="Important disclaimer for FairShare. The app is an educational reference, not a substitute for a qualified mufti or licensed attorney."
@@ -30,8 +30,8 @@
       <h2>The calculator is educational</h2>
       <p>
         FairShare illustrates how an estate would be distributed under the classical rules of
-        <em>Fara'id</em> for the five schools we support. It implements the rules accurately —
-        the engine is tested against the canonical worked examples — but a real estate
+        <em>Fara'id</em> for the five schools we support. It implements the rules accurately
+        (the engine is tested against the canonical worked examples), but a real estate
         distribution involves facts the calculator cannot know:
       </p>
       <ul>
@@ -49,7 +49,7 @@
         </li>
         <li>
           <strong>Family-specific facts.</strong> Adopted children, missing heirs, simultaneous
-          deaths, divorces in waiting period — all require scholarly judgement.
+          deaths, divorces in waiting period: all require scholarly judgement.
         </li>
       </ul>
 
@@ -67,7 +67,7 @@
       </ol>
       <p>
         FairShare is most useful for understanding <em>why</em> a distribution looks the way it
-        does — the verse-level citations and side-by-side school comparison let you see the
+        does. The verse-level citations and side-by-side school comparison let you see the
         reasoning. Treat the output as a teaching aid, not a binding decree.
       </p>
 

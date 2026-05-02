@@ -14,7 +14,14 @@
 <header class="topnav">
   <div class="topnav-inner">
     <a href="/" class="brand" aria-label={t("nav.brand")}>
-      <span class="brand-mark" aria-hidden="true">FS</span>
+      <img
+        src="/icons/pwa-192.png"
+        alt=""
+        class="brand-mark"
+        width="32"
+        height="32"
+        aria-hidden="true"
+      />
       <span class="brand-name">{t("nav.brand")}</span>
     </a>
 
@@ -82,15 +89,9 @@
   .brand-mark {
     width: 1.75rem;
     height: 1.75rem;
-    border-radius: 0.5rem;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
+    border-radius: 0.4375rem; /* matches iOS app icon corner radius (~22.37%) */
+    object-fit: cover;
+    display: block;
   }
   .brand-name {
     font-weight: 700;

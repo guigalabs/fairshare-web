@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>About — FairShare</title>
+  <title>About · FairShare</title>
   <meta
     name="description"
     content="FairShare is an offline-first Islamic inheritance calculator from Guiga Labs. Five madhabs side by side, every share linked to its Quranic source, no accounts, no tracking."
@@ -29,15 +29,15 @@
 
       <h2>Why we built it</h2>
       <p>
-        Islamic inheritance is one of the most precisely specified legal systems in the Quran —
-        more verses are devoted to it than to prayer, fasting, or zakat. But existing calculators
-        either silently follow a single school of thought, fail on well-known edge cases (Awl,
-        Radd, Umariatan), or hide the reasoning behind opaque numbers.
+        Islamic inheritance is one of the most precisely specified legal systems in the Quran. More
+        verses are devoted to it than to prayer, fasting, or zakat. But existing calculators either
+        silently follow a single school of thought, fail on well-known edge cases (Awl, Radd,
+        Umariatan), or hide the reasoning behind opaque numbers.
       </p>
       <p>
         FairShare exists to do two things at once: produce the <em>right</em> answer for each of
         the five Sunni schools (General, Hanafi, Maliki, Shafi'i, Hanbali), and <em>show its
-        work</em> — every share is linked to the Quranic verse that prescribes it.
+        work</em>. Every share is linked to the Quranic verse that prescribes it.
       </p>
 
       <h2>How the calculator works</h2>
@@ -45,7 +45,7 @@
         Every calculation runs entirely in your browser. The inheritance engine is a pure
         TypeScript port of the Swift package that powers the iOS app, with BigInt-backed exact
         fractions to guarantee parity with the iOS calculations. We test against 28+ classical
-        scenarios — including the named edge cases — to catch regressions.
+        scenarios, including the named edge cases, to catch regressions.
       </p>
       <p>
         Saved calculations live in your browser's IndexedDB. Nothing is uploaded anywhere. There
@@ -56,7 +56,7 @@
       <h2>The team</h2>
       <p>
         FairShare is built by <strong>Mohammed Guiga</strong>, a software engineer based in
-        California. The project is open to contributions and feedback — for press kits, see
+        California. The project is open to contributions and feedback. For press kits, see
         <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.
       </p>
 

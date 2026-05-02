@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Privacy — FairShare</title>
+  <title>Privacy · FairShare</title>
   <meta
     name="description"
     content="Privacy policy for FairShare web. The app is offline-first, collects no personal data, and stores everything locally on your device."
@@ -32,7 +32,7 @@
       <p>FairShare does <strong>not</strong> collect, store, or transmit any of the following:</p>
       <ul>
         <li>Personal identifiers (name, email, IP address linkage, device fingerprint)</li>
-        <li>Account information — there are no accounts</li>
+        <li>Account information (there are no accounts)</li>
         <li>Family-composition details from your calculations</li>
         <li>Geolocation data</li>
         <li>Advertising identifiers</li>

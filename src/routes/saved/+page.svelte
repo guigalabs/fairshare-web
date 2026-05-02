@@ -68,7 +68,7 @@
 </script>
 
 <svelte:head>
-  <title>Saved — FairShare</title>
+  <title>Saved · FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

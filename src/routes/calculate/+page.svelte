@@ -68,7 +68,7 @@
 </script>
 
 <svelte:head>
-  <title>Calculate — FairShare</title>
+  <title>Calculate · FairShare</title>
   <meta
     name="description"
     content="Walk through a short questionnaire to compute Islamic inheritance shares for any family."

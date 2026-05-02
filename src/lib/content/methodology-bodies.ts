@@ -8,22 +8,22 @@ export const BODIES: Record<string, string> = {
   // ─── Schools of thought ─────────────────────────────────────────────
 
   "madhhab/general":
-    `<p>The <strong>General</strong> ruleset in FairShare follows the rulings the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) agree on — and where they diverge in well-known cases, follows the majority position. It's the right starting point for anyone who isn't deliberately following one school over the others.</p>
+    `<p>The <strong>General</strong> ruleset in FairShare follows the rulings the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) agree on. Where they diverge in well-known cases, it follows the majority position. It's the right starting point for anyone who isn't deliberately following one school over the others.</p>
 
     <h2>What it covers</h2>
-    <p>Every fixed-share heir is assigned the same fraction across all four schools — that's the bedrock 80% of Fara'id. The General view aligns with the schools on:</p>
+    <p>Every fixed-share heir is assigned the same fraction across all four schools. That's the bedrock 80% of Fara'id. The General view aligns with the schools on:</p>
     <ul>
       <li>The six prescribed fractions (1/2, 1/4, 1/8, 2/3, 1/3, 1/6) and which heirs receive them.</li>
-      <li>The blocking (Hajb) chain — son blocks son's son, father blocks paternal grandfather, etc.</li>
+      <li>The blocking (Hajb) chain: son blocks son's son, father blocks paternal grandfather, etc.</li>
       <li>The Awl proportional reduction when shares overflow.</li>
       <li>The Radd surplus redistribution when shares fall short and no residuary is present.</li>
     </ul>
 
     <h2>Where it differs from individual schools</h2>
-    <p>On the three named contested cases — <a href="/methodology/special-cases/umariatan">Umariatan</a>, <a href="/methodology/special-cases/musharakah">Musharakah</a>, and <a href="/methodology/special-cases/grandfather-with-siblings">Grandfather-with-siblings</a> — General sides with the majority of three schools against any single dissenter. In practice that means agreeing with Maliki, Shafi'i, and Hanbali on the grandfather case; with Maliki and Shafi'i on Musharakah; and with Umar's ruling (which all four classical schools eventually adopted) on Umariatan.</p>
+    <p>On the three named contested cases (<a href="/methodology/special-cases/umariatan">Umariatan</a>, <a href="/methodology/special-cases/musharakah">Musharakah</a>, <a href="/methodology/special-cases/grandfather-with-siblings">Grandfather-with-siblings</a>), General sides with the majority of three schools against any single dissenter. In practice that means agreeing with Maliki, Shafi'i, and Hanbali on the grandfather case; with Maliki and Shafi'i on Musharakah; and with Umar's ruling (which all four classical schools eventually adopted) on Umariatan.</p>
 
     <h2>When you should pick a specific school instead</h2>
-    <p>If you or your family follow one school as a matter of religious commitment — and especially if you're consulting a mufti from that school — choose it explicitly in the calculator. The differences are small in most cases but real when they trigger.</p>
+    <p>If you or your family follow one school as a matter of religious commitment, and especially if you're consulting a mufti from that school, choose it explicitly in the calculator. The differences are small in most cases but real when they trigger.</p>
 
     <h2>Further reading</h2>
     <ul>
@@ -32,20 +32,20 @@ export const BODIES: Record<string, string> = {
     </ul>`,
 
   "madhhab/hanafi":
-    `<p>The <strong>Hanafi school</strong> is the largest by following — historically the school of the Ottoman empire and today dominant across South Asia, Central Asia, Turkey, and the Levant. Its inheritance rulings agree with the other three schools on most cases but have a few sharp differences worth knowing.</p>
+    `<p>The <strong>Hanafi school</strong> is the largest by following. Historically the school of the Ottoman empire, today it's dominant across South Asia, Central Asia, Turkey, and the Levant. Its inheritance rulings agree with the other three schools on most cases but have a few sharp differences worth knowing.</p>
 
     <h2>Distinctive Hanafi positions</h2>
     <h3>Grandfather blocks siblings</h3>
     <p>In the Hanafi school, a paternal grandfather <strong>completely blocks</strong> the deceased's siblings (full and paternal half) when the father is dead. The other three Sunni schools have him <em>share</em> with the siblings via the special <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> calculation.</p>
 
     <h3>No Musharakah</h3>
-    <p>In the <a href="/methodology/special-cases/musharakah">Musharakah case</a> (husband + mother + 2+ maternal half-siblings + full siblings), Hanafi gives the full siblings <em>nothing</em> — they're residuary heirs, and the estate is already exhausted by the fixed shares. Maliki and Shafi'i, by contrast, let them join the maternal half-siblings in the 1/3 share.</p>
+    <p>In the <a href="/methodology/special-cases/musharakah">Musharakah case</a> (husband + mother + 2+ maternal half-siblings + full siblings), Hanafi gives the full siblings <em>nothing</em>. They're residuary heirs, and the estate is already exhausted by the fixed shares. Maliki and Shafi'i, by contrast, let them join the maternal half-siblings in the 1/3 share.</p>
 
     <h3>Father blocks maternal grandmother</h3>
     <p>Only in the Hanafi school does the deceased's father block the maternal grandmother. Other schools allow her to inherit her 1/6 even when the father is alive.</p>
 
     <h2>What it shares with the others</h2>
-    <p>Everything else: the six fixed fractions, blocking by closer descendants, Awl, Radd (Hanafi applies it readily — even more so than Maliki), and Umariatan.</p>
+    <p>Everything else: the six fixed fractions, blocking by closer descendants, Awl, Radd (Hanafi applies it readily, even more so than Maliki), and Umariatan.</p>
 
     <h2>Further reading</h2>
     <ul>
@@ -59,13 +59,13 @@ export const BODIES: Record<string, string> = {
 
     <h2>Distinctive Maliki positions</h2>
     <h3>Historical reluctance to apply Radd</h3>
-    <p>Classical Maliki authorities preferred that surplus inheritance — when fixed shares total less than the estate and there's no residuary — go to the public treasury (<em>Bayt al-Mal</em>) rather than be redistributed among the fixed-share heirs. In modern practice, where the treasury isn't organised to receive estates, Maliki scholars apply <a href="/methodology/rules/radd">Radd</a> the same way the other schools do. FairShare follows the contemporary practice.</p>
+    <p>Classical Maliki authorities preferred that surplus inheritance (when fixed shares total less than the estate and there's no residuary) go to the public treasury (<em>Bayt al-Mal</em>) rather than be redistributed among the fixed-share heirs. In modern practice, where the treasury isn't organised to receive estates, Maliki scholars apply <a href="/methodology/rules/radd">Radd</a> the same way the other schools do. FairShare follows the contemporary practice.</p>
 
     <h3>Joins Shafi'i on Musharakah and Grandfather</h3>
-    <p>Maliki sides with Shafi'i and Hanbali (against Hanafi) on the <a href="/methodology/special-cases/musharakah">Musharakah</a> case — full siblings join maternal half-siblings in their 1/3 share. Same alignment on the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> case: the grandfather shares with the siblings rather than blocking them.</p>
+    <p>Maliki sides with Shafi'i and Hanbali (against Hanafi) on the <a href="/methodology/special-cases/musharakah">Musharakah</a> case, where full siblings join maternal half-siblings in their 1/3 share. Same alignment on the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> case: the grandfather shares with the siblings rather than blocking them.</p>
 
     <h2>What it shares with the others</h2>
-    <p>The six fixed fractions, the blocking chain, Awl, and Umariatan — Maliki agrees with the majority on all of these.</p>
+    <p>The six fixed fractions, the blocking chain, Awl, and Umariatan. Maliki agrees with the majority on all of these.</p>
 
     <h2>Further reading</h2>
     <ul>
@@ -78,7 +78,7 @@ export const BODIES: Record<string, string> = {
 
     <h2>Distinctive Shafi'i positions</h2>
     <h3>Applies Musharakah</h3>
-    <p>Where Hanafi gives full siblings nothing in the <a href="/methodology/special-cases/musharakah">Musharakah</a> case, Shafi'i has them <em>share</em> with the maternal half-siblings in the 1/3 portion — even though they would otherwise be residuary heirs with no remainder to claim. The reasoning: they share the same mother, so it's just to include them.</p>
+    <p>Where Hanafi gives full siblings nothing in the <a href="/methodology/special-cases/musharakah">Musharakah</a> case, Shafi'i has them <em>share</em> with the maternal half-siblings in the 1/3 portion, even though they would otherwise be residuary heirs with no remainder to claim. The reasoning: they share the same mother, so it's just to include them.</p>
 
     <h3>Grandfather as a sibling on the case</h3>
     <p>On the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> case, Shafi'i computes three options for the grandfather (1/3 of remainder, share-as-sibling, 1/6 minimum) and gives him the largest. The same algorithm is used by Maliki and Hanbali, with minor sub-rule differences.</p>
@@ -103,10 +103,10 @@ export const BODIES: Record<string, string> = {
       <li>Letting the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather share with siblings</a> rather than blocking them.</li>
       <li>Applying <a href="/methodology/rules/radd">Radd</a> when the estate has no residuary heir.</li>
     </ul>
-    <p>Where Hanbali sometimes diverges from the other two is in technical sub-rules within the grandfather case (the exact 1/3 / sibling-share / 1/6 selection) — but the practical outcomes are usually the same.</p>
+    <p>Where Hanbali sometimes diverges from the other two is in technical sub-rules within the grandfather case (the exact 1/3 / sibling-share / 1/6 selection), but the practical outcomes are usually the same.</p>
 
     <h2>What it shares with the others</h2>
-    <p>The six fixed fractions, blocking, Awl, and Umariatan — all standard.</p>
+    <p>The six fixed fractions, blocking, Awl, and Umariatan are all standard.</p>
 
     <h2>Further reading</h2>
     <ul>
@@ -117,7 +117,7 @@ export const BODIES: Record<string, string> = {
   // ─── Core rules ─────────────────────────────────────────────────────
 
   "rules/fixed-shares":
-    `<p>Fixed shares — <em>al-furud</em>, the singular is <em>fardh</em> — are the prescribed Quranic fractions assigned to specific heirs. They're the floor of the inheritance system: every other rule (residuary, blocking, Awl, Radd) operates on top of them.</p>
+    `<p>Fixed shares (<em>al-furud</em>, the singular is <em>fardh</em>) are the prescribed Quranic fractions assigned to specific heirs. They're the floor of the inheritance system: every other rule (residuary, blocking, Awl, Radd) operates on top of them.</p>
 
     <h2>The six fractions</h2>
     <p>Every fixed-share heir receives one of exactly six fractions, all stated directly in the Quran:</p>
@@ -151,7 +151,7 @@ export const BODIES: Record<string, string> = {
     <p>Same pattern as daughters: one sister gets 1/2, two or more share 2/3, with a brother they're residuary at 2:1.</p>
 
     <h3>Maternal half-siblings</h3>
-    <p>One of either gender: <strong>1/6</strong>. Two or more (regardless of gender mix): together <strong>1/3</strong>, shared equally — uniquely, male and female maternal half-siblings inherit equal shares.</p>
+    <p>One of either gender: <strong>1/6</strong>. Two or more (regardless of gender mix): together <strong>1/3</strong>, shared equally. Uniquely, male and female maternal half-siblings inherit equal shares.</p>
 
     <h2>Important context</h2>
     <p>"Fixed" doesn't mean "always paid in full." If the sum of fixed shares exceeds the estate, <a href="/methodology/rules/awl">Awl</a> reduces them proportionally. If it falls short and no residuary claims the remainder, <a href="/methodology/rules/radd">Radd</a> redistributes the surplus. And <a href="/methodology/rules/blocking">blocking (Hajb)</a> can prevent a heir from receiving anything at all.</p>
@@ -163,13 +163,13 @@ export const BODIES: Record<string, string> = {
     </ul>`,
 
   "rules/blocking":
-    `<p>Blocking — <em>Hajb</em> — is the rule that prevents a more distant heir from inheriting when a closer one is alive. It's the most common reason an heir who looks like they should inherit ends up with nothing.</p>
+    `<p>Blocking (<em>Hajb</em>) is the rule that prevents a more distant heir from inheriting when a closer one is alive. It's the most common reason an heir who looks like they should inherit ends up with nothing.</p>
 
     <h2>Two types of blocking</h2>
     <p>Classical scholars distinguish two types:</p>
     <ul>
-      <li><strong>Hajb hirman</strong> — total blocking. The heir gets nothing. This is what most people mean by "blocking" and what FairShare detects.</li>
-      <li><strong>Hajb nuqsan</strong> — reduction. The heir still inherits but at a smaller share. The mother going from 1/3 to 1/6 because of children present is a classic example.</li>
+      <li><strong>Hajb hirman</strong> is total blocking. The heir gets nothing. This is what most people mean by "blocking" and what FairShare detects.</li>
+      <li><strong>Hajb nuqsan</strong> is reduction. The heir still inherits but at a smaller share. The mother going from 1/3 to 1/6 because of children present is a classic example.</li>
     </ul>
 
     <h2>The blocking chain</h2>
@@ -187,8 +187,8 @@ export const BODIES: Record<string, string> = {
     <h2>School-specific blocking</h2>
     <p>The Hanafi school adds a few cases the others don't:</p>
     <ul>
-      <li>Father blocks the <em>maternal</em> grandmother (only Hanafi — others let her inherit).</li>
-      <li>Paternal grandfather blocks all siblings (only Hanafi — others have him share via the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> rule).</li>
+      <li>Father blocks the <em>maternal</em> grandmother (only Hanafi; others let her inherit).</li>
+      <li>Paternal grandfather blocks all siblings (only Hanafi; others have him share via the <a href="/methodology/special-cases/grandfather-with-siblings">grandfather-with-siblings</a> rule).</li>
     </ul>
 
     <h2>Further reading</h2>
@@ -198,7 +198,7 @@ export const BODIES: Record<string, string> = {
     </ul>`,
 
   "rules/residuary":
-    `<p>Residuary heirs — <em>asabah</em> — take whatever's left of the estate after fixed-share heirs have been paid. They have no prescribed fraction; their share is whatever the remainder happens to be.</p>
+    `<p>Residuary heirs (<em>asabah</em>) take whatever's left of the estate after fixed-share heirs have been paid. They have no prescribed fraction; their share is whatever the remainder happens to be.</p>
 
     <h2>Three sub-types</h2>
     <h3>Asabah bin-nafs (by self)</h3>
@@ -219,13 +219,13 @@ export const BODIES: Record<string, string> = {
     </ol>
 
     <h3>Asabah bil-ghayr (by another)</h3>
-    <p>Female relatives who become residuary because a male counterpart at the same level is present. They inherit at a 2:1 ratio with the male — male gets two parts, female gets one. This converts daughters, son's daughters, full sisters, and paternal half-sisters from fixed-share heirs into residuaries.</p>
+    <p>Female relatives who become residuary because a male counterpart at the same level is present. They inherit at a 2:1 ratio with the male: male gets two parts, female gets one. This converts daughters, son's daughters, full sisters, and paternal half-sisters from fixed-share heirs into residuaries.</p>
 
     <h3>Asabah ma'a-l-ghayr (with another)</h3>
     <p>Full sisters and paternal half-sisters become residuary <em>through the presence of female descendants</em> (daughters or son's daughters). Without a male counterpart, the sister still becomes residuary because the daughter takes her fixed share first.</p>
 
     <h2>Why the order matters</h2>
-    <p>Only one residuary "tier" inherits — the closest one present. A son excludes a son's son; a father excludes the grandfather; a full brother excludes a paternal half-brother. The whole residue goes to whichever male relative is highest on the list.</p>
+    <p>Only one residuary "tier" inherits: the closest one present. A son excludes a son's son; a father excludes the grandfather; a full brother excludes a paternal half-brother. The whole residue goes to whichever male relative is highest on the list.</p>
 
     <h2>The father exception</h2>
     <p>The father is unusual: when descendants exist, he gets a fixed 1/6 <em>and</em> any remaining residue (which is rarely much). Without descendants, he's purely residuary. The grandfather follows the same pattern when no father is present.</p>
@@ -276,10 +276,10 @@ export const BODIES: Record<string, string> = {
     </ul>`,
 
   "rules/radd":
-    `<p><strong>Radd</strong> — literally "return" — is the inverse of Awl. When prescribed fixed shares add up to <em>less</em> than the estate <em>and</em> there's no residuary heir to take the remainder, Radd returns the surplus to the eligible fixed-share heirs in proportion to their original shares.</p>
+    `<p><strong>Radd</strong> (literally "return") is the inverse of Awl. When prescribed fixed shares add up to <em>less</em> than the estate <em>and</em> there's no residuary heir to take the remainder, Radd returns the surplus to the eligible fixed-share heirs in proportion to their original shares.</p>
 
     <h2>The simplest case</h2>
-    <p>A man dies leaving only one daughter. The Quran prescribes her 1/2. There's no son, no father, no brother — no one to take the residue.</p>
+    <p>A man dies leaving only one daughter. The Quran prescribes her 1/2. There's no son, no father, no brother, no one to take the residue.</p>
     <p>Without Radd, the surplus 1/2 would go to a distant relative or the public treasury. With Radd, the daughter inherits the whole estate.</p>
 
     <h2>Two conditions</h2>
@@ -308,7 +308,7 @@ export const BODIES: Record<string, string> = {
   // ─── Special cases ──────────────────────────────────────────────────
 
   "special-cases/umariatan":
-    `<p>The <strong>Umariatan</strong> — "the two cases of Umar" — are a pair of named scenarios where Caliph Umar ibn al-Khattab issued a distinctive ruling that all four classical Sunni schools eventually adopted.</p>
+    `<p>The <strong>Umariatan</strong> ("the two cases of Umar") are a pair of named scenarios where Caliph Umar ibn al-Khattab issued a distinctive ruling that all four classical Sunni schools eventually adopted.</p>
 
     <h2>The condition</h2>
     <p>Both cases require exactly three heirs: a spouse, a mother, and a father. <em>No descendants and no siblings.</em> If any other heir is present, the special rule doesn't apply.</p>
@@ -320,13 +320,13 @@ export const BODIES: Record<string, string> = {
       <li>Mother (no siblings): 1/3</li>
       <li>Father: residuary, gets what's left = 1/6</li>
     </ul>
-    <p>The unease: the father (a male relative) ends up with less than the mother. Umar's ruling: <strong>the mother takes 1/3 of the remainder</strong> (after the husband's 1/2), not 1/3 of the total estate. The result:</p>
+    <p>The unease here: the father (a male relative) ends up with less than the mother. Umar's ruling: <strong>the mother takes 1/3 of the remainder</strong> (after the husband's 1/2), not 1/3 of the total estate. The result:</p>
     <ul>
       <li>Husband: <strong>1/2</strong></li>
       <li>Mother: <strong>1/3 of 1/2 = 1/6</strong> of the total</li>
       <li>Father: residuary takes the rest = <strong>1/3</strong></li>
     </ul>
-    <p>Now the father has more than the mother — preserving the 2:1 male/female pattern that runs through Fara'id.</p>
+    <p>Now the father has more than the mother, preserving the 2:1 male/female pattern that runs through Fara'id.</p>
 
     <h2>Case 2: wife + mother + father</h2>
     <p>Same logic with the wife's smaller share. Naive assignment:</p>
@@ -343,7 +343,7 @@ export const BODIES: Record<string, string> = {
     </ul>
 
     <h2>Why it matters</h2>
-    <p>Umariatan is one of the most common "trick" scenarios in inheritance discussions. A naive calculator that doesn't detect it will give the mother 1/3 of the total — a meaningful error in real distributions. FairShare detects both forms automatically.</p>
+    <p>Umariatan is one of the most common "trick" scenarios in inheritance discussions. A naive calculator that doesn't detect it will give the mother 1/3 of the total, a meaningful error in real distributions. FairShare detects both forms automatically.</p>
 
     <h2>Further reading</h2>
     <ul>
@@ -352,7 +352,7 @@ export const BODIES: Record<string, string> = {
     </ul>`,
 
   "special-cases/musharakah":
-    `<p>The <strong>Musharakah</strong> — "the shared case" — is a named scenario where the Maliki, Shafi'i, and Hanbali schools allow full siblings to <em>join</em> the maternal half-siblings in their 1/3 share, even though the full siblings would normally be residuary heirs with no remainder to claim. The Hanafi school disagrees and gives the full siblings nothing.</p>
+    `<p>The <strong>Musharakah</strong> ("the shared case") is a named scenario where the Maliki, Shafi'i, and Hanbali schools allow full siblings to <em>join</em> the maternal half-siblings in their 1/3 share, even though the full siblings would normally be residuary heirs with no remainder to claim. The Hanafi school disagrees and gives the full siblings nothing.</p>
 
     <h2>The condition</h2>
     <p>All of the following must hold:</p>
@@ -374,7 +374,7 @@ export const BODIES: Record<string, string> = {
     <p>Sum: 1/2 + 1/6 + 1/3 = 1. The estate is exhausted. The full brother, who would normally inherit as residuary, has nothing left to claim.</p>
 
     <h2>The Maliki / Shafi'i / Hanbali ruling</h2>
-    <p>The full brother (and any full siblings present) <em>joins</em> the maternal half-siblings in their 1/3 share, dividing it equally among the four of them — <strong>without</strong> the usual 2:1 male/female split. The reasoning: they share the same mother, so it's just to include them in what's already her line's portion.</p>
+    <p>The full brother (and any full siblings present) <em>joins</em> the maternal half-siblings in their 1/3 share, dividing it equally among the four of them, <strong>without</strong> the usual 2:1 male/female split. The reasoning: they share the same mother, so it's just to include them in what's already her line's portion.</p>
     <p>Final shares: husband 1/2, mother 1/6, and the four siblings (2 maternal halves + 1 full brother + ... ) divide the 1/3 equally.</p>
 
     <h2>The Hanafi position</h2>
@@ -390,14 +390,14 @@ export const BODIES: Record<string, string> = {
     `<p>When a deceased leaves no father but does leave a paternal grandfather alongside siblings (full or paternal half), the four Sunni schools split. The <strong>Hanafi school</strong> has the grandfather block the siblings entirely. The other three schools have him <em>share</em> with them in a calculation that gives him whichever option is best.</p>
 
     <h2>The Hanafi position</h2>
-    <p>The grandfather is treated like the father for blocking purposes. He blocks all siblings — full and paternal half — and inherits as residuary. This is the simpler of the two outcomes.</p>
+    <p>The grandfather is treated like the father for blocking purposes. He blocks all siblings (full and paternal half) and inherits as residuary. This is the simpler of the two outcomes.</p>
 
     <h2>The Maliki / Shafi'i / Hanbali position</h2>
     <p>The grandfather <em>shares</em> with the siblings, getting the larger of three options:</p>
     <ol>
-      <li><strong>Muqasama</strong> — share with the siblings as if he were one of them, at a 2:1 male:female ratio. The grandfather counts as 2 parts (like a brother).</li>
-      <li><strong>One-third of the remainder</strong> — after any other fixed-share heirs are paid.</li>
-      <li><strong>One-sixth of the estate</strong> — the minimum guaranteed share.</li>
+      <li><strong>Muqasama</strong>: share with the siblings as if he were one of them, at a 2:1 male:female ratio. The grandfather counts as 2 parts (like a brother).</li>
+      <li><strong>One-third of the remainder</strong>, after any other fixed-share heirs are paid.</li>
+      <li><strong>One-sixth of the estate</strong>, the minimum guaranteed share.</li>
     </ol>
     <p>Whichever option produces the largest grandfather share is what he takes. The remainder is divided among the siblings at the usual 2:1 ratio.</p>
 

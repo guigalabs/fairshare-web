@@ -45,14 +45,14 @@
 </script>
 
 <svelte:head>
-  <title>FairShare — Islamic Inheritance Calculator (Fara'id)</title>
+  <title>FairShare · Islamic Inheritance Calculator (Fara'id)</title>
   <meta
     name="description"
     content="Calculate Fara'id (Islamic inheritance) shares with confidence. Five madhabs side by side, every share linked to its Quranic source. Free, offline-first, bilingual EN/AR."
   />
   <link rel="canonical" href="https://fairshare.guigalabs.com/" />
 
-  <meta property="og:title" content="FairShare — Islamic Inheritance Calculator" />
+  <meta property="og:title" content="FairShare · Islamic Inheritance Calculator" />
   <meta
     property="og:description"
     content="Five madhabs side by side, every share linked to its Quranic source. Free, offline-first."
@@ -154,8 +154,7 @@
     <h2>Try it for yourself.</h2>
     <p>
       Five-minute walkthrough, no signup, fully private. The calculator runs entirely in your
-      browser — install it as an app for offline use at funerals, hospitals, or family
-      gatherings.
+      browser. Install it as an app for offline use at funerals, hospitals, or family gatherings.
     </p>
     <div class="cta-buttons">
       <Button href="/calculate" size="lg">Start a calculation</Button>

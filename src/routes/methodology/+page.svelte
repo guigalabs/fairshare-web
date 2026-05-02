@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>Methodology — FairShare</title>
+  <title>Methodology · FairShare</title>
   <meta
     name="description"
     content="The classical rules of Islamic inheritance (Fara'id) explained. Five madhabs, the core rules of fixed shares, blocking, residuary heirs, Awl, and Radd, plus the named special cases."
@@ -30,8 +30,8 @@
     <p class="kicker">Methodology</p>
     <h1>Islamic inheritance, in 13 short reads.</h1>
     <p class="lede">
-      Each page covers one school, rule, or special case — the source verses, the worked
-      examples, and where the schools diverge. Useful before you trust any calculator output.
+      Each page covers one school, rule, or special case: the source verses, the worked examples,
+      and where the schools diverge. Useful before you trust any calculator output.
     </p>
   </header>
 

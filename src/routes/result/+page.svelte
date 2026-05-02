@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Result — FairShare</title>
+  <title>Result · FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

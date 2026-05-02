@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Terms of use — FairShare</title>
+  <title>Terms of use · FairShare</title>
   <meta
     name="description"
     content="Terms of use for FairShare web. Free educational tool, no warranty, see the disclaimer for limits on reliance."
@@ -40,7 +40,7 @@
       <p>
         Don't try to break the app for other users (no automated abuse, no attempts to circumvent
         rate limits or interfere with the static delivery infrastructure). The calculator is
-        offline-first by design — there's nothing to abuse on a server, but the same principle
+        offline-first by design, so there's nothing to abuse on a server, but the same principle
         applies to bandwidth-level abuse against the CDN.
       </p>
 

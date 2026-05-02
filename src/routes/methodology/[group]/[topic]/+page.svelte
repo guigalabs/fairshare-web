@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-  <title>{entry.title} — FairShare</title>
+  <title>{entry.title} · FairShare</title>
   <meta name="description" content={entry.description} />
   <link rel="canonical" href={url} />
   <meta property="og:title" content={entry.title} />
