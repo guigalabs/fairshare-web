@@ -1,0 +1,8 @@
+node_modules
+.svelte-kit
+out
+build
+bun.lock
+src/lib/i18n/generated
+playwright-report
+test-results
