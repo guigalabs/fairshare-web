@@ -28,7 +28,6 @@ const config = {
       // saved/methodology arrive in B4-B9.
       handleHttpError: ({ path, message }) => {
         const pending = new Set([
-          "/result",
           "/saved",
           "/methodology",
           "/about",
