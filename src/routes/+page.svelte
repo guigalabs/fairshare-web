@@ -7,16 +7,14 @@
   import BookOpen from "@lucide/svelte/icons/book-open";
   import ShieldCheck from "@lucide/svelte/icons/shield-check";
   import WifiOff from "@lucide/svelte/icons/wifi-off";
+  import { t } from "$lib/i18n/index.svelte";
+
+  const APP_STORE_URL = "https://apps.apple.com/app/id000000000"; // TODO: real App Store ID
 
   const enter = (delay: number) => ({ y: 16, duration: 500, easing: cubicOut, delay });
 
-  const TRUST = [
-    { stat: "5", label: "schools of thought" },
-    { stat: "0", label: "data collected" },
-    { stat: "EN/AR", label: "bilingual + RTL" },
-    { stat: "100%", label: "offline" },
-  ];
-
+  // School / feature lookup tables. Translatable labels reach into t() inline
+  // so the template's reactive read picks them up on locale change.
   const MADHHABS = [
     { name: "General", description: "Majority Sunni opinion", slug: "general" },
     { name: "Hanafi", description: "Largest Sunni school", slug: "hanafi" },
@@ -26,21 +24,16 @@
   ];
 
   const FEATURES = [
-    {
-      Icon: BookOpen,
-      title: "Every share, with its source",
-      body: "Every fraction is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12, 4:176).",
-    },
-    {
-      Icon: ShieldCheck,
-      title: "Edge cases, handled",
-      body: "Awl, Radd, Hajb, Umariatan, Musharakah, and the Grandfather-with-siblings case all detected automatically.",
-    },
-    {
-      Icon: WifiOff,
-      title: "Local, private, free",
-      body: "Calculations run entirely in your browser. No accounts, no analytics, no ads. Installable as a PWA.",
-    },
+    { Icon: BookOpen, titleKey: "landing.feature1.title", bodyKey: "landing.feature1.body" },
+    { Icon: ShieldCheck, titleKey: "landing.feature2.title", bodyKey: "landing.feature2.body" },
+    { Icon: WifiOff, titleKey: "landing.feature3.title", bodyKey: "landing.feature3.body" },
+  ];
+
+  const TRUST_KEYS = [
+    { stat: "5", labelKey: "landing.trust.schools" },
+    { stat: "0", labelKey: "landing.trust.data" },
+    { stat: "EN/AR", labelKey: "landing.trust.bilingual" },
+    { stat: "100%", labelKey: "landing.trust.offline" },
   ];
 </script>
 
@@ -65,23 +58,24 @@
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-inner">
-    <p class="kicker" in:fly={enter(0)}>Fara'id · Islamic Inheritance</p>
+    <p class="kicker" in:fly={enter(0)}>{t("landing.kicker")}</p>
     <h1 class="hero-title" in:fly={enter(120)}>
-      Inheritance, calculated&nbsp;faithfully.
+      {t("landing.title")}
     </h1>
     <p class="hero-sub" in:fly={enter(240)}>
-      A free, offline calculator for Islamic inheritance. Five madhabs side by side, every share
-      linked to its Quranic source.
+      {t("landing.subtitle")}
     </p>
     <div class="hero-ctas" in:fly={enter(360)}>
       <Button href="/calculate" size="lg">
-        Start a calculation
+        {t("landing.cta.primary")}
         <ArrowRight size={18} aria-hidden="true" />
       </Button>
-      <Button href="/methodology" variant="secondary" size="lg">Read the methodology</Button>
+      <Button href="/methodology" variant="secondary" size="lg">
+        {t("landing.cta.secondary")}
+      </Button>
     </div>
     <p class="hero-meta" in:fly={enter(480)}>
-      Free · No accounts · No tracking · Works offline
+      {t("landing.meta")}
     </p>
   </div>
 </section>
@@ -89,10 +83,10 @@
 <!-- Trust strip -->
 <section class="strip">
   <div class="strip-inner">
-    {#each TRUST as item (item.label)}
+    {#each TRUST_KEYS as item (item.labelKey)}
       <div class="strip-item">
         <p class="strip-stat">{item.stat}</p>
-        <p class="strip-label">{item.label}</p>
+        <p class="strip-label">{t(item.labelKey)}</p>
       </div>
     {/each}
   </div>
@@ -102,9 +96,8 @@
 <section class="container">
   <Banner tone="scholar">
     {#snippet children()}
-      <strong>Educational use only.</strong> FairShare illustrates how an estate would be
-      distributed under the classical rules of Fara'id. For an actual estate, please consult a
-      qualified mufti and a licensed attorney for the legal and tax aspects in your jurisdiction.
+      <strong>{t("landing.disclaimer.bold")}</strong>
+      {t("landing.disclaimer.rest")}
     {/snippet}
   </Banner>
 </section>
@@ -112,15 +105,15 @@
 <!-- Features -->
 <section class="container features">
   <div class="features-grid">
-    {#each FEATURES as f (f.title)}
+    {#each FEATURES as f (f.titleKey)}
       <Card>
         {#snippet children()}
           <div class="feature">
             <div class="feature-icon" aria-hidden="true">
               <f.Icon size={20} />
             </div>
-            <h3>{f.title}</h3>
-            <p>{f.body}</p>
+            <h3>{t(f.titleKey)}</h3>
+            <p>{t(f.bodyKey)}</p>
           </div>
         {/snippet}
       </Card>
@@ -131,12 +124,8 @@
 <!-- Methodology preview -->
 <section class="container methodology">
   <div class="section-header">
-    <h2>Five schools, side by side.</h2>
-    <p>
-      The Hanafi, Maliki, Shafi'i, and Hanbali schools agree on most rulings but diverge in the
-      named edge cases. FairShare's Compare view shows you exactly where they differ for any
-      family scenario.
-    </p>
+    <h2>{t("landing.schools.title")}</h2>
+    <p>{t("landing.schools.lede")}</p>
   </div>
   <div class="madhhab-grid">
     {#each MADHHABS as m (m.slug)}
@@ -151,16 +140,21 @@
 <!-- CTA -->
 <section class="container cta">
   <div class="cta-inner">
-    <h2>Try it for yourself.</h2>
-    <p>
-      Five-minute walkthrough, no signup, fully private. The calculator runs entirely in your
-      browser. Install it as an app for offline use at funerals, hospitals, or family gatherings.
-    </p>
+    <h2>{t("landing.cta2.title")}</h2>
+    <p>{t("landing.cta2.body")}</p>
     <div class="cta-buttons">
-      <Button href="/calculate" size="lg">Start a calculation</Button>
-      <Button href="/methodology" variant="ghost" size="lg">Browse methodology</Button>
+      <Button href="/calculate" size="lg">{t("landing.cta2.primary")}</Button>
+      <Button href="/methodology" variant="ghost" size="lg">{t("landing.cta2.secondary")}</Button>
     </div>
-    <div class="cta-install">
+    <div class="cta-extras">
+      <a class="ios-link" href={APP_STORE_URL}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
+          />
+        </svg>
+        {t("landing.cta2.ios")}
+      </a>
       <InstallPwaButton />
     </div>
   </div>
@@ -190,8 +184,8 @@
     pointer-events: none;
     background: radial-gradient(
       ellipse at 50% 30%,
-      color-mix(in srgb, var(--color-accent) 12%, transparent),
-      transparent 60%
+      color-mix(in srgb, var(--color-accent) 5%, transparent),
+      transparent 55%
     );
   }
   .hero-inner {
@@ -389,9 +383,26 @@
     justify-content: center;
     gap: 0.75rem;
   }
-  .cta-install {
-    margin-top: 1rem;
+  .cta-extras {
+    margin-top: 1.25rem;
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     justify-content: center;
+    align-items: center;
+  }
+  .ios-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .ios-link:hover {
+    color: var(--color-text);
   }
 </style>

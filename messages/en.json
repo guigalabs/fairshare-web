@@ -14,6 +14,30 @@
   "landing.cta.secondary": "Read the methodology",
   "landing.meta": "Free · No accounts · No tracking · Works offline",
 
+  "landing.trust.schools": "schools of thought",
+  "landing.trust.data": "data collected",
+  "landing.trust.bilingual": "bilingual + RTL",
+  "landing.trust.offline": "offline",
+
+  "landing.disclaimer.bold": "Educational use only.",
+  "landing.disclaimer.rest": "FairShare illustrates how an estate would be distributed under the classical rules of Fara'id. For an actual estate, please consult a qualified mufti and a licensed attorney for the legal and tax aspects in your jurisdiction.",
+
+  "landing.feature1.title": "Every share, with its source",
+  "landing.feature1.body": "Every fraction is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12, 4:176).",
+  "landing.feature2.title": "Edge cases, handled",
+  "landing.feature2.body": "Awl, Radd, Hajb, Umariatan, Musharakah, and the Grandfather-with-siblings case all detected automatically.",
+  "landing.feature3.title": "Local, private, free",
+  "landing.feature3.body": "Calculations run entirely in your browser. No accounts, no analytics, no ads. Installable as a PWA.",
+
+  "landing.schools.title": "Five schools, side by side.",
+  "landing.schools.lede": "The Hanafi, Maliki, Shafi'i, and Hanbali schools agree on most rulings but diverge in the named edge cases. FairShare's Compare view shows you exactly where they differ for any family scenario.",
+
+  "landing.cta2.title": "Try it for yourself.",
+  "landing.cta2.body": "Five-minute walkthrough, no signup, fully private. The calculator runs entirely in your browser. Install it as an app for offline use at funerals, hospitals, or family gatherings.",
+  "landing.cta2.primary": "Start a calculation",
+  "landing.cta2.secondary": "Browse methodology",
+  "landing.cta2.ios": "Download for iOS",
+
   "calculate.title": "Calculate",
   "calculate.school": "School:",
   "calculate.back": "Back",
@@ -38,9 +62,6 @@
   "saved.empty.title": "No saved calculations yet",
   "saved.empty.desc": "Run a calculation and tap Save to keep it here for later.",
 
-  "theme.light": "Light",
-  "theme.dark": "Dark",
-  "theme.system": "System",
   "locale.english": "English",
   "locale.arabic": "العربية"
 }

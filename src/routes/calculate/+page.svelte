@@ -166,7 +166,7 @@
       </Card>
 
       <div class="nav">
-        <Button variant="ghost" onclick={runner.back} disabled={!runner.canGoBack}>
+        <Button variant="ghost" onclick={() => runner.back()} disabled={!runner.canGoBack}>
           <ChevronLeft size={16} aria-hidden="true" />
           Back
         </Button>
