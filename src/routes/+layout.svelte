@@ -12,8 +12,9 @@
   <link rel="manifest" href="/manifest.webmanifest" />
 </svelte:head>
 
+<a href="#main" class="skip">Skip to main content</a>
 <TopNav />
-<main id="main">
+<main id="main" tabindex="-1">
   {@render children()}
 </main>
 <SiteFooter />
@@ -22,5 +23,27 @@
 <style>
   main {
     min-height: calc(100vh - 60px);
+  }
+  /* Accessibility: visible skip-link on focus, hidden otherwise. */
+  .skip {
+    position: absolute;
+    inset-inline-start: 0.5rem;
+    top: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 500;
+    transform: translateY(-150%);
+    transition: transform 0.15s;
+    z-index: 100;
+    text-decoration: none;
+  }
+  .skip:focus {
+    transform: translateY(0);
+  }
+  /* Don't move focus ring outline to <main> when programmatically focused */
+  main:focus {
+    outline: none;
   }
 </style>

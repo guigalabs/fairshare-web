@@ -34,8 +34,13 @@
   viewBox="0 0 400 400"
   class="tree"
   role="img"
-  aria-label="Family tree showing heirs and their shares"
+  aria-labelledby="tree-title"
+  aria-describedby="tree-desc"
 >
+  <title id="tree-title">Family tree showing heirs and their shares</title>
+  <desc id="tree-desc">
+    {result.shares.map((s) => `${labelFor(s.heirType, s.count)}: ${s.fraction.toString()} (${s.percentage.toFixed(1)} percent)`).join("; ")}
+  </desc>
   <!-- Connector lines -->
   {#each layout as p (p.heir.heirType)}
     <line
