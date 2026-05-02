@@ -5,9 +5,9 @@
   import FileDown from "@lucide/svelte/icons/file-down";
   import Printer from "@lucide/svelte/icons/printer";
   import type { CalculationResult, InheritanceCase } from "$engine";
-  import { saveCalculation } from "$lib/persistence";
   import { share, shareUrlFor } from "$lib/share";
-  import { buildResultPdf, downloadBlob } from "$lib/features/pdf/exportPdf";
+  // Both pdf-lib (~430 KB) and Dexie (~50 KB) are lazy-imported inside their
+  // click handlers — /result doesn't pay for them on initial load.
 
   interface Props {
     inputCase: InheritanceCase;
@@ -27,6 +27,7 @@
   async function onSave() {
     saving = true;
     try {
+      const { saveCalculation } = await import("$lib/persistence");
       const id = await saveCalculation({
         name: defaultName(inputCase),
         subjectGender: inputCase.subjectGender,
@@ -57,6 +58,9 @@
   async function onExportPdf() {
     exporting = true;
     try {
+      const { buildResultPdf, downloadBlob } = await import(
+        "$lib/features/pdf/exportPdf"
+      );
       const blob = await buildResultPdf({ inputCase, result });
       downloadBlob(blob, `fairshare-${Date.now()}.pdf`);
       toast.show("PDF downloaded", "success");
