@@ -141,12 +141,15 @@ export function calculate(c: InheritanceCase): CalculationResult {
       shares.some((s) => s.heirType === "fullSister" || s.heirType === "paternalHalfSister");
 
     if (!hasResiduaryWithShare && !sisterAsResiduary) {
+      const pre = shares;
       shares = applyRadd(shares, c.madhhab);
-      appliedRadd = true;
-      steps.push({
-        description: "Applied radd: surplus redistributed proportionally",
-        ruleApplied: "radd",
-      });
+      if (!sharesEqual(shares, pre)) {
+        appliedRadd = true;
+        steps.push({
+          description: "Applied radd: surplus redistributed proportionally",
+          ruleApplied: "radd",
+        });
+      }
     }
   }
 

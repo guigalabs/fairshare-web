@@ -142,7 +142,7 @@ export async function buildResultPdf(opts: ExportOptions): Promise<Blob> {
 
   // Footer
   text(
-    "Educational use only — please consult a qualified mufti before acting on any calculation.",
+    "Educational use only. Please consult a qualified mufti before acting on any calculation.",
     margin,
     margin,
     9,

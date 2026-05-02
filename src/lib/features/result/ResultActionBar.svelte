@@ -37,7 +37,7 @@
       toast.show(`Saved (#${id})`, "success");
     } catch (err) {
       console.error(err);
-      toast.show("Couldn't save — IndexedDB unavailable?", "error");
+      toast.show("Couldn't save. IndexedDB may be unavailable.", "error");
     } finally {
       saving = false;
     }
@@ -52,7 +52,7 @@
     });
     if (outcome === "share") toast.show("Shared", "success");
     else if (outcome === "clipboard") toast.show("Link copied to clipboard", "success");
-    else toast.show("Couldn't share — copy URL from address bar", "error");
+    else toast.show("Couldn't share. Copy the URL from the address bar.", "error");
   }
 
   async function onExportPdf() {

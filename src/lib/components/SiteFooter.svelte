@@ -17,7 +17,7 @@
       </nav>
     </div>
     <p class="footer-meta">
-      &copy; {year} Guiga Labs. Educational use only — please consult a qualified scholar before
+      &copy; {year} Guiga Labs. Educational use only. Please consult a qualified scholar before
       acting on any calculation.
     </p>
   </div>
