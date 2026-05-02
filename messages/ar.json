@@ -1,0 +1,46 @@
+{
+  "nav.calculate": "احسب",
+  "nav.methodology": "المنهجية",
+  "nav.saved": "المحفوظات",
+  "nav.brand": "فيرشير",
+
+  "footer.disclaimer": "للاستخدام التعليمي فقط — يرجى استشارة عالم مؤهل قبل التصرف بناءً على أي حساب.",
+  "footer.copyright": "© {year} غيغا لابز.",
+
+  "landing.kicker": "الفرائض · الميراث الإسلامي",
+  "landing.title": "ميراث محسوب بإخلاص.",
+  "landing.subtitle": "حاسبة مجانية تعمل دون اتصال للميراث الإسلامي. خمسة مذاهب جنبًا إلى جنب، وكل نصيب مربوط بمصدره القرآني.",
+  "landing.cta.primary": "ابدأ الحساب",
+  "landing.cta.secondary": "اقرأ المنهجية",
+  "landing.meta": "مجاني · بدون حسابات · بدون تتبع · يعمل دون اتصال",
+
+  "calculate.title": "احسب",
+  "calculate.school": "المذهب:",
+  "calculate.back": "السابق",
+  "calculate.continue": "متابعة",
+  "calculate.startOver": "ابدأ من جديد",
+  "calculate.seeResult": "اعرض النتيجة",
+  "calculate.done": "تم الانتهاء. راجع الورثة أعلاه ثم احسب.",
+
+  "result.title": "النتيجة",
+  "result.shares": "الأنصبة",
+  "result.tree": "شجرة العائلة",
+  "result.disclaimer": "<strong>للاستخدام التعليمي فقط.</strong> تأكد مع عالم مؤهل قبل التصرف بناءً على أي توزيع.",
+  "result.empty.title": "لا يوجد حساب جارٍ",
+  "result.empty.desc": "ابدأ حسابًا جديدًا لرؤية النتيجة هنا.",
+  "result.action.save": "احفظ",
+  "result.action.share": "شارك",
+  "result.action.pdf": "PDF",
+  "result.action.print": "اطبع",
+
+  "saved.title": "الحسابات المحفوظة",
+  "saved.desc": "تُحفظ جميع الحسابات على هذا الجهاز فقط. امسح ذاكرة المتصفح لحذفها.",
+  "saved.empty.title": "لا توجد حسابات محفوظة بعد",
+  "saved.empty.desc": "قم بإجراء حساب واضغط على \"احفظ\" للاحتفاظ به هنا.",
+
+  "theme.light": "فاتح",
+  "theme.dark": "داكن",
+  "theme.system": "تلقائي",
+  "locale.english": "English",
+  "locale.arabic": "العربية"
+}

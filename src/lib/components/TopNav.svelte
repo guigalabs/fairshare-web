@@ -3,6 +3,8 @@
   import Calculator from "@lucide/svelte/icons/calculator";
   import BookOpen from "@lucide/svelte/icons/book-open";
   import { ThemeToggle } from "$lib/ui";
+  import LocaleToggle from "$lib/components/LocaleToggle.svelte";
+  import { t } from "$lib/i18n/index.svelte";
 
   const path = $derived(page.url.pathname.replace(/\/$/, "") || "/");
   const isCalc = $derived(path === "/calculate" || path.startsWith("/calculate/"));
@@ -12,9 +14,9 @@
 
 <header class="topnav">
   <div class="topnav-inner">
-    <a href="/" class="brand" aria-label="FairShare home">
+    <a href="/" class="brand" aria-label={t("nav.brand")}>
       <span class="brand-mark" aria-hidden="true">FS</span>
-      <span class="brand-name">FairShare</span>
+      <span class="brand-name">{t("nav.brand")}</span>
     </a>
 
     <nav class="nav-links" aria-label="Primary">
@@ -25,7 +27,7 @@
         aria-current={isCalc ? "page" : undefined}
       >
         <Calculator size={16} aria-hidden="true" />
-        Calculate
+        {t("nav.calculate")}
       </a>
       <a
         href="/methodology"
@@ -34,7 +36,7 @@
         aria-current={isMethodology ? "page" : undefined}
       >
         <BookOpen size={16} aria-hidden="true" />
-        Methodology
+        {t("nav.methodology")}
       </a>
       <a
         href="/saved"
@@ -42,11 +44,12 @@
         class:nav-link--active={isSaved}
         aria-current={isSaved ? "page" : undefined}
       >
-        Saved
+        {t("nav.saved")}
       </a>
     </nav>
 
     <div class="nav-end">
+      <LocaleToggle />
       <ThemeToggle />
     </div>
   </div>
@@ -124,6 +127,8 @@
   .nav-end {
     display: flex;
     justify-content: end;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   @media (min-width: 640px) {

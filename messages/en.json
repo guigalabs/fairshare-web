@@ -1,0 +1,46 @@
+{
+  "nav.calculate": "Calculate",
+  "nav.methodology": "Methodology",
+  "nav.saved": "Saved",
+  "nav.brand": "FairShare",
+
+  "footer.disclaimer": "Educational use only — please consult a qualified scholar before acting on any calculation.",
+  "footer.copyright": "© {year} Guiga Labs.",
+
+  "landing.kicker": "Fara'id · Islamic Inheritance",
+  "landing.title": "Inheritance, calculated faithfully.",
+  "landing.subtitle": "A free, offline calculator for Islamic inheritance. Five madhabs side by side, every share linked to its Quranic source.",
+  "landing.cta.primary": "Start a calculation",
+  "landing.cta.secondary": "Read the methodology",
+  "landing.meta": "Free · No accounts · No tracking · Works offline",
+
+  "calculate.title": "Calculate",
+  "calculate.school": "School:",
+  "calculate.back": "Back",
+  "calculate.continue": "Continue",
+  "calculate.startOver": "Start over",
+  "calculate.seeResult": "See the result",
+  "calculate.done": "You're done. Review the heirs above and run the calculation.",
+
+  "result.title": "Result",
+  "result.shares": "Shares",
+  "result.tree": "Family tree",
+  "result.disclaimer": "<strong>Educational use only.</strong> Confirm with a qualified scholar before acting on any distribution.",
+  "result.empty.title": "No calculation in progress",
+  "result.empty.desc": "Start a new calculation to see a result here.",
+  "result.action.save": "Save",
+  "result.action.share": "Share",
+  "result.action.pdf": "PDF",
+  "result.action.print": "Print",
+
+  "saved.title": "Saved calculations",
+  "saved.desc": "All saved calculations live on this device. Clear your browser storage to remove them.",
+  "saved.empty.title": "No saved calculations yet",
+  "saved.empty.desc": "Run a calculation and tap Save to keep it here for later.",
+
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "theme.system": "System",
+  "locale.english": "English",
+  "locale.arabic": "العربية"
+}
