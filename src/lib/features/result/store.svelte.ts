@@ -1,15 +1,23 @@
 // Reactive store that holds a calculation in progress on the /result page.
-// Reads the InheritanceCase from sessionStorage (set by /calculate), then
-// runs `calculate()`. What-If toggles let the user enable/disable heirs and
-// recompute live without losing the original input.
+// Reads the InheritanceCase from sessionStorage (set by /calculate) OR from
+// the ?case= URL parameter (shareable links). What-If toggles let the user
+// enable/disable heirs and recompute live without losing the original input.
 
 import { browser } from "$app/environment";
 import { calculate, type CalculationResult, type HeirEntry, type HeirType, type InheritanceCase } from "$engine";
+import { decodeCase } from "$lib/share";
 
 const STORAGE_KEY = "fairshare:case";
 
 function readStoredCase(): InheritanceCase | null {
   if (!browser) return null;
+  // URL takes precedence so shareable links just work.
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("case");
+  if (token) {
+    const fromUrl = decodeCase(token);
+    if (fromUrl) return fromUrl;
+  }
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
@@ -22,7 +30,7 @@ function readStoredCase(): InheritanceCase | null {
 }
 
 export class ResultStore {
-  // Original case from sessionStorage. Never mutated.
+  // Original case (URL or sessionStorage). Never mutated.
   baseCase = $state<InheritanceCase | null>(null);
   // Set of heir types the user has toggled OFF in what-if mode.
   disabled = $state<Set<HeirType>>(new Set());

@@ -36,11 +36,13 @@
   {:else if !result || !c}
     <p class="loading">Calculating…</p>
   {:else}
+    {@const safeC = c}
+    {@const safeResult = result}
     <header class="head">
       <p class="kicker">Result</p>
-      <h1>{c.subjectGender === "male" ? "Male" : "Female"} subject · {c.madhhab}</h1>
+      <h1>{safeC.subjectGender === "male" ? "Male" : "Female"} subject · {safeC.madhhab}</h1>
       <p class="subject-meta">
-        {c.heirs.length} heir{c.heirs.length === 1 ? "" : "s"}
+        {safeC.heirs.length} heir{safeC.heirs.length === 1 ? "" : "s"}
         {#if store.whatIfActive}
           <span class="whatif-flag">· What-If active</span>
         {/if}
@@ -48,7 +50,7 @@
     </header>
 
     <div class="action-row">
-      <ResultActionBar />
+      <ResultActionBar inputCase={safeC} result={safeResult} />
     </div>
 
     <Banner tone="scholar">
@@ -64,11 +66,11 @@
           {#snippet children()}
             <h2 class="section-title">Shares</h2>
             <div class="shares">
-              {#each result.shares as s (s.heirType)}
+              {#each safeResult.shares as s (s.heirType)}
                 <ShareRow share={s} />
               {/each}
             </div>
-            {#if result.shares.length === 0}
+            {#if safeResult.shares.length === 0}
               <p class="empty">No shares could be assigned for this configuration.</p>
             {/if}
           {/snippet}
@@ -77,14 +79,14 @@
         <Card>
           {#snippet children()}
             <h2 class="section-title">Family tree</h2>
-            <FamilyTree {result} subjectGender={c.subjectGender} />
+            <FamilyTree result={safeResult} subjectGender={safeC.subjectGender} />
           {/snippet}
         </Card>
       </div>
 
       <aside class="right">
         <WhatIf {store} />
-        <Walkthrough {result} />
+        <Walkthrough result={safeResult} />
       </aside>
     </div>
   {/if}
