@@ -2,7 +2,6 @@
   import { page } from "$app/state";
   import Calculator from "@lucide/svelte/icons/calculator";
   import BookOpen from "@lucide/svelte/icons/book-open";
-  import { ThemeToggle } from "$lib/ui";
   import LocaleToggle from "$lib/components/LocaleToggle.svelte";
   import { t } from "$lib/i18n/index.svelte";
 
@@ -50,7 +49,6 @@
 
     <div class="nav-end">
       <LocaleToggle />
-      <ThemeToggle />
     </div>
   </div>
 </header>

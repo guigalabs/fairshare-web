@@ -28,7 +28,9 @@
   --radius-pill: 9999px;
 }
 
-/* Light theme (default) */
+/* Single light theme. Dark mode + the system-pref override were removed
+ * as a deliberate product decision — keep one canonical look. All text
+ * tokens hit WCAG 2.1 AA against --color-bg. */
 :root {
   --color-bg-actual: #fafafa;
   --color-bg-elevated-actual: #ffffff;
@@ -38,55 +40,12 @@
   --color-text-subtle-actual: #707070;
   --color-border-actual: #e5e5e5;
   --color-border-strong-actual: #cccccc;
-  /* Monochrome accent — primary buttons, brand mark, focus ring, ring chart
-   * stroke. Sits a touch lighter than --color-text so it reads "primary"
-   * rather than "text". */
-  --color-accent-actual: #1f1f1f;
-  --color-accent-hover-actual: #050505;
+  --color-accent-actual: #0c6f42;
+  --color-accent-hover-actual: #095533;
   --color-warning-bg-actual: #fff7e6;
   --color-warning-border-actual: #f0d9a0;
   --color-warning-text-actual: #6e4500;
   --color-error-actual: #b91c1c;
-}
-
-/* Dark theme. Warmer charcoal base + neutral elevation step that actually
- * separates cards from the page. Accent is a soft off-white (slightly
- * dimmer than text) so primary buttons read as inverted, not glowing. */
-:root[data-theme="dark"] {
-  --color-bg-actual: #14171a;
-  --color-bg-elevated-actual: #1c2024;
-  --color-text-actual: #ebeaea;
-  --color-text-secondary-actual: #c2c0bd;
-  --color-text-muted-actual: #9a9794;
-  --color-text-subtle-actual: #797673;
-  --color-border-actual: #2c3035;
-  --color-border-strong-actual: #3f4348;
-  --color-accent-actual: #ebeaea;
-  --color-accent-hover-actual: #ffffff;
-  --color-warning-bg-actual: #2a210e;
-  --color-warning-border-actual: #5a4514;
-  --color-warning-text-actual: #f0c878;
-  --color-error-actual: #f87171;
-}
-
-/* System preference (only when no explicit data-theme is set) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg-actual: #14171a;
-    --color-bg-elevated-actual: #1c2024;
-    --color-text-actual: #ebeaea;
-    --color-text-secondary-actual: #c2c0bd;
-    --color-text-muted-actual: #9a9794;
-    --color-text-subtle-actual: #797673;
-    --color-border-actual: #2c3035;
-    --color-border-strong-actual: #3f4348;
-    --color-accent-actual: #ebeaea;
-    --color-accent-hover-actual: #ffffff;
-    --color-warning-bg-actual: #2a210e;
-    --color-warning-border-actual: #5a4514;
-    --color-warning-text-actual: #f0c878;
-    --color-error-actual: #f87171;
-  }
 }
 
 @layer base {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Button, Card, ThemeToggle, toast } from "$lib/ui";
+  import { Button, Card, toast } from "$lib/ui";
   import LocaleToggle from "$lib/components/LocaleToggle.svelte";
   import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import Trash2 from "@lucide/svelte/icons/trash-2";
@@ -68,13 +68,6 @@
   </header>
 
   <div class="grid">
-    <Card>
-      {#snippet children()}
-        <h2>Appearance</h2>
-        <div class="row"><span>Theme</span><ThemeToggle /></div>
-      {/snippet}
-    </Card>
-
     <Card>
       {#snippet children()}
         <h2>Language</h2>

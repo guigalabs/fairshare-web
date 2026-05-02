@@ -8,8 +8,6 @@ export { default as Counter } from "./Counter.svelte";
 export { default as Field } from "./Field.svelte";
 export { default as Banner } from "./Banner.svelte";
 export { default as ToastHost } from "./ToastHost.svelte";
-export { default as ThemeToggle } from "./ThemeToggle.svelte";
 export { default as EmptyState } from "./EmptyState.svelte";
 
-export { theme, type ThemeMode } from "./theme.svelte";
 export { toast, type ToastEntry, type ToastTone } from "./toast.svelte";
