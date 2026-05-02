@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# /result and /saved are excluded so search engines don't index user
+# state — they're noindex via meta tag too.
+Disallow: /result
+Disallow: /saved
+Disallow: /settings
+
+Sitemap: https://fairshare.guigalabs.com/sitemap.xml

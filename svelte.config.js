@@ -22,22 +22,6 @@ const config = {
     alias: {
       $engine: "src/lib/engine",
     },
-    prerender: {
-      // Routes that don't exist yet (built in later phases). Don't fail the
-      // build on links to them — landing already renders, calculate/result/
-      // saved/methodology arrive in B4-B9.
-      handleHttpError: ({ path, message }) => {
-        const pending = new Set([
-          "/about",
-          "/disclaimer",
-          "/privacy",
-          "/terms",
-          "/settings",
-        ]);
-        if (pending.has(path)) return;
-        throw new Error(message);
-      },
-    },
   },
 };
 
