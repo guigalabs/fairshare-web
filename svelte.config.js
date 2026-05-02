@@ -28,15 +28,13 @@ const config = {
       // saved/methodology arrive in B4-B9.
       handleHttpError: ({ path, message }) => {
         const pending = new Set([
-          "/saved",
-          "/methodology",
           "/about",
           "/disclaimer",
           "/privacy",
           "/terms",
           "/settings",
         ]);
-        if (pending.has(path) || path.startsWith("/methodology/")) return;
+        if (pending.has(path)) return;
         throw new Error(message);
       },
     },
