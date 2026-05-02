@@ -112,7 +112,9 @@
   /* variants */
   .btn--primary {
     background: var(--color-accent);
-    color: #fff;
+    /* Inverted text — works in both light (white-on-dark) and dark
+     * (dark-on-off-white) since accent is monochromatic on each theme. */
+    color: var(--color-bg);
   }
   .btn--primary:hover {
     background: var(--color-accent-hover);

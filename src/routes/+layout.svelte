@@ -32,7 +32,7 @@
     padding: 0.5rem 0.875rem;
     border-radius: var(--radius-pill);
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-bg);
     font-weight: 500;
     transform: translateY(-150%);
     transition: transform 0.15s;

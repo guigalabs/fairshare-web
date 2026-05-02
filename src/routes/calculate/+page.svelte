@@ -250,7 +250,7 @@
   .madhhab-pill--active {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-bg);
   }
 
   .summary {

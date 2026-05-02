@@ -96,7 +96,7 @@
     height: 1.5rem;
     border-radius: var(--radius-pill);
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-bg);
     font-size: 0.75rem;
     font-weight: 600;
     display: inline-flex;

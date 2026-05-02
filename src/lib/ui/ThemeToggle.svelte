@@ -55,10 +55,10 @@
   }
   .seg-option--active {
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-bg);
   }
   .seg-option--active:hover {
-    color: #fff;
+    color: var(--color-bg);
   }
   .seg-option input {
     position: absolute;

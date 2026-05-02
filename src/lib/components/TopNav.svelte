@@ -86,7 +86,7 @@
     height: 1.75rem;
     border-radius: 0.5rem;
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-bg);
     display: inline-flex;
     align-items: center;
     justify-content: center;
