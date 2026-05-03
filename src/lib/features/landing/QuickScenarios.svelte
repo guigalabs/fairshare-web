@@ -169,7 +169,8 @@
     margin-inline-start: 0;
   }
   .icon-bubble.more {
-    background: color-mix(in srgb, var(--tint) 8%, transparent);
+    background: color-mix(in srgb, var(--tint) 14%, transparent);
+    color: var(--color-text);
   }
 
   .text {
@@ -201,10 +202,13 @@
     gap: 0.25rem;
     align-self: flex-start;
     padding: 0.1875rem 0.5rem;
-    background: color-mix(in srgb, var(--tint) 8%, transparent);
-    color: var(--tint);
+    background: color-mix(in srgb, var(--tint) 12%, transparent);
+    color: var(--color-text);
     font-size: 0.6875rem;
     font-weight: 600;
     border-radius: 999px;
+  }
+  .pill :global(svg) {
+    color: var(--tint);
   }
 </style>
