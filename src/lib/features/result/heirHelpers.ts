@@ -10,7 +10,13 @@ import Heart from "@lucide/svelte/icons/heart";
 import Baby from "@lucide/svelte/icons/baby";
 import type { Component } from "svelte";
 
-export type HeirCategory = "spouse" | "parents" | "grandparents" | "children" | "siblings" | "extended";
+export type HeirCategory =
+  | "spouse"
+  | "parents"
+  | "grandparents"
+  | "children"
+  | "siblings"
+  | "extended";
 
 const COLORS: Record<HeirCategory, string> = {
   spouse: "#D95971", // rose

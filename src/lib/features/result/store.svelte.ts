@@ -4,7 +4,13 @@
 // enable/disable heirs and recompute live without losing the original input.
 
 import { browser } from "$app/environment";
-import { calculate, type CalculationResult, type HeirEntry, type HeirType, type InheritanceCase } from "$engine";
+import {
+  calculate,
+  type CalculationResult,
+  type HeirEntry,
+  type HeirType,
+  type InheritanceCase,
+} from "$engine";
 import { decodeCase } from "$lib/share";
 
 const STORAGE_KEY = "fairshare:case";

@@ -24,15 +24,15 @@
     {#snippet children()}
       <h2>Free educational tool</h2>
       <p>
-        FairShare web is provided free of charge as an educational reference for Islamic
-        inheritance (Fara'id). There are no fees, no subscriptions, and no in-app purchases.
+        FairShare web is provided free of charge as an educational reference for Islamic inheritance
+        (Fara'id). There are no fees, no subscriptions, and no in-app purchases.
       </p>
 
       <h2>Permitted use</h2>
       <p>
         You may use FairShare for personal, educational, or professional reference. You may share
-        links to specific calculations, embed screenshots in articles or social media, and
-        reference the methodology pages with attribution to
+        links to specific calculations, embed screenshots in articles or social media, and reference
+        the methodology pages with attribution to
         <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a>.
       </p>
 
@@ -46,34 +46,33 @@
 
       <h2>No warranty</h2>
       <p>
-        FairShare is provided "as is", without warranty of any kind, express or implied. While
-        the inheritance engine is tested against the canonical classical scenarios, we make no
-        guarantee that it will produce the correct distribution for every conceivable family
-        configuration or every interpretation within the schools we support.
+        FairShare is provided "as is", without warranty of any kind, express or implied. While the
+        inheritance engine is tested against the canonical classical scenarios, we make no guarantee
+        that it will produce the correct distribution for every conceivable family configuration or
+        every interpretation within the schools we support.
       </p>
       <p>
-        See the <a href="/disclaimer">disclaimer</a> for the full statement on educational scope
-        and the recommendation to consult a qualified scholar before acting on any calculation.
+        See the <a href="/disclaimer">disclaimer</a> for the full statement on educational scope and the
+        recommendation to consult a qualified scholar before acting on any calculation.
       </p>
 
       <h2>Limitation of liability</h2>
       <p>
         To the fullest extent permitted by law, Guiga Labs is not liable for any direct, indirect,
-        incidental, or consequential loss arising from use of FairShare or reliance on its
-        output.
+        incidental, or consequential loss arising from use of FairShare or reliance on its output.
       </p>
 
       <h2>Open source components</h2>
       <p>
-        FairShare is built on open source software (SvelteKit, Vite, Tailwind, Dexie, pdf-lib,
-        and others). These are licensed under their own terms; nothing in these terms restricts
-        your rights under those licences.
+        FairShare is built on open source software (SvelteKit, Vite, Tailwind, Dexie, pdf-lib, and
+        others). These are licensed under their own terms; nothing in these terms restricts your
+        rights under those licences.
       </p>
 
       <h2>Changes</h2>
       <p>
-        We may update these terms from time to time. The "Last updated" date above tracks the
-        most recent change.
+        We may update these terms from time to time. The "Last updated" date above tracks the most
+        recent change.
       </p>
 
       <h2>Contact</h2>

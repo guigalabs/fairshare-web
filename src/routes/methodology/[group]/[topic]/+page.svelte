@@ -5,18 +5,12 @@
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
   import { BODIES } from "$lib/content/methodology-bodies";
   import { groupTitle } from "$lib/content/methodology";
-  import {
-    serialiseJsonLd,
-    articleSchema,
-    breadcrumbSchema,
-  } from "$lib/seo/jsonld";
+  import { serialiseJsonLd, articleSchema, breadcrumbSchema } from "$lib/seo/jsonld";
   import type { PageProps } from "./$types";
 
   let { data }: PageProps = $props();
   const entry = $derived(data.entry);
-  const url = $derived(
-    `https://fairshare.guigalabs.com/methodology/${entry.group}/${entry.slug}/`,
-  );
+  const url = $derived(`https://fairshare.guigalabs.com/methodology/${entry.group}/${entry.slug}/`);
   const body = $derived(BODIES[`${entry.group}/${entry.slug}`] ?? "");
 
   const article = $derived(

@@ -46,9 +46,7 @@
   >
     <header class="sheet-header">
       <h2 class="sheet-title">{title}</h2>
-      <button type="button" class="sheet-close" onclick={close} aria-label="Close">
-        ×
-      </button>
+      <button type="button" class="sheet-close" onclick={close} aria-label="Close"> × </button>
     </header>
     <div class="sheet-body">
       {@render children()}

@@ -35,10 +35,6 @@ export interface CalculationResult {
   readonly steps: readonly CalculationStep[];
 }
 
-export function makeShare(
-  heirType: HeirType,
-  count: number,
-  fraction: Fraction,
-): HeirShare {
+export function makeShare(heirType: HeirType, count: number, fraction: Fraction): HeirShare {
   return { heirType, count, fraction, percentage: fraction.percentage };
 }

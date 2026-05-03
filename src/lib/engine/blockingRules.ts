@@ -111,11 +111,7 @@ function blockingResult(
       if (has("father", present))
         return blocked(heirType, "father", "Father blocks maternal half-sibling");
       if (has("paternalGrandfather", present) && !has("father", present))
-        return blocked(
-          heirType,
-          "paternalGrandfather",
-          "Grandfather blocks maternal half-sibling",
-        );
+        return blocked(heirType, "paternalGrandfather", "Grandfather blocks maternal half-sibling");
       if (has("son", present)) return blocked(heirType, "son", "Son blocks maternal half-sibling");
       if (has("daughter", present))
         return blocked(heirType, "daughter", "Daughter blocks maternal half-sibling");

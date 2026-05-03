@@ -42,10 +42,7 @@ export function applyRadd(shares: readonly HeirShare[], _madhhab: Madhhab): Heir
 
   const surplus = Fraction.ONE.subtract(totalAll);
   const nonSpouse = shares.filter((s) => !SPOUSE_TYPES.has(s.heirType));
-  const totalNonSpouse = nonSpouse.reduce<Fraction>(
-    (acc, s) => acc.add(s.fraction),
-    Fraction.ZERO,
-  );
+  const totalNonSpouse = nonSpouse.reduce<Fraction>((acc, s) => acc.add(s.fraction), Fraction.ZERO);
   if (totalNonSpouse.lte(Fraction.ZERO)) return [...shares];
 
   return shares.map((s) => {

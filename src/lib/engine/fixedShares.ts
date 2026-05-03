@@ -80,8 +80,7 @@ function fixedShare(
 
     case "paternalGrandmother":
     case "maternalGrandmother": {
-      const both =
-        has("paternalGrandmother", present) && has("maternalGrandmother", present);
+      const both = has("paternalGrandmother", present) && has("maternalGrandmother", present);
       return both ? new Fraction(1, 12) : Fraction.ONE_SIXTH;
     }
 

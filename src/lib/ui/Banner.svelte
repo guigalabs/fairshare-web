@@ -19,12 +19,7 @@
     {@render children()}
   </div>
   {#if dismissible}
-    <button
-      type="button"
-      class="banner-dismiss"
-      onclick={onDismiss}
-      aria-label="Dismiss"
-    >
+    <button type="button" class="banner-dismiss" onclick={onDismiss} aria-label="Dismiss">
       ×
     </button>
   {/if}

@@ -7,8 +7,7 @@
 export const BODIES: Record<string, string> = {
   // ─── Schools of thought ─────────────────────────────────────────────
 
-  "madhhab/general":
-    `<p>The <strong>General</strong> ruleset in FairShare follows the rulings the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) agree on. Where they diverge in well-known cases, it follows the majority position. It's the right starting point for anyone who isn't deliberately following one school over the others.</p>
+  "madhhab/general": `<p>The <strong>General</strong> ruleset in FairShare follows the rulings the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) agree on. Where they diverge in well-known cases, it follows the majority position. It's the right starting point for anyone who isn't deliberately following one school over the others.</p>
 
     <h2>What it covers</h2>
     <p>Every fixed-share heir is assigned the same fraction across all four schools. That's the bedrock 80% of Fara'id. The General view aligns with the schools on:</p>
@@ -31,8 +30,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/blocking">Blocking (Hajb)</a></li>
     </ul>`,
 
-  "madhhab/hanafi":
-    `<p>The <strong>Hanafi school</strong> is the largest by following. Historically the school of the Ottoman empire, today it's dominant across South Asia, Central Asia, Turkey, and the Levant. Its inheritance rulings agree with the other three schools on most cases but have a few sharp differences worth knowing.</p>
+  "madhhab/hanafi": `<p>The <strong>Hanafi school</strong> is the largest by following. Historically the school of the Ottoman empire, today it's dominant across South Asia, Central Asia, Turkey, and the Levant. Its inheritance rulings agree with the other three schools on most cases but have a few sharp differences worth knowing.</p>
 
     <h2>Distinctive Hanafi positions</h2>
     <h3>Grandfather blocks siblings</h3>
@@ -54,8 +52,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/madhhab/general">The General opinion (compare)</a></li>
     </ul>`,
 
-  "madhhab/maliki":
-    `<p>The <strong>Maliki school</strong> is dominant across North Africa and West Africa, with deep roots in the practice of the people of Madinah. Its inheritance rulings broadly track the General/majority opinion, with a couple of historical wrinkles around Radd.</p>
+  "madhhab/maliki": `<p>The <strong>Maliki school</strong> is dominant across North Africa and West Africa, with deep roots in the practice of the people of Madinah. Its inheritance rulings broadly track the General/majority opinion, with a couple of historical wrinkles around Radd.</p>
 
     <h2>Distinctive Maliki positions</h2>
     <h3>Historical reluctance to apply Radd</h3>
@@ -73,8 +70,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/madhhab/shafii">Shafi'i (closely aligned)</a></li>
     </ul>`,
 
-  "madhhab/shafii":
-    `<p>The <strong>Shafi'i school</strong> dominates Egypt, the Levant, and Southeast Asia (Indonesia, Malaysia). Its inheritance rulings closely mirror Maliki and Hanbali, and stand against Hanafi on the contested special cases.</p>
+  "madhhab/shafii": `<p>The <strong>Shafi'i school</strong> dominates Egypt, the Levant, and Southeast Asia (Indonesia, Malaysia). Its inheritance rulings closely mirror Maliki and Hanbali, and stand against Hanafi on the contested special cases.</p>
 
     <h2>Distinctive Shafi'i positions</h2>
     <h3>Applies Musharakah</h3>
@@ -93,8 +89,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/madhhab/maliki">Maliki (closely aligned)</a></li>
     </ul>`,
 
-  "madhhab/hanbali":
-    `<p>The <strong>Hanbali school</strong> is the official school of Saudi Arabia and dominant across the Arabian peninsula. Its inheritance rulings align almost entirely with Shafi'i and Maliki against the Hanafi position on contested cases.</p>
+  "madhhab/hanbali": `<p>The <strong>Hanbali school</strong> is the official school of Saudi Arabia and dominant across the Arabian peninsula. Its inheritance rulings align almost entirely with Shafi'i and Maliki against the Hanafi position on contested cases.</p>
 
     <h2>Distinctive Hanbali positions</h2>
     <p>Hanbali agrees with Maliki and Shafi'i on:</p>
@@ -116,8 +111,7 @@ export const BODIES: Record<string, string> = {
 
   // ─── Core rules ─────────────────────────────────────────────────────
 
-  "rules/fixed-shares":
-    `<p>Fixed shares (<em>al-furud</em>, the singular is <em>fardh</em>) are the prescribed Quranic fractions assigned to specific heirs. They're the floor of the inheritance system: every other rule (residuary, blocking, Awl, Radd) operates on top of them.</p>
+  "rules/fixed-shares": `<p>Fixed shares (<em>al-furud</em>, the singular is <em>fardh</em>) are the prescribed Quranic fractions assigned to specific heirs. They're the floor of the inheritance system: every other rule (residuary, blocking, Awl, Radd) operates on top of them.</p>
 
     <h2>The six fractions</h2>
     <p>Every fixed-share heir receives one of exactly six fractions, all stated directly in the Quran:</p>
@@ -162,8 +156,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/residuary">Residuary heirs (Asabah)</a></li>
     </ul>`,
 
-  "rules/blocking":
-    `<p>Blocking (<em>Hajb</em>) is the rule that prevents a more distant heir from inheriting when a closer one is alive. It's the most common reason an heir who looks like they should inherit ends up with nothing.</p>
+  "rules/blocking": `<p>Blocking (<em>Hajb</em>) is the rule that prevents a more distant heir from inheriting when a closer one is alive. It's the most common reason an heir who looks like they should inherit ends up with nothing.</p>
 
     <h2>Two types of blocking</h2>
     <p>Classical scholars distinguish two types:</p>
@@ -197,8 +190,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/residuary">Residuary heirs</a></li>
     </ul>`,
 
-  "rules/residuary":
-    `<p>Residuary heirs (<em>asabah</em>) take whatever's left of the estate after fixed-share heirs have been paid. They have no prescribed fraction; their share is whatever the remainder happens to be.</p>
+  "rules/residuary": `<p>Residuary heirs (<em>asabah</em>) take whatever's left of the estate after fixed-share heirs have been paid. They have no prescribed fraction; their share is whatever the remainder happens to be.</p>
 
     <h2>Three sub-types</h2>
     <h3>Asabah bin-nafs (by self)</h3>
@@ -237,8 +229,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/radd">Radd (when no residuary claims it)</a></li>
     </ul>`,
 
-  "rules/awl":
-    `<p><strong>Awl</strong> is the rule that handles cases where prescribed fixed shares add up to <em>more</em> than the entire estate. Every share is scaled down proportionally so the math works out.</p>
+  "rules/awl": `<p><strong>Awl</strong> is the rule that handles cases where prescribed fixed shares add up to <em>more</em> than the entire estate. Every share is scaled down proportionally so the math works out.</p>
 
     <h2>The classic example</h2>
     <p>A woman dies leaving a husband, two full sisters, and her mother. Quranic prescriptions:</p>
@@ -275,8 +266,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/fixed-shares">Fixed shares</a></li>
     </ul>`,
 
-  "rules/radd":
-    `<p><strong>Radd</strong> (literally "return") is the inverse of Awl. When prescribed fixed shares add up to <em>less</em> than the estate <em>and</em> there's no residuary heir to take the remainder, Radd returns the surplus to the eligible fixed-share heirs in proportion to their original shares.</p>
+  "rules/radd": `<p><strong>Radd</strong> (literally "return") is the inverse of Awl. When prescribed fixed shares add up to <em>less</em> than the estate <em>and</em> there's no residuary heir to take the remainder, Radd returns the surplus to the eligible fixed-share heirs in proportion to their original shares.</p>
 
     <h2>The simplest case</h2>
     <p>A man dies leaving only one daughter. The Quran prescribes her 1/2. There's no son, no father, no brother, no one to take the residue.</p>
@@ -307,8 +297,7 @@ export const BODIES: Record<string, string> = {
 
   // ─── Special cases ──────────────────────────────────────────────────
 
-  "special-cases/umariatan":
-    `<p>The <strong>Umariatan</strong> ("the two cases of Umar") are a pair of named scenarios where Caliph Umar ibn al-Khattab issued a distinctive ruling that all four classical Sunni schools eventually adopted.</p>
+  "special-cases/umariatan": `<p>The <strong>Umariatan</strong> ("the two cases of Umar") are a pair of named scenarios where Caliph Umar ibn al-Khattab issued a distinctive ruling that all four classical Sunni schools eventually adopted.</p>
 
     <h2>The condition</h2>
     <p>Both cases require exactly three heirs: a spouse, a mother, and a father. <em>No descendants and no siblings.</em> If any other heir is present, the special rule doesn't apply.</p>
@@ -351,8 +340,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/special-cases/musharakah">Musharakah (another named case)</a></li>
     </ul>`,
 
-  "special-cases/musharakah":
-    `<p>The <strong>Musharakah</strong> ("the shared case") is a named scenario where the Maliki, Shafi'i, and Hanbali schools allow full siblings to <em>join</em> the maternal half-siblings in their 1/3 share, even though the full siblings would normally be residuary heirs with no remainder to claim. The Hanafi school disagrees and gives the full siblings nothing.</p>
+  "special-cases/musharakah": `<p>The <strong>Musharakah</strong> ("the shared case") is a named scenario where the Maliki, Shafi'i, and Hanbali schools allow full siblings to <em>join</em> the maternal half-siblings in their 1/3 share, even though the full siblings would normally be residuary heirs with no remainder to claim. The Hanafi school disagrees and gives the full siblings nothing.</p>
 
     <h2>The condition</h2>
     <p>All of the following must hold:</p>
@@ -386,8 +374,7 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/madhhab/shafii">Shafi'i (applies Musharakah)</a></li>
     </ul>`,
 
-  "special-cases/grandfather-with-siblings":
-    `<p>When a deceased leaves no father but does leave a paternal grandfather alongside siblings (full or paternal half), the four Sunni schools split. The <strong>Hanafi school</strong> has the grandfather block the siblings entirely. The other three schools have him <em>share</em> with them in a calculation that gives him whichever option is best.</p>
+  "special-cases/grandfather-with-siblings": `<p>When a deceased leaves no father but does leave a paternal grandfather alongside siblings (full or paternal half), the four Sunni schools split. The <strong>Hanafi school</strong> has the grandfather block the siblings entirely. The other three schools have him <em>share</em> with them in a calculation that gives him whichever option is best.</p>
 
     <h2>The Hanafi position</h2>
     <p>The grandfather is treated like the father for blocking purposes. He blocks all siblings (full and paternal half) and inherits as residuary. This is the simpler of the two outcomes.</p>

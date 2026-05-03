@@ -20,8 +20,8 @@
 
   <Banner tone="warning">
     {#snippet children()}
-      <strong>FairShare is not a substitute for a qualified scholar or attorney.</strong> Please
-      read the full disclaimer below before relying on any calculation.
+      <strong>FairShare is not a substitute for a qualified scholar or attorney.</strong> Please read
+      the full disclaimer below before relying on any calculation.
     {/snippet}
   </Banner>
 
@@ -30,26 +30,26 @@
       <h2>The calculator is educational</h2>
       <p>
         FairShare illustrates how an estate would be distributed under the classical rules of
-        <em>Fara'id</em> for the five schools we support. It implements the rules accurately
-        (the engine is tested against the canonical worked examples), but a real estate
-        distribution involves facts the calculator cannot know:
+        <em>Fara'id</em> for the five schools we support. It implements the rules accurately (the engine
+        is tested against the canonical worked examples), but a real estate distribution involves facts
+        the calculator cannot know:
       </p>
       <ul>
         <li>
-          <strong>Outstanding debts.</strong> Debts are paid before any inheritance is
-          distributed. The calculator assumes a clean estate.
+          <strong>Outstanding debts.</strong> Debts are paid before any inheritance is distributed. The
+          calculator assumes a clean estate.
         </li>
         <li>
-          <strong>Bequests (wasiyyah).</strong> Up to one-third of the estate may be willed
-          outside the Fara'id distribution. The calculator does not handle bequests.
+          <strong>Bequests (wasiyyah).</strong> Up to one-third of the estate may be willed outside the
+          Fara'id distribution. The calculator does not handle bequests.
         </li>
         <li>
-          <strong>Jurisdictional law.</strong> Local civil and tax law often shapes how an estate
-          is actually settled, regardless of the religious calculation.
+          <strong>Jurisdictional law.</strong> Local civil and tax law often shapes how an estate is actually
+          settled, regardless of the religious calculation.
         </li>
         <li>
-          <strong>Family-specific facts.</strong> Adopted children, missing heirs, simultaneous
-          deaths, divorces in waiting period: all require scholarly judgement.
+          <strong>Family-specific facts.</strong> Adopted children, missing heirs, simultaneous deaths,
+          divorces in waiting period: all require scholarly judgement.
         </li>
       </ul>
 
@@ -57,18 +57,18 @@
       <p>For any actual estate distribution, please consult two professionals:</p>
       <ol>
         <li>
-          A <strong>qualified mufti</strong> familiar with your family's specific circumstances
-          and the school of thought you follow.
+          A <strong>qualified mufti</strong> familiar with your family's specific circumstances and the
+          school of thought you follow.
         </li>
         <li>
-          A <strong>licensed attorney</strong> in your jurisdiction for the legal and tax
-          aspects of estate settlement.
+          A <strong>licensed attorney</strong> in your jurisdiction for the legal and tax aspects of estate
+          settlement.
         </li>
       </ol>
       <p>
-        FairShare is most useful for understanding <em>why</em> a distribution looks the way it
-        does. The verse-level citations and side-by-side school comparison let you see the
-        reasoning. Treat the output as a teaching aid, not a binding decree.
+        FairShare is most useful for understanding <em>why</em> a distribution looks the way it does.
+        The verse-level citations and side-by-side school comparison let you see the reasoning. Treat
+        the output as a teaching aid, not a binding decree.
       </p>
 
       <h2>Limitation of liability</h2>
@@ -80,9 +80,9 @@
 
       <h2>Sectarian scope</h2>
       <p>
-        FairShare currently covers the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) and
-        a "General" majority Sunni position. The Ja'fari (Shia) inheritance system is
-        substantially different and is not yet supported.
+        FairShare currently covers the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) and a
+        "General" majority Sunni position. The Ja'fari (Shia) inheritance system is substantially
+        different and is not yet supported.
       </p>
     {/snippet}
   </Prose>

@@ -49,11 +49,7 @@ function checkUmariatan(
   if (sibCount >= 2) return null;
 
   const otherHeirs = activeHeirs.filter(
-    (e) =>
-      e.type !== "mother" &&
-      e.type !== "father" &&
-      e.type !== "husband" &&
-      e.type !== "wife",
+    (e) => e.type !== "mother" && e.type !== "father" && e.type !== "husband" && e.type !== "wife",
   );
   if (otherHeirs.length > 0) return null;
 
@@ -160,7 +156,10 @@ function checkGrandfatherWithSiblings(
       s.heirType !== "paternalHalfBrother" &&
       s.heirType !== "paternalHalfSister",
   );
-  const otherTotal = otherFixedShares.reduce<Fraction>((acc, s) => acc.add(s.fraction), Fraction.ZERO);
+  const otherTotal = otherFixedShares.reduce<Fraction>(
+    (acc, s) => acc.add(s.fraction),
+    Fraction.ZERO,
+  );
   const remainderAfterOthers = Fraction.ONE.subtract(otherTotal);
 
   const fullBrotherCount = countOf("fullBrother", activeHeirs);

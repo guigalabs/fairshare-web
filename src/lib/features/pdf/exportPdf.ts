@@ -52,8 +52,7 @@ export async function buildResultPdf(opts: ExportOptions): Promise<Blob> {
   y -= 56;
 
   // Subject summary
-  const subject =
-    opts.inputCase.subjectGender === "male" ? "Male subject" : "Female subject";
+  const subject = opts.inputCase.subjectGender === "male" ? "Male subject" : "Female subject";
   text(subject, margin, y, 14, helvBold);
   y -= 16;
   text(`School: ${opts.inputCase.madhhab}`, margin, y, 10, helv, rgb(0.4, 0.4, 0.4));
@@ -116,14 +115,7 @@ export async function buildResultPdf(opts: ExportOptions): Promise<Blob> {
     y -= 12;
   }
   if (opts.result.appliedRadd) {
-    text(
-      "Radd applied (surplus redistribution).",
-      margin,
-      y,
-      10,
-      helv,
-      rgb(0.3, 0.3, 0.3),
-    );
+    text("Radd applied (surplus redistribution).", margin, y, 10, helv, rgb(0.3, 0.3, 0.3));
     y -= 12;
   }
   if (opts.result.appliedSpecialCase) {

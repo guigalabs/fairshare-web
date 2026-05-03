@@ -144,9 +144,7 @@
           {:else if shape === "gender"}
             <div class="bool-actions">
               <Button onclick={() => pickGender(0)} fullWidth>Male</Button>
-              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>
-                Female
-              </Button>
+              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>Female</Button>
             </div>
           {:else}
             <Banner tone="scholar">

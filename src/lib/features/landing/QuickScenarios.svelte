@@ -3,6 +3,9 @@
   import Users from "@lucide/svelte/icons/users";
   import { SCENARIOS, heirCountOf, representativeHeirTypesOf, type Scenario } from "./scenarios";
   import { iconFor } from "$lib/features/result/heirHelpers";
+  import { encodeCase } from "$lib/share";
+  import { inheritanceCase } from "$engine";
+  import { t } from "$lib/i18n/index.svelte";
 
   // Mirrors HeirHelpers categories — kept inline so we can include the green
   // "accent" tint that doesn't map to any heir category.
@@ -15,9 +18,6 @@
     extended: "#738CA6",
     accent: "var(--color-accent)",
   };
-  import { encodeCase } from "$lib/share";
-  import { inheritanceCase } from "$engine";
-  import { t } from "$lib/i18n/index.svelte";
 
   function urlFor(id: string): string {
     const s = SCENARIOS.find((x) => x.id === id)!;
@@ -59,7 +59,8 @@
 
         <span class="pill">
           <Users size={11} aria-hidden="true" />
-          {count} {count === 1 ? "heir" : "heirs"}
+          {count}
+          {count === 1 ? "heir" : "heirs"}
         </span>
       </a>
     {/each}
@@ -97,8 +98,12 @@
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
   }
-  .scroller::-webkit-scrollbar { display: none; }
-  .scroller { scrollbar-width: none; }
+  .scroller::-webkit-scrollbar {
+    display: none;
+  }
+  .scroller {
+    scrollbar-width: none;
+  }
 
   .card {
     position: relative;
@@ -113,7 +118,10 @@
     text-decoration: none;
     color: var(--color-text);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease,
+      border-color 120ms ease;
     scroll-snap-align: start;
   }
   .card:hover {

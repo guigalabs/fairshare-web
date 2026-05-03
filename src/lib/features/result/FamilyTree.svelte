@@ -5,10 +5,7 @@
   import { colorFor } from "./heirHelpers";
   import User from "@lucide/svelte/icons/user";
 
-  let {
-    result,
-    subjectGender,
-  }: { result: CalculationResult; subjectGender: Gender } = $props();
+  let { result, subjectGender }: { result: CalculationResult; subjectGender: Gender } = $props();
 
   const ancestors = $derived(buildAncestorTiers(result.shares));
   const descendants = $derived(buildDescendantTiers(result.shares));
@@ -35,7 +32,12 @@
         {#if tier.heirs.length === 1}
           <div class="single-drop"></div>
         {:else}
-          <svg class="branch-svg" viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true">
+          <svg
+            class="branch-svg"
+            viewBox="0 0 100 18"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
             <line x1="50" y1="0" x2="50" y2="9" />
             <line x1="6" y1="9" x2="94" y2="9" />
           </svg>
@@ -76,7 +78,12 @@
         {#if tier.heirs.length === 1}
           <div class="single-drop"></div>
         {:else}
-          <svg class="branch-svg" viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true">
+          <svg
+            class="branch-svg"
+            viewBox="0 0 100 18"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
             <line x1="50" y1="0" x2="50" y2="9" />
             <line x1="6" y1="9" x2="94" y2="9" />
           </svg>

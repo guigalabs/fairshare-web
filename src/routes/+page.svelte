@@ -107,7 +107,7 @@
 </section>
 
 <!-- Features -->
-<section class="container features">
+<section class="features container">
   <div class="features-grid">
     {#each FEATURES as f (f.titleKey)}
       <Card>
@@ -126,7 +126,7 @@
 </section>
 
 <!-- Methodology preview -->
-<section class="container methodology">
+<section class="methodology container">
   <div class="section-header">
     <h2>{t("landing.schools.title")}</h2>
     <p>{t("landing.schools.lede")}</p>
@@ -142,7 +142,7 @@
 </section>
 
 <!-- CTA -->
-<section class="container cta">
+<section class="cta container">
   <div class="cta-inner">
     <h2>{t("landing.cta2.title")}</h2>
     <p>{t("landing.cta2.body")}</p>

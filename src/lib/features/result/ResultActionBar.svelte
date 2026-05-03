@@ -75,9 +75,7 @@
   async function onExportPdf() {
     exporting = true;
     try {
-      const { buildResultPdf, downloadBlob } = await import(
-        "$lib/features/pdf/exportPdf"
-      );
+      const { buildResultPdf, downloadBlob } = await import("$lib/features/pdf/exportPdf");
       const blob = await buildResultPdf({ inputCase, result });
       downloadBlob(blob, `fairshare-${Date.now()}.pdf`);
       toast.show("PDF downloaded", "success");

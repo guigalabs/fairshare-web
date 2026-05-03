@@ -23,8 +23,7 @@
       <p>
         FairShare is a free, offline-first calculator for Islamic inheritance (<em>Fara'id</em>),
         built by <a href="https://guigalabs.com">Guiga Labs</a>. It's available as a web app at
-        <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> and as a native iOS
-        app.
+        <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> and as a native iOS app.
       </p>
 
       <h2>Why we built it</h2>
@@ -35,22 +34,22 @@
         Umariatan), or hide the reasoning behind opaque numbers.
       </p>
       <p>
-        FairShare exists to do two things at once: produce the <em>right</em> answer for each of
-        the five Sunni schools (General, Hanafi, Maliki, Shafi'i, Hanbali), and <em>show its
-        work</em>. Every share is linked to the Quranic verse that prescribes it.
+        FairShare exists to do two things at once: produce the <em>right</em> answer for each of the
+        five Sunni schools (General, Hanafi, Maliki, Shafi'i, Hanbali), and <em>show its work</em>.
+        Every share is linked to the Quranic verse that prescribes it.
       </p>
 
       <h2>How the calculator works</h2>
       <p>
-        Every calculation runs entirely in your browser. The inheritance engine is a pure
-        TypeScript port of the Swift package that powers the iOS app, with BigInt-backed exact
-        fractions to guarantee parity with the iOS calculations. We test against 28+ classical
-        scenarios, including the named edge cases, to catch regressions.
+        Every calculation runs entirely in your browser. The inheritance engine is a pure TypeScript
+        port of the Swift package that powers the iOS app, with BigInt-backed exact fractions to
+        guarantee parity with the iOS calculations. We test against 28+ classical scenarios,
+        including the named edge cases, to catch regressions.
       </p>
       <p>
-        Saved calculations live in your browser's IndexedDB. Nothing is uploaded anywhere. There
-        are no accounts, no analytics SDKs, no advertising. The only outbound network request
-        FairShare ever makes is downloading the page itself.
+        Saved calculations live in your browser's IndexedDB. Nothing is uploaded anywhere. There are
+        no accounts, no analytics SDKs, no advertising. The only outbound network request FairShare
+        ever makes is downloading the page itself.
       </p>
 
       <h2>The team</h2>

@@ -56,8 +56,7 @@
 
     <Banner tone="scholar">
       {#snippet children()}
-        <strong>Educational use only.</strong> Confirm with a qualified scholar before acting on
-        any distribution.
+        <strong>Educational use only.</strong> Confirm with a qualified scholar before acting on any distribution.
       {/snippet}
     </Banner>
 

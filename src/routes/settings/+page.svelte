@@ -90,8 +90,8 @@
       {#snippet children()}
         <h2>Your data</h2>
         <p class="desc">
-          {savedCount} saved calculation{savedCount === 1 ? "" : "s"} on this device.
-          Everything is local. Nothing is uploaded.
+          {savedCount} saved calculation{savedCount === 1 ? "" : "s"} on this device. Everything is local.
+          Nothing is uploaded.
         </p>
         <div class="data-actions">
           <Button variant="secondary" onclick={exportJson} size="sm">

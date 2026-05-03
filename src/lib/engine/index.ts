@@ -1,12 +1,6 @@
 // Public engine API. Mirrors FairShareEngine's public surface.
 
-export type {
-  Gender,
-  Madhhab,
-  HeirType,
-  HeirEntry,
-  InheritanceCase,
-} from "./types";
+export type { Gender, Madhhab, HeirType, HeirEntry, InheritanceCase } from "./types";
 export { MADHHABS, HEIR_TYPES, genderOf, heirEntry, inheritanceCase } from "./types";
 
 export { Fraction } from "./fraction";

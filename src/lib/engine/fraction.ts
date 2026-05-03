@@ -63,16 +63,14 @@ export class Fraction {
   add(other: Fraction): Fraction {
     const common = lcmBig(this.denominator, other.denominator);
     const newNum =
-      this.numerator * (common / this.denominator) +
-      other.numerator * (common / other.denominator);
+      this.numerator * (common / this.denominator) + other.numerator * (common / other.denominator);
     return new Fraction(newNum, common);
   }
 
   subtract(other: Fraction): Fraction {
     const common = lcmBig(this.denominator, other.denominator);
     const newNum =
-      this.numerator * (common / this.denominator) -
-      other.numerator * (common / other.denominator);
+      this.numerator * (common / this.denominator) - other.numerator * (common / other.denominator);
     return new Fraction(newNum, common);
   }
 
@@ -117,7 +115,8 @@ export class Fraction {
   }
 
   static fromJSON(value: { numerator: string | number; denominator: string | number }): Fraction {
-    const n = typeof value.numerator === "string" ? BigInt(value.numerator) : BigInt(value.numerator);
+    const n =
+      typeof value.numerator === "string" ? BigInt(value.numerator) : BigInt(value.numerator);
     const d =
       typeof value.denominator === "string" ? BigInt(value.denominator) : BigInt(value.denominator);
     return new Fraction(n, d);

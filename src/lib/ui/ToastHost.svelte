@@ -5,11 +5,7 @@
 
 <div class="toast-host" aria-live="polite" aria-atomic="true">
   {#each toast.entries as t (t.id)}
-    <div
-      class="toast toast--{t.tone}"
-      role="status"
-      transition:fly={{ y: 16, duration: 200 }}
-    >
+    <div class="toast toast--{t.tone}" role="status" transition:fly={{ y: 16, duration: 200 }}>
       {t.message}
     </div>
   {/each}

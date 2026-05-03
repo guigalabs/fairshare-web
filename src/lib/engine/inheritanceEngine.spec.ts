@@ -33,11 +33,7 @@ describe("InheritanceEngine — classical scenarios", () => {
   });
 
   it("husband + son -> husband 1/4, son takes the residue (3/4)", () => {
-    const c = inheritanceCase(
-      "female",
-      [heirEntry("husband", 1), heirEntry("son", 1)],
-      "general",
-    );
+    const c = inheritanceCase("female", [heirEntry("husband", 1), heirEntry("son", 1)], "general");
     const r = calculate(c);
     expect(shareOf(r.shares, "husband").equals(Fraction.ONE_FOURTH)).toBe(true);
     expect(shareOf(r.shares, "son").equals(new Fraction(3, 4))).toBe(true);
@@ -107,11 +103,7 @@ describe("InheritanceEngine — classical scenarios", () => {
   });
 
   it("Wife + 1 son -> wife 1/8, son 7/8 (residue)", () => {
-    const c = inheritanceCase(
-      "male",
-      [heirEntry("wife", 1), heirEntry("son", 1)],
-      "general",
-    );
+    const c = inheritanceCase("male", [heirEntry("wife", 1), heirEntry("son", 1)], "general");
     const r = calculate(c);
     expect(shareOf(r.shares, "wife").equals(Fraction.ONE_EIGHTH)).toBe(true);
     expect(shareOf(r.shares, "son").equals(new Fraction(7, 8))).toBe(true);

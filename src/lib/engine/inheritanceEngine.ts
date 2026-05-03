@@ -1,10 +1,6 @@
 import type { HeirType, InheritanceCase } from "./types";
 import { Fraction } from "./fraction";
-import {
-  type CalculationResult,
-  type CalculationStep,
-  type HeirShare,
-} from "./result";
+import { type CalculationResult, type CalculationStep, type HeirShare } from "./result";
 import { isCriticalError, validate } from "./validator";
 import { applyBlocking } from "./blockingRules";
 import { assignFixedShares } from "./fixedShares";
@@ -31,10 +27,7 @@ const RESIDUARY_TYPES: ReadonlySet<HeirType> = new Set([
 
 function commonDenominatorOf(shares: readonly HeirShare[]): bigint {
   if (shares.length === 0) return 1n;
-  return shares.reduce<bigint>(
-    (acc, s) => Fraction.lcmInt(acc, s.fraction.denominator),
-    1n,
-  );
+  return shares.reduce<bigint>((acc, s) => Fraction.lcmInt(acc, s.fraction.denominator), 1n);
 }
 
 function sharesEqual(a: readonly HeirShare[], b: readonly HeirShare[]): boolean {
