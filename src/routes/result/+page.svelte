@@ -6,6 +6,7 @@
   import Walkthrough from "$lib/features/result/Walkthrough.svelte";
   import WhatIf from "$lib/features/result/WhatIf.svelte";
   import ResultActionBar from "$lib/features/result/ResultActionBar.svelte";
+  import PlainLanguageSummary from "$lib/features/result/PlainLanguageSummary.svelte";
   import { ResultStore } from "$lib/features/result/store.svelte";
 
   const store = new ResultStore();
@@ -86,6 +87,7 @@
 
       <aside class="right">
         <WhatIf {store} />
+        <PlainLanguageSummary result={safeResult} subjectGender={safeC.subjectGender} />
         <Walkthrough result={safeResult} />
       </aside>
     </div>

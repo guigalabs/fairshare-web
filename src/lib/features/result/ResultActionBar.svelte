@@ -35,12 +35,29 @@
         heirs: [...inputCase.heirs],
       });
       toast.show(`Saved (#${id})`, "success");
+      void fireConfetti();
     } catch (err) {
       console.error(err);
       toast.show("Couldn't save. IndexedDB may be unavailable.", "error");
     } finally {
       saving = false;
     }
+  }
+
+  // Suppress confetti for users who opted out of motion. The lib is dynamic-
+  // imported so it never lands in the /result initial bundle.
+  async function fireConfetti() {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const { default: confetti } = await import("canvas-confetti");
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      startVelocity: 35,
+      origin: { y: 0.3 },
+      colors: ["#0a8754", "#388F9E", "#C79438", "#D95971", "#7A61B8"],
+      disableForReducedMotion: true,
+    });
   }
 
   async function onShare() {

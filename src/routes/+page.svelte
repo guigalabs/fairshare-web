@@ -3,6 +3,7 @@
   import { cubicOut } from "svelte/easing";
   import { Button, Card, Banner } from "$lib/ui";
   import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
+  import QuickScenarios from "$lib/features/landing/QuickScenarios.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
   import BookOpen from "@lucide/svelte/icons/book-open";
   import ShieldCheck from "@lucide/svelte/icons/shield-check";
@@ -91,6 +92,9 @@
     {/each}
   </div>
 </section>
+
+<!-- Quick scenarios — one-tap presets that deep-link to /result -->
+<QuickScenarios />
 
 <!-- Disclaimer banner -->
 <section class="container">
