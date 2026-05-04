@@ -18,6 +18,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "pro:grant": "bun scripts/pro.ts grant",
+    "pro:revoke": "bun scripts/pro.ts revoke",
+    "pro:list": "bun scripts/pro.ts list",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check ."
   },

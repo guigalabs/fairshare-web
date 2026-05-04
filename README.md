@@ -123,6 +123,23 @@ stripe listen --forward-to localhost:5173/api/stripe/webhook \
 stripe trigger customer.subscription.created
 ```
 
+### Manual Pro grants (pre-Stripe)
+
+Until Stripe is wired up in production, you can hand-grant Pro to a
+user (after they've signed in once so a `user` row exists):
+
+```bash
+export DATABASE_URL="postgres://...neon..."
+bun run pro:grant amina@firm.com           # monthly cadence
+bun run pro:grant amina@firm.com --annual  # annual cadence
+bun run pro:list                           # show everyone with Pro
+bun run pro:revoke amina@firm.com
+```
+
+The script writes a synthetic `subscription` row with
+`stripe_subscription_id = manual_<user_id>` so it's easy to spot and
+clean up once real Stripe webhooks start flowing.
+
 ## See also
 
 - Plan: `~/.claude/plans/twinkly-plotting-torvalds.md`
