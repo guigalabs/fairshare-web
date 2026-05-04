@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'deploy-production' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   check:
@@ -24,6 +24,8 @@ jobs:
       - run: bun run check
       - run: bun run test
       - run: bun run build
+        env:
+          PUBLIC_COMMIT_SHA: ${{ github.sha }}
 
   e2e:
     name: Playwright e2e + a11y
@@ -57,9 +59,26 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun run build
+        env:
+          PUBLIC_COMMIT_SHA: ${{ github.sha }}
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=fairshare-web --branch=main --commit-hash=${{ github.sha }}
+      - name: Smoke test live site
+        env:
+          SHA: ${{ github.sha }}
+          URL: https://fairshare.guigalabs.com/
+        run: |
+          for i in 1 2 3 4 5; do
+            if curl -fsSL --max-time 10 "${URL}?cb=$(date +%s)" | grep -q "name=\"commit-sha\" content=\"${SHA}\""; then
+              echo "Smoke test passed: ${URL} serves ${SHA}"
+              exit 0
+            fi
+            echo "Attempt ${i}: ${URL} not yet serving ${SHA}, retrying in 6s..."
+            sleep 6
+          done
+          echo "Smoke test failed: ${URL} did not serve ${SHA} after 30s"
+          exit 1
