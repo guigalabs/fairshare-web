@@ -8,6 +8,13 @@
       "when": 1777882750269,
       "tag": "0000_cooing_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1777884407288,
+      "tag": "0001_smiling_chimera",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,13 @@
-import { integer, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  date,
+  integer,
+  jsonb,
+  numeric,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
   id: text("id")
@@ -47,3 +56,76 @@ export const verificationTokens = pgTable(
   },
   (vt) => [primaryKey({ columns: [vt.identifier, vt.token] })],
 );
+
+export const clients = pgTable("client", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  displayName: text("display_name").notNull(),
+  primaryContactName: text("primary_contact_name"),
+  primaryContactEmail: text("primary_contact_email"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  deletedAt: timestamp("deleted_at", { mode: "date" }),
+});
+
+export const caseFolders = pgTable("case_folder", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+});
+
+export const cases = pgTable("case", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  clientId: text("client_id").references(() => clients.id, { onDelete: "set null" }),
+  folderId: text("folder_id").references(() => caseFolders.id, { onDelete: "set null" }),
+  deceasedName: text("deceased_name").notNull(),
+  dateOfDeath: date("date_of_death"),
+  placeOfDeath: text("place_of_death"),
+  jurisdiction: text("jurisdiction"),
+  deceasedIdentifier: text("deceased_identifier"),
+  hearingDate: date("hearing_date"),
+  notes: text("notes"),
+  tags: text("tags").array().notNull().default([]),
+  subjectGender: text("subject_gender").notNull(),
+  madhhab: text("madhhab").notNull(),
+  heirs: jsonb("heirs").notNull(),
+  currency: text("currency").notNull().default("USD"),
+  grossEstate: numeric("gross_estate", { precision: 18, scale: 2 }),
+  funeralExpenses: numeric("funeral_expenses", { precision: 18, scale: 2 }).notNull().default("0"),
+  debts: jsonb("debts").notNull().default([]),
+  bequests: jsonb("bequests").notNull().default([]),
+  specialFlags: jsonb("special_flags").notNull().default({}),
+  advisoryNotes: text("advisory_notes"),
+  resultSnapshot: jsonb("result_snapshot"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  deletedAt: timestamp("deleted_at", { mode: "date" }),
+});
+
+export const firmBranding = pgTable("firm_branding", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  logoObjectKey: text("logo_object_key"),
+  letterheadText: text("letterhead_text"),
+  customDisclaimerEn: text("custom_disclaimer_en"),
+  customDisclaimerAr: text("custom_disclaimer_ar"),
+  primaryColor: text("primary_color"),
+  signatureBlock: text("signature_block"),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
