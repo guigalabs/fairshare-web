@@ -1,12 +1,14 @@
 import { error } from "@sveltejs/kit";
 import { apiOk, authedApiContext, parseJsonBody } from "$lib/server/api";
 import { casePatchSchema, getCase, patchCase, softDeleteCase } from "$lib/server/cases";
+import { requireEntitlement } from "$lib/server/entitlements";
 import type { RequestHandler } from "./$types";
 
 export const prerender = false;
 
 export const GET: RequestHandler = async (event) => {
   const ctx = await authedApiContext(event);
+  await requireEntitlement(ctx.db, ctx.userId);
   const row = await getCase(ctx.db, ctx.userId, event.params.id);
   if (!row) throw error(404, "not_found");
   return apiOk({ case: row });
@@ -14,6 +16,7 @@ export const GET: RequestHandler = async (event) => {
 
 export const PATCH: RequestHandler = async (event) => {
   const ctx = await authedApiContext(event);
+  await requireEntitlement(ctx.db, ctx.userId);
   const patch = await parseJsonBody(event.request, casePatchSchema);
   const row = await patchCase(ctx.db, ctx.userId, event.params.id, patch);
   if (!row) throw error(404, "not_found");
@@ -22,6 +25,7 @@ export const PATCH: RequestHandler = async (event) => {
 
 export const DELETE: RequestHandler = async (event) => {
   const ctx = await authedApiContext(event);
+  await requireEntitlement(ctx.db, ctx.userId);
   const ok = await softDeleteCase(ctx.db, ctx.userId, event.params.id);
   if (!ok) throw error(404, "not_found");
   return apiOk({ ok: true });

@@ -117,6 +117,24 @@ export const cases = pgTable("case", {
   deletedAt: timestamp("deleted_at", { mode: "date" }),
 });
 
+export const subscriptions = pgTable("subscription", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: "cascade" }),
+  paddleSubscriptionId: text("paddle_subscription_id").unique(),
+  paddleCustomerId: text("paddle_customer_id"),
+  plan: text("plan").notNull().default("pro"),
+  cadence: text("cadence").notNull(),
+  status: text("status").notNull(),
+  currentPeriodEnd: timestamp("current_period_end", { mode: "date" }),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 export const firmBranding = pgTable("firm_branding", {
   userId: text("user_id")
     .primaryKey()

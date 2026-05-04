@@ -15,6 +15,13 @@
       "when": 1777884407288,
       "tag": "0001_smiling_chimera",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777885771614,
+      "tag": "0002_petite_cassandra_nova",
+      "breakpoints": true
     }
   ]
 }

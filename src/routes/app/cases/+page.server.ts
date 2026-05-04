@@ -1,12 +1,17 @@
 import { authedApiContext } from "$lib/server/api";
 import { listCases } from "$lib/server/cases";
 import { listClients } from "$lib/server/clients";
+import { getSubscription, hasProEntitlement } from "$lib/server/entitlements";
 import type { PageServerLoad } from "./$types";
 
 export const prerender = false;
 
 export const load: PageServerLoad = async (event) => {
   const ctx = await authedApiContext(event);
+  const sub = await getSubscription(ctx.db, ctx.userId);
+  if (!hasProEntitlement(sub)) {
+    return { cases: [], clients: [], query: "", isPro: false };
+  }
   const url = event.url;
   const [cases, clients] = await Promise.all([
     listCases(ctx.db, ctx.userId, {
@@ -24,5 +29,5 @@ export const load: PageServerLoad = async (event) => {
     }),
     listClients(ctx.db, ctx.userId),
   ]);
-  return { cases, clients, query: url.searchParams.get("q") ?? "" };
+  return { cases, clients, query: url.searchParams.get("q") ?? "", isPro: true };
 };
