@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button, EmptyState, TextInput } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
+  import ImportLocalCasesPrompt from "$lib/features/migration/ImportLocalCasesPrompt.svelte";
   import type { PageData } from "./$types";
 
   let { data }: { data: PageData } = $props();
@@ -13,6 +14,8 @@
 <svelte:head>
   <title>Cases · FairShare Pro</title>
 </svelte:head>
+
+<ImportLocalCasesPrompt />
 
 <section class="head">
   <h1>{t("app.cases.title")}</h1>
