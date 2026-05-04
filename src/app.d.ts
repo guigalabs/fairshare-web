@@ -19,6 +19,8 @@ declare global {
     interface Platform {
       env: {
         WAITLIST_KV: KVNamespace;
+        DATABASE_URL: string;
+        AUTH_SECRET: string;
       };
     }
   }

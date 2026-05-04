@@ -51,6 +51,23 @@ bunx wrangler kv namespace create WAITLIST_KV --preview
 
 Paste the returned IDs into `wrangler.toml`.
 
+## Database (Neon Postgres)
+
+User accounts, cases, and Pro subscriptions live in Neon. Drizzle ORM owns
+the schema; the Auth.js Drizzle adapter wires session / verification
+tokens.
+
+```bash
+# local dev / migrations
+export DATABASE_URL="postgres://...neon..."
+bun run db:generate          # diff schema.ts → drizzle/*.sql
+bun run db:migrate           # apply migrations
+bun run db:studio            # browse rows
+```
+
+Bind `DATABASE_URL` as a Pages secret for the deployed environments
+(`bunx wrangler pages secret put DATABASE_URL`).
+
 ## See also
 
 - Plan: `~/.claude/plans/twinkly-plotting-torvalds.md`
