@@ -1,5 +1,6 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { SvelteKitAuth } from "@auth/sveltekit";
+import Google from "@auth/sveltekit/providers/google";
 import Resend from "@auth/sveltekit/providers/resend";
 import { Resend as ResendClient } from "resend";
 
@@ -30,6 +31,10 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
       verifyRequest: "/login/verify",
     },
     providers: [
+      Google({
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
+      }),
       Resend({
         from: env.AUTH_EMAIL_FROM,
         sendVerificationRequest: async ({ identifier, url }) => {

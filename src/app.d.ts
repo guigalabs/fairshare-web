@@ -23,6 +23,8 @@ declare global {
         AUTH_SECRET: string;
         RESEND_API_KEY: string;
         AUTH_EMAIL_FROM: string;
+        GOOGLE_CLIENT_ID: string;
+        GOOGLE_CLIENT_SECRET: string;
       };
     }
   }

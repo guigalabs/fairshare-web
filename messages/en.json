@@ -92,6 +92,8 @@
   "login.lede": "We'll email you a link. No password needed.",
   "login.emailLabel": "Email",
   "login.submit": "Send sign-in link",
+  "login.or": "or",
+  "login.google": "Continue with Google",
   "login.legal": "By signing in you agree to the Terms and Privacy Policy.",
   "login.verify.kicker": "Almost there",
   "login.verify.title": "Check your email",

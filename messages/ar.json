@@ -92,6 +92,8 @@
   "login.lede": "سنرسل إليك رابطًا بالبريد الإلكتروني. لا حاجة لكلمة مرور.",
   "login.emailLabel": "البريد الإلكتروني",
   "login.submit": "أرسل رابط الدخول",
+  "login.or": "أو",
+  "login.google": "متابعة باستخدام Google",
   "login.legal": "بتسجيل الدخول فأنت توافق على الشروط وسياسة الخصوصية.",
   "login.verify.kicker": "اقتربنا",
   "login.verify.title": "تحقق من بريدك",
