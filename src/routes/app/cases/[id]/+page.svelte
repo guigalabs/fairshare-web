@@ -1,11 +1,14 @@
 <script lang="ts">
+  import { page } from "$app/state";
   import { calculate, type HeirEntry, type Madhhab } from "$engine";
+  import CompareMadhabs from "$lib/features/compare/CompareMadhabs.svelte";
   import { Button } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
   import { bequestsValid, formatCents, netEstate, parseCents, perHeirAmount } from "$lib/money";
   import type { PageData } from "./$types";
 
   let { data }: { data: PageData } = $props();
+  const compare = $derived(page.url.searchParams.get("compare") === "1");
   const c = $derived(data.case);
 
   const grossCents = $derived(c.grossEstate ? (parseCents(c.grossEstate) ?? 0n) : 0n);
@@ -57,7 +60,18 @@
       {#if c.jurisdiction}· {c.jurisdiction}{/if}
     </p>
   </div>
-  <Button href="/app/cases" variant="ghost">{t("app.cases.detail.back")}</Button>
+  <div class="actions">
+    {#if compare}
+      <Button href="/app/cases/{c.id}" variant="secondary"
+        >{t("app.cases.detail.singleMadhhab")}</Button
+      >
+    {:else}
+      <Button href="/app/cases/{c.id}?compare=1" variant="secondary"
+        >{t("app.cases.detail.compare")}</Button
+      >
+    {/if}
+    <Button href="/app/cases" variant="ghost">{t("app.cases.detail.back")}</Button>
+  </div>
 </section>
 
 {#if grossCents > 0n}
@@ -84,24 +98,33 @@
 
 <div class="card">
   <h2>{t("app.cases.detail.shares")}</h2>
-  <table class="shares">
-    <thead>
-      <tr
-        ><th>Heir</th><th>Share</th>{#if net > 0n}<th>Amount</th>{/if}</tr
-      >
-    </thead>
-    <tbody>
-      {#each result.shares as s}
-        <tr>
-          <td>{s.heirType}{s.count > 1 ? ` ×${s.count}` : ""}</td>
-          <td>{s.fraction.numerator.toString()}/{s.fraction.denominator.toString()}</td>
-          {#if net > 0n}
-            <td>{c.currency} {formatCents(perHeirAmount(net, s.fraction))}</td>
-          {/if}
-        </tr>
-      {/each}
-    </tbody>
-  </table>
+  {#if compare}
+    <CompareMadhabs
+      subjectGender={c.subjectGender as "male" | "female"}
+      heirs={c.heirs as HeirEntry[]}
+      {net}
+      currency={c.currency}
+    />
+  {:else}
+    <table class="shares">
+      <thead>
+        <tr
+          ><th>Heir</th><th>Share</th>{#if net > 0n}<th>Amount</th>{/if}</tr
+        >
+      </thead>
+      <tbody>
+        {#each result.shares as s}
+          <tr>
+            <td>{s.heirType}{s.count > 1 ? ` ×${s.count}` : ""}</td>
+            <td>{s.fraction.numerator.toString()}/{s.fraction.denominator.toString()}</td>
+            {#if net > 0n}
+              <td>{c.currency} {formatCents(perHeirAmount(net, s.fraction))}</td>
+            {/if}
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/if}
 </div>
 
 <style>
@@ -111,6 +134,12 @@
     align-items: flex-start;
     margin-bottom: 2rem;
     gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
   .kicker {
     font-size: 0.75rem;
