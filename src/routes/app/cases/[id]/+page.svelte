@@ -2,6 +2,8 @@
   import { page } from "$app/state";
   import { calculate, type HeirEntry, type Madhhab } from "$engine";
   import CompareMadhabs from "$lib/features/compare/CompareMadhabs.svelte";
+  import { downloadBlob } from "$lib/features/pdf/exportPdf";
+  import { buildPractitionerPdf } from "$lib/features/pdf/proPdf";
   import { Button } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
   import { bequestsValid, formatCents, netEstate, parseCents, perHeirAmount } from "$lib/money";
@@ -9,6 +11,41 @@
 
   let { data }: { data: PageData } = $props();
   const compare = $derived(page.url.searchParams.get("compare") === "1");
+  let pdfBusy = $state(false);
+
+  async function downloadPdf() {
+    if (pdfBusy) return;
+    pdfBusy = true;
+    try {
+      const blob = await buildPractitionerPdf({
+        case: {
+          deceasedName: c.deceasedName,
+          dateOfDeath: c.dateOfDeath,
+          placeOfDeath: c.placeOfDeath,
+          jurisdiction: c.jurisdiction,
+          deceasedIdentifier: c.deceasedIdentifier,
+          madhhab: c.madhhab,
+          subjectGender: c.subjectGender,
+          currency: c.currency,
+          grossEstate: grossCents,
+          funeralExpenses: funeralCents,
+          debts: debtsList,
+          bequests: bequestsList,
+          specialFlags: (c.specialFlags ?? {}) as Record<string, string>,
+          advisoryNotes: c.advisoryNotes,
+          heirs: c.heirs as HeirEntry[],
+        },
+        result,
+        net,
+        debtsTotal,
+        bequestsTotal,
+      });
+      const safe = c.deceasedName.replace(/[^a-z0-9-]+/gi, "-").toLowerCase();
+      downloadBlob(blob, `fairshare-${safe || "case"}.pdf`);
+    } finally {
+      pdfBusy = false;
+    }
+  }
   const c = $derived(data.case);
 
   const grossCents = $derived(c.grossEstate ? (parseCents(c.grossEstate) ?? 0n) : 0n);
@@ -61,6 +98,7 @@
     </p>
   </div>
   <div class="actions">
+    <Button onclick={downloadPdf} loading={pdfBusy}>{t("app.cases.detail.pdf")}</Button>
     {#if compare}
       <Button href="/app/cases/{c.id}" variant="secondary"
         >{t("app.cases.detail.singleMadhhab")}</Button
