@@ -10,7 +10,7 @@ Deployed at **https://fairshare.guigalabs.com**.
 
 - **SvelteKit 2 + Svelte 5** (runes)
 - **Vite 8 + TypeScript strict + Tailwind v4** (`@tailwindcss/vite`)
-- **`@sveltejs/adapter-static`** → Cloudflare Pages
+- **`@sveltejs/adapter-cloudflare`** → Cloudflare Pages (free routes prerendered, `/api/**` and future `/app/**` run as Pages Functions)
 - **Bun** (dev runtime + package manager)
 - **Engine**: TypeScript port of `FairShareEngine` Swift package, with BigInt-backed exact
   fractions and a snapshot parity test against the Swift side.
@@ -30,16 +30,26 @@ bun run check            # type-check via svelte-check
 bun run test             # vitest unit tests
 bun run test:e2e         # playwright e2e (boots its own preview server)
 bun run test:a11y        # axe-core via playwright
-bun run build            # static export to ./out
-bun run preview          # serve ./out locally
+bun run build            # output to .svelte-kit/cloudflare
+bun run preview          # serve the build locally (prerendered routes only)
 bun run fmt              # prettier --write .
 ```
 
 ## Deploy
 
 ```bash
-bunx wrangler pages deploy out --project-name=fairshare-web
+bunx wrangler pages deploy .svelte-kit/cloudflare --project-name=fairshare-web
 ```
+
+`/api/**` and (future) `/app/**` routes run as Cloudflare Pages Functions. KV
+bindings are declared in `wrangler.toml`; create namespaces with:
+
+```bash
+bunx wrangler kv namespace create WAITLIST_KV
+bunx wrangler kv namespace create WAITLIST_KV --preview
+```
+
+Paste the returned IDs into `wrangler.toml`.
 
 ## See also
 

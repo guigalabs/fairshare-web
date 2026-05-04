@@ -12,11 +12,22 @@
 
   let cadence: Cadence = $state("monthly");
   let email = $state("");
-  let submitted = $state(false);
+  let status: "idle" | "pending" | "ok" | "error" = $state("idle");
 
-  function submitWaitlist(e: SubmitEvent): void {
+  async function submitWaitlist(e: SubmitEvent): Promise<void> {
     e.preventDefault();
-    submitted = true;
+    if (status === "pending") return;
+    status = "pending";
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      status = res.ok ? "ok" : "error";
+    } catch {
+      status = "error";
+    }
   }
 
   const FEATURES = [
@@ -92,11 +103,14 @@
     <h2>{t("pricing.waitlist.title")}</h2>
     <p class="waitlist-sub">{t("pricing.waitlist.sub")}</p>
 
-    {#if submitted}
+    {#if status === "ok"}
       <p class="waitlist-thanks" role="status">{t("pricing.waitlist.thanks")}</p>
     {:else}
       <form class="waitlist-form" onsubmit={submitWaitlist}>
-        <Field label={t("pricing.waitlist.emailLabel")}>
+        <Field
+          label={t("pricing.waitlist.emailLabel")}
+          error={status === "error" ? t("pricing.waitlist.error") : undefined}
+        >
           {#snippet children()}
             <input
               class="waitlist-input"
@@ -108,7 +122,7 @@
             />
           {/snippet}
         </Field>
-        <Button type="submit">{t("pricing.waitlist.submit")}</Button>
+        <Button type="submit" loading={status === "pending"}>{t("pricing.waitlist.submit")}</Button>
       </form>
     {/if}
   </section>

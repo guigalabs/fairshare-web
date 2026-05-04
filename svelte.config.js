@@ -1,4 +1,4 @@
-import adapter from "@sveltejs/adapter-static";
+import adapter from "@sveltejs/adapter-cloudflare";
 import { relative, sep } from "node:path";
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -13,11 +13,10 @@ const config = {
   },
   kit: {
     adapter: adapter({
-      pages: "out",
-      assets: "out",
-      fallback: "404.html",
-      precompress: false,
-      strict: true,
+      // Prerendered routes are emitted as plain HTML files; the
+      // _worker.js handles only routes that opt out of prerender
+      // (e.g. /api/**, future /app/**).
+      fallback: "404",
     }),
     alias: {
       $engine: "src/lib/engine",

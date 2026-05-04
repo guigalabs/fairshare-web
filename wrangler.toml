@@ -1,0 +1,12 @@
+name = "fairshare-web"
+compatibility_date = "2025-04-01"
+pages_build_output_dir = ".svelte-kit/cloudflare"
+
+# Waitlist signups captured from /pricing before Phase D launches.
+# Replace `id` and `preview_id` with the values returned by:
+#   bunx wrangler kv namespace create WAITLIST_KV
+#   bunx wrangler kv namespace create WAITLIST_KV --preview
+[[kv_namespaces]]
+binding = "WAITLIST_KV"
+id = "REPLACE_WITH_PROD_KV_ID"
+preview_id = "REPLACE_WITH_PREVIEW_KV_ID"
