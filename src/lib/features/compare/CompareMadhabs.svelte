@@ -60,7 +60,7 @@
                   >
                 {/if}
               {:else}
-                <span class="blocked">—</span>
+                <span class="blocked" aria-label="No share">·</span>
               {/if}
             </td>
           {/each}

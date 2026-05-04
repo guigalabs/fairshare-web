@@ -91,7 +91,37 @@ export const caseCreateSchema = z.object({
   advisoryNotes: z.string().max(20_000).nullish(),
 });
 
-export const casePatchSchema = caseCreateSchema.partial();
+/**
+ * Patch-shape of caseCreateSchema, but with all `.default(...)` values
+ * stripped: a PATCH body of `{}` must round-trip to `{}`, not to the
+ * defaults baked into create. Without this, an empty PATCH would silently
+ * overwrite tags / debts / bequests / specialFlags / currency /
+ * funeralExpenses back to their initial values.
+ */
+export const casePatchSchema = z
+  .object({
+    clientId: z.string().nullish(),
+    folderId: z.string().nullish(),
+    deceasedName: z.string().trim().min(1).max(200).optional(),
+    dateOfDeath: z.iso.date().nullish(),
+    placeOfDeath: z.string().trim().max(200).nullish(),
+    jurisdiction: z.string().trim().max(200).nullish(),
+    deceasedIdentifier: z.string().trim().max(200).nullish(),
+    hearingDate: z.iso.date().nullish(),
+    notes: z.string().max(10_000).nullish(),
+    tags: z.array(z.string().trim().max(50)).max(50).optional(),
+    subjectGender: z.enum(["male", "female"] as [Gender, Gender]).optional(),
+    madhhab: z.enum(MADHHABS as readonly [Madhhab, ...Madhhab[]]).optional(),
+    heirs: z.array(heirEntrySchema).min(1, "at_least_one_heir").optional(),
+    currency: z.string().length(3).optional(),
+    grossEstate: moneyStringSchema.nullish(),
+    funeralExpenses: moneyStringSchema.optional(),
+    debts: z.array(debtSchema).optional(),
+    bequests: z.array(bequestSchema).optional(),
+    specialFlags: specialFlagsSchema.optional(),
+    advisoryNotes: z.string().max(20_000).nullish(),
+  })
+  .strict();
 
 export type CaseCreate = z.infer<typeof caseCreateSchema>;
 export type CasePatch = z.infer<typeof casePatchSchema>;

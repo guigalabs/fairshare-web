@@ -26,7 +26,7 @@
       <ul>
         <li>
           <strong>Teaching Fara'id.</strong> Walk students through any family scenario and let the step-by-step
-          explanation show how each share is derived — fixed shares first, then 'awl or radd, then residue.
+          explanation show how each share is derived: fixed shares first, then 'awl or radd, then residue.
         </li>
         <li>
           <strong>Public Q&A.</strong> When a congregant asks "what's the share of two daughters and a
@@ -52,7 +52,7 @@
         </li>
         <li>
           <strong>Plain-language summary.</strong> Each result includes a paragraph explaining the outcome
-          to a non-technical audience — helpful when explaining to a grieving family.
+          to a non-technical audience, which helps when explaining to a grieving family.
         </li>
         <li>
           <strong>Branded PDFs.</strong> If you teach at a madrassa or run a fatwa service, your logo,
@@ -67,8 +67,8 @@
       <p>
         FairShare's calculator is a TypeScript port of the Swift package that powers the iOS app. It
         uses BigInt-backed exact fractions, runs entirely in your browser, and is tested against a
-        corpus of classical scenarios — including the named edge cases. The methodology pages walk
-        through each madhab's rulings in detail.
+        corpus of classical scenarios, including all the named edge cases. The methodology pages
+        walk through each madhab's rulings in detail.
       </p>
 
       <h2>Who's it for</h2>

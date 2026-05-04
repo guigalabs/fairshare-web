@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import type { DB } from "./db/client";
-import { subscriptions } from "./db/schema";
+import { processedWebhookEvents, subscriptions } from "./db/schema";
 
 /**
  * Pin every Stripe API call to the version that gates Managed Payments.
@@ -98,18 +98,52 @@ export async function stripeRequest(args: {
   });
 }
 
+interface StripeSubscriptionItem {
+  // `2025-03-31.basil` moved current_period_{start,end} from the
+  // subscription onto the item. Older API versions still expose them
+  // on the subscription itself, so we read both and prefer the item.
+  current_period_end?: number;
+  plan: { interval: "month" | "year" };
+}
+
 interface StripeSubscription {
   id: string;
   customer: string;
   status: string;
+  /** Pre-`basil` location. Kept for safety on older API versions. */
   current_period_end?: number;
-  items: { data: Array<{ plan: { interval: "month" | "year" } }> };
+  items: { data: StripeSubscriptionItem[] };
   metadata?: { user_id?: string };
 }
 
 interface StripeWebhook {
+  /** `evt_*` — unique per delivered event. Used for idempotency. */
+  id: string;
+  /** Unix seconds the event was created at Stripe. Used to drop stale replays. */
+  created: number;
   type: string;
   data: { object: StripeSubscription };
+}
+
+/**
+ * Mark a Stripe `event.id` as processed. Returns `true` if this is the
+ * first time we've seen it (caller should run the side effect), `false`
+ * if Stripe already redelivered an event we've already handled.
+ *
+ * The PK on `processed_webhook_event.id` makes the INSERT atomic across
+ * concurrent webhook deliveries. Postgres' ON CONFLICT DO NOTHING returns
+ * the inserted row if it was new, nothing if the row already existed.
+ */
+export async function markEventProcessed(
+  db: DB,
+  event: { id: string; type: string },
+): Promise<boolean> {
+  const inserted = await db
+    .insert(processedWebhookEvents)
+    .values({ id: event.id, type: event.type })
+    .onConflictDoNothing({ target: processedWebhookEvents.id })
+    .returning({ id: processedWebhookEvents.id });
+  return inserted.length > 0;
 }
 
 /** Subscription-lifecycle events we react to. */
@@ -128,6 +162,12 @@ export const SUBSCRIPTION_EVENT_TYPES = new Set([
  * Checkout session as `subscription_data[metadata][user_id]` when the
  * Subscribe CTA fires. Stripe propagates that to the subscription.
  *
+ * Out-of-order delivery: Stripe doesn't guarantee strict ordering, so a
+ * delayed `subscription.deleted` for an old subscription can arrive
+ * after a fresh `subscription.created` for a re-subscribing user. We
+ * stamp `lastEventAt` from `event.created` and refuse to overwrite a
+ * row whose stored `lastEventAt` is newer.
+ *
  * 'customer.subscription.deleted' arrives with status 'canceled', so the
  * single upsert path handles it; entitlements.ts decides what status
  * means "still has Pro".
@@ -137,9 +177,13 @@ export async function applySubscriptionEvent(db: DB, event: StripeWebhook): Prom
   const userId = sub.metadata?.user_id;
   if (!userId) return;
 
-  const cadence = sub.items.data[0]?.plan.interval === "year" ? "annual" : "monthly";
+  const firstItem = sub.items.data[0];
+  const cadence = firstItem?.plan.interval === "year" ? "annual" : "monthly";
+  // basil API moved the period end onto the item; older versions kept it on the
+  // subscription. Read item first, fall back to the subscription field.
+  const periodEndUnix = firstItem?.current_period_end ?? sub.current_period_end;
   const currentPeriodEnd =
-    typeof sub.current_period_end === "number" ? new Date(sub.current_period_end * 1000) : null;
+    typeof periodEndUnix === "number" ? new Date(periodEndUnix * 1000) : null;
 
   const values = {
     userId,
@@ -149,16 +193,20 @@ export async function applySubscriptionEvent(db: DB, event: StripeWebhook): Prom
     cadence,
     status: sub.status,
     currentPeriodEnd,
+    lastEventAt: event.created,
     updatedAt: new Date(),
   };
 
-  const existing = await db
-    .select({ id: subscriptions.id })
+  const [existing] = await db
+    .select({ id: subscriptions.id, lastEventAt: subscriptions.lastEventAt })
     .from(subscriptions)
     .where(eq(subscriptions.userId, userId))
     .limit(1);
 
-  if (existing[0]) {
+  if (existing) {
+    // Drop replays / out-of-order deliveries that would overwrite a
+    // newer state with an older one.
+    if (existing.lastEventAt !== null && existing.lastEventAt >= event.created) return;
     await db.update(subscriptions).set(values).where(eq(subscriptions.userId, userId));
   } else {
     await db.insert(subscriptions).values(values);

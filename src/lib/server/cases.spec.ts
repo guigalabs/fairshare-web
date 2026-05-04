@@ -138,4 +138,28 @@ describe("casePatchSchema", () => {
     const r = casePatchSchema.safeParse({ advisoryNotes: "After review with the family..." });
     expect(r.success).toBe(true);
   });
+
+  it("does NOT inject create-schema defaults into an empty PATCH", () => {
+    const r = casePatchSchema.safeParse({});
+    expect(r.success).toBe(true);
+    expect(r.data).toEqual({});
+    expect(r.data?.tags).toBeUndefined();
+    expect(r.data?.debts).toBeUndefined();
+    expect(r.data?.bequests).toBeUndefined();
+    expect(r.data?.specialFlags).toBeUndefined();
+    expect(r.data?.currency).toBeUndefined();
+    expect(r.data?.funeralExpenses).toBeUndefined();
+  });
+
+  it("does NOT inject defaults when patching an unrelated field", () => {
+    const r = casePatchSchema.safeParse({ jurisdiction: "Lahore, Pakistan" });
+    expect(r.success).toBe(true);
+    // The rest of the case must not be silently rewritten back to defaults.
+    expect(Object.keys(r.data ?? {}).sort()).toEqual(["jurisdiction"]);
+  });
+
+  it("rejects unknown keys (.strict prevents silent typos)", () => {
+    const r = casePatchSchema.safeParse({ deceasedNamez: "typo" });
+    expect(r.success).toBe(false);
+  });
 });

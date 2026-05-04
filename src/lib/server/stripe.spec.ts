@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { verifyStripeSignature } from "./stripe";
+import { applySubscriptionEvent, verifyStripeSignature } from "./stripe";
 
 const SECRET = "whsec_test_secret_xyz";
 const NOW = new Date("2026-05-04T12:00:00Z");
@@ -105,5 +105,170 @@ describe("verifyStripeSignature", () => {
         now: NOW,
       }),
     ).toBe(false);
+  });
+});
+
+/** Captures the values written to the subscription upsert without hitting Postgres. */
+function makeFakeDb(existing: { id: string; lastEventAt?: number | null } | null) {
+  const captured: { values?: Record<string, unknown>; mode?: "insert" | "update" } = {};
+  const fakeDb = {
+    select: () => ({
+      from: () => ({
+        where: () => ({ limit: async () => (existing ? [existing] : []) }),
+      }),
+    }),
+    insert: () => ({
+      values: async (v: Record<string, unknown>) => {
+        captured.values = v;
+        captured.mode = "insert";
+      },
+    }),
+    update: () => ({
+      set: (v: Record<string, unknown>) => ({
+        where: async () => {
+          captured.values = v;
+          captured.mode = "update";
+        },
+      }),
+    }),
+  };
+  return { fakeDb, captured };
+}
+
+describe("applySubscriptionEvent — current_period_end resolution", () => {
+  const baseEvent = {
+    id: "evt_test_1",
+    type: "customer.subscription.updated",
+    created: 1_700_000_000,
+    data: {
+      object: {
+        id: "sub_basil_test",
+        customer: "cus_test",
+        status: "active",
+        items: { data: [{ plan: { interval: "month" as const } }] },
+        metadata: { user_id: "user_42" },
+      },
+    },
+  };
+
+  it("reads current_period_end from the subscription item (basil API)", async () => {
+    const { fakeDb, captured } = makeFakeDb(null);
+    const ts = 1_800_000_000; // 2027-01-15
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      {
+        ...baseEvent,
+        data: {
+          object: {
+            ...baseEvent.data.object,
+            items: { data: [{ current_period_end: ts, plan: { interval: "month" } }] },
+          },
+        },
+      },
+    );
+    expect((captured.values?.currentPeriodEnd as Date).getTime()).toBe(ts * 1000);
+  });
+
+  it("falls back to subscription.current_period_end on older API versions", async () => {
+    const { fakeDb, captured } = makeFakeDb(null);
+    const ts = 1_800_000_000;
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      {
+        ...baseEvent,
+        data: {
+          object: {
+            ...baseEvent.data.object,
+            current_period_end: ts,
+          },
+        },
+      } as Parameters<typeof applySubscriptionEvent>[1],
+    );
+    expect((captured.values?.currentPeriodEnd as Date).getTime()).toBe(ts * 1000);
+  });
+
+  it("prefers item-level over subscription-level when both are present", async () => {
+    const { fakeDb, captured } = makeFakeDb(null);
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      {
+        ...baseEvent,
+        data: {
+          object: {
+            ...baseEvent.data.object,
+            current_period_end: 100,
+            items: {
+              data: [{ current_period_end: 200, plan: { interval: "month" } }],
+            },
+          },
+        },
+      } as Parameters<typeof applySubscriptionEvent>[1],
+    );
+    expect((captured.values?.currentPeriodEnd as Date).getTime()).toBe(200_000);
+  });
+
+  it("writes null when neither location has the field", async () => {
+    const { fakeDb, captured } = makeFakeDb(null);
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      baseEvent,
+    );
+    expect(captured.values?.currentPeriodEnd).toBeNull();
+  });
+});
+
+describe("applySubscriptionEvent — out-of-order event guard", () => {
+  const evt = (id: string, created: number, status = "active") => ({
+    id,
+    type: "customer.subscription.updated",
+    created,
+    data: {
+      object: {
+        id: "sub_X",
+        customer: "cus_X",
+        status,
+        items: { data: [{ plan: { interval: "month" as const } }] },
+        metadata: { user_id: "user_X" },
+      },
+    },
+  });
+
+  it("ignores an event whose `created` is older than the row's lastEventAt", async () => {
+    const { fakeDb, captured } = makeFakeDb({ id: "row_1", lastEventAt: 2000 });
+    // Stripe re-delivers an event from before the latest one we applied.
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      evt("evt_old", 1500, "canceled"),
+    );
+    expect(captured.mode).toBeUndefined();
+  });
+
+  it("applies an event whose `created` is newer than the row's lastEventAt", async () => {
+    const { fakeDb, captured } = makeFakeDb({ id: "row_1", lastEventAt: 1000 });
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      evt("evt_new", 2000, "active"),
+    );
+    expect(captured.mode).toBe("update");
+    expect(captured.values?.lastEventAt).toBe(2000);
+  });
+
+  it("applies on first-ever event (lastEventAt is null)", async () => {
+    const { fakeDb, captured } = makeFakeDb({ id: "row_1", lastEventAt: null });
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      evt("evt_first", 1234, "active"),
+    );
+    expect(captured.mode).toBe("update");
+  });
+
+  it("inserts (not updates) when no row exists yet, and stamps lastEventAt", async () => {
+    const { fakeDb, captured } = makeFakeDb(null);
+    await applySubscriptionEvent(
+      fakeDb as unknown as Parameters<typeof applySubscriptionEvent>[0],
+      evt("evt_create", 5000, "active"),
+    );
+    expect(captured.mode).toBe("insert");
+    expect(captured.values?.lastEventAt).toBe(5000);
   });
 });

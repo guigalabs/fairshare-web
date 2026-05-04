@@ -30,7 +30,7 @@
         </li>
         <li>
           <strong>Named heirs.</strong> Capture each son, daughter, and spouse by name and identifier
-          so they appear on the distribution document — not just "sons: 3."
+          so they appear on the distribution document, not just as "sons: 3."
         </li>
         <li>
           <strong>Estate amounts and deductions.</strong> Enter the gross estate, funeral expenses, debts,
@@ -55,9 +55,9 @@
       <p>
         The Fara'id engine is a TypeScript port of the Swift package that powers the FairShare iOS
         app, with BigInt-backed exact fractions and snapshot tests against the iOS reference. The
-        named edge cases — Awl, Radd, Hajb, Umariatan, Musharakah, Grandfather-with-siblings — are
-        all detected automatically. Every share is linked to the verse in Surah An-Nisa that
-        prescribes it (4:11, 4:12, 4:176).
+        named edge cases (Awl, Radd, Hajb, Umariatan, Musharakah, Grandfather-with-siblings) are all
+        detected automatically. Every share is linked to the verse in Surah An-Nisa that prescribes
+        it (4:11, 4:12, 4:176).
       </p>
 
       <h2>For diaspora clients</h2>

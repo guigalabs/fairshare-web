@@ -123,6 +123,18 @@ stripe listen --forward-to localhost:5173/api/stripe/webhook \
 stripe trigger customer.subscription.created
 ```
 
+### Buy me a coffee link
+
+The footer of the free site (everything outside `/app/*`) carries an
+unobtrusive "Buy me a coffee" link. The destination URL is controlled
+by the build-time env var `PUBLIC_BMC_URL`; it defaults to
+`https://www.buymeacoffee.com/guigalabs`. Override it in Cloudflare
+Pages → Settings → Environment variables → Production:
+
+```
+PUBLIC_BMC_URL=https://www.buymeacoffee.com/your-handle
+```
+
 ### Manual Pro grants (pre-Stripe)
 
 Until Stripe is wired up in production, you can hand-grant Pro to a

@@ -17,6 +17,17 @@
     if (pdfBusy) return;
     pdfBusy = true;
     try {
+      const branding = data.branding
+        ? {
+            letterhead: data.branding.letterheadText,
+            customDisclaimerEn: data.branding.customDisclaimerEn,
+            customDisclaimerAr: data.branding.customDisclaimerAr,
+            primaryColor: data.branding.primaryColor,
+            signatureBlock: data.branding.signatureBlock,
+            // Logo bytes are fetched from R2 via /api/branding/logo (deferred);
+            // text-only branding still appears on every PDF.
+          }
+        : undefined;
       const blob = await buildPractitionerPdf({
         case: {
           deceasedName: c.deceasedName,
@@ -39,6 +50,7 @@
         net,
         debtsTotal,
         bequestsTotal,
+        branding,
       });
       const safe = c.deceasedName.replace(/[^a-z0-9-]+/gi, "-").toLowerCase();
       downloadBlob(blob, `fairshare-${safe || "case"}.pdf`);

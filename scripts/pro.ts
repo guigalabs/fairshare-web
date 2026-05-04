@@ -13,7 +13,7 @@
  *   bun run pro:revoke amina@firm.com
  *   bun run pro:list
  */
-import { eq } from "drizzle-orm";
+import { and, eq, like } from "drizzle-orm";
 import { makeDb } from "../src/lib/server/db/client";
 import { subscriptions, users } from "../src/lib/server/db/schema";
 
@@ -72,8 +72,31 @@ async function grant(email: string, cadence: "monthly" | "annual") {
 async function revoke(email: string) {
   const user = await findUserByEmail(email);
   if (!user) die(`no user with email ${email}`);
-  const result = await db.delete(subscriptions).where(eq(subscriptions.userId, user.id));
-  console.log(`revoked Pro from ${email}`, result);
+  // Only delete synthetic rows. Real Stripe-owned subscriptions must be
+  // canceled at Stripe (and the row gets rewritten by the next webhook).
+  // Without this gate, running pro:revoke against a paying customer
+  // would wipe their local record while Stripe keeps charging.
+  const deleted = await db
+    .delete(subscriptions)
+    .where(
+      and(eq(subscriptions.userId, user.id), like(subscriptions.stripeSubscriptionId, "manual_%")),
+    )
+    .returning({ id: subscriptions.id });
+  if (deleted.length === 0) {
+    const [existing] = await db
+      .select({ stripeSubscriptionId: subscriptions.stripeSubscriptionId })
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, user.id))
+      .limit(1);
+    if (existing) {
+      die(
+        `${email} has a real Stripe subscription (${existing.stripeSubscriptionId}); cancel it from the Stripe dashboard or the customer portal instead.`,
+      );
+    }
+    console.log(`no Pro grant to revoke for ${email}`);
+    return;
+  }
+  console.log(`revoked manual Pro from ${email}`);
 }
 
 async function list() {

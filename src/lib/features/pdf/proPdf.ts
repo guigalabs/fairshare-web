@@ -265,7 +265,7 @@ function renderSharesBlock(s: RenderState, input: PractitionerPdfInput): void {
     const persons = (entry as { persons?: { name?: string }[] } | undefined)?.persons;
     let label: string;
     if (persons && persons.length > 0) {
-      label = `${labelFor(share.heirType, share.count)} — ${persons
+      label = `${labelFor(share.heirType, share.count)}: ${persons
         .map((p) => p.name)
         .filter(Boolean)
         .join(", ")}`;

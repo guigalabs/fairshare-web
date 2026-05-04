@@ -81,7 +81,7 @@ export function softwareApplicationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "FairShare — Islamic Inheritance Calculator",
+    name: "FairShare: Islamic Inheritance Calculator",
     applicationCategory: "ReferenceApplication",
     applicationSubCategory: "EducationalApplication",
     operatingSystem: "Web, iOS",

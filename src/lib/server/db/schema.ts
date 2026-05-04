@@ -131,8 +131,25 @@ export const subscriptions = pgTable("subscription", {
   cadence: text("cadence").notNull(),
   status: text("status").notNull(),
   currentPeriodEnd: timestamp("current_period_end", { mode: "date" }),
+  /**
+   * Unix timestamp (seconds) of the most recent Stripe event applied
+   * to this row. Used to ignore out-of-order or replayed events that
+   * would otherwise revert the subscription to an older state.
+   */
+  lastEventAt: integer("last_event_at"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
+/**
+ * Stripe redelivers webhook events on 5xx/timeouts. We record every
+ * processed event id so the webhook handler can short-circuit duplicates
+ * without re-running applySubscriptionEvent.
+ */
+export const processedWebhookEvents = pgTable("processed_webhook_event", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  processedAt: timestamp("processed_at", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const firmBranding = pgTable("firm_branding", {
