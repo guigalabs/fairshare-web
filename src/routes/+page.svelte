@@ -59,7 +59,14 @@
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-inner">
-    <p class="kicker" in:fly={enter(0)}>{t("landing.kicker")}</p>
+    <a class="pro-banner" href="/pricing" in:fly={enter(0)}>
+      <span class="pro-banner-text">{t("landing.pro.banner")}</span>
+      <span class="pro-banner-cta">
+        {t("landing.pro.cta")}
+        <ArrowRight size={14} aria-hidden="true" />
+      </span>
+    </a>
+    <p class="kicker" in:fly={enter(60)}>{t("landing.kicker")}</p>
     <h1 class="hero-title" in:fly={enter(120)}>
       {t("landing.title")}
     </h1>
@@ -197,6 +204,39 @@
     max-width: 760px;
     margin: 0 auto;
     text-align: center;
+  }
+  .pro-banner {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-elevated);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    transition:
+      border-color 0.15s,
+      color 0.15s,
+      transform 0.15s;
+  }
+  .pro-banner:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+    transform: translateY(-1px);
+  }
+  .pro-banner-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
   }
   .kicker {
     font-size: 0.8125rem;
