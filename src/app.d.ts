@@ -21,6 +21,8 @@ declare global {
         WAITLIST_KV: KVNamespace;
         DATABASE_URL: string;
         AUTH_SECRET: string;
+        RESEND_API_KEY: string;
+        AUTH_EMAIL_FROM: string;
       };
     }
   }

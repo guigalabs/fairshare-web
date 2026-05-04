@@ -18,6 +18,10 @@ export default defineConfig({
     { name: "mobile-safari", use: { ...devices["iPhone 14"] } },
   ],
   webServer: {
+    // Tests run against `vite preview`, which serves prerendered routes
+    // only. SSR routes (e.g. /login) run on Cloudflare Pages Functions in
+    // production; cover them with Vitest unit tests + integration runs
+    // against `wrangler pages dev` once that's wired in CI.
     command: "bun run build && bun run preview --port 4173",
     url: "http://localhost:4173",
     reuseExistingServer: !process.env.CI,

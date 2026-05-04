@@ -1,6 +1,6 @@
 <script lang="ts">
   import ArticleHeader from "$lib/components/ArticleHeader.svelte";
-  import { Button, Card, Field } from "$lib/ui";
+  import { Button, Card, Field, TextInput } from "$lib/ui";
   import Check from "@lucide/svelte/icons/check";
   import { t } from "$lib/i18n/index.svelte";
 
@@ -112,8 +112,7 @@
           error={status === "error" ? t("pricing.waitlist.error") : undefined}
         >
           {#snippet children()}
-            <input
-              class="waitlist-input"
+            <TextInput
               type="email"
               required
               autocomplete="email"
@@ -263,20 +262,6 @@
     .waitlist-form :global(.field) {
       flex: 1;
     }
-  }
-  .waitlist-input {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-size: 0.9375rem;
-  }
-  .waitlist-input:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
   }
   .waitlist-thanks {
     margin-top: 1rem;
