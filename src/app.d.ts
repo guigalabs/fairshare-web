@@ -29,10 +29,11 @@ declare global {
         AUTH_EMAIL_FROM: string;
         GOOGLE_CLIENT_ID: string;
         GOOGLE_CLIENT_SECRET: string;
-        PADDLE_WEBHOOK_SECRET: string;
-        PADDLE_PUBLIC_TOKEN: string;
-        PADDLE_PRICE_ID_MONTHLY: string;
-        PADDLE_PRICE_ID_ANNUAL: string;
+        STRIPE_SECRET_KEY: string;
+        STRIPE_PUBLISHABLE_KEY: string;
+        STRIPE_WEBHOOK_SECRET: string;
+        STRIPE_PRICE_ID_MONTHLY: string;
+        STRIPE_PRICE_ID_ANNUAL: string;
       };
     }
   }

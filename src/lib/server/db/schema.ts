@@ -125,8 +125,8 @@ export const subscriptions = pgTable("subscription", {
     .notNull()
     .unique()
     .references(() => users.id, { onDelete: "cascade" }),
-  paddleSubscriptionId: text("paddle_subscription_id").unique(),
-  paddleCustomerId: text("paddle_customer_id"),
+  stripeSubscriptionId: text("stripe_subscription_id").unique(),
+  stripeCustomerId: text("stripe_customer_id"),
   plan: text("plan").notNull().default("pro"),
   cadence: text("cadence").notNull(),
   status: text("status").notNull(),

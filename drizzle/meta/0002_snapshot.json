@@ -1,5 +1,5 @@
 {
-  "id": "bfafb950-740a-47a9-b5de-dba384de1362",
+  "id": "bc6d9191-a91a-49bf-8110-4c0f6c74e224",
   "prevId": "33f3ef9f-b117-47dc-a027-f3e6ab182969",
   "version": "7",
   "dialect": "postgresql",
@@ -559,14 +559,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "paddle_subscription_id": {
-          "name": "paddle_subscription_id",
+        "stripe_subscription_id": {
+          "name": "stripe_subscription_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "paddle_customer_id": {
-          "name": "paddle_customer_id",
+        "stripe_customer_id": {
+          "name": "stripe_customer_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -630,10 +630,10 @@
           "nullsNotDistinct": false,
           "columns": ["user_id"]
         },
-        "subscription_paddle_subscription_id_unique": {
-          "name": "subscription_paddle_subscription_id_unique",
+        "subscription_stripe_subscription_id_unique": {
+          "name": "subscription_stripe_subscription_id_unique",
           "nullsNotDistinct": false,
-          "columns": ["paddle_subscription_id"]
+          "columns": ["stripe_subscription_id"]
         }
       },
       "policies": {},

@@ -68,6 +68,61 @@ bun run db:studio            # browse rows
 Bind `DATABASE_URL` as a Pages secret for the deployed environments
 (`bunx wrangler pages secret put DATABASE_URL`).
 
+## Billing (Stripe Managed Payments)
+
+FairShare Pro is sold via **Stripe Managed Payments**, so Stripe acts as
+the merchant of record. Tax (VAT/sales tax/GST), fraud screening, dispute
+management, and transactional support are all absorbed by Stripe — no
+separate Tax/Radar subscription required.
+
+The integration lives in `src/lib/server/stripe.ts` (webhook signature
+verifier, `applySubscriptionEvent`, and a `stripeRequest` helper that
+pins every call to API version `2025-03-31.basil`). Three endpoints:
+
+- `POST /api/stripe/checkout` — creates a Managed Payments Checkout
+  session and 303-redirects to it. Carries `subscription_data.metadata.user_id`
+  so the lifecycle webhook can bind the subscription to our user row.
+- `POST /api/stripe/portal` — creates a customer-portal session and
+  redirects to it.
+- `POST /api/stripe/webhook` — verifies `Stripe-Signature` and upserts
+  on `customer.subscription.{created,updated,deleted,paused,resumed}`.
+
+### One-time setup
+
+1. **Activate Managed Payments** in the Dashboard:
+   <https://dashboard.stripe.com/settings/managed-payments>
+2. Create the Pro product with two recurring prices (monthly $19, annual
+   $179). Each must use a Managed-Payments-eligible tax code.
+3. Add the production webhook endpoint pointing at
+   `https://fairshare.guigalabs.com/api/stripe/webhook`. Subscribe to
+   `customer.subscription.created`, `customer.subscription.updated`,
+   `customer.subscription.deleted`, `customer.subscription.paused`,
+   `customer.subscription.resumed`.
+4. Bind the secrets to Cloudflare Pages:
+
+   ```bash
+   bunx wrangler pages secret put STRIPE_SECRET_KEY
+   bunx wrangler pages secret put STRIPE_WEBHOOK_SECRET
+   bunx wrangler pages secret put STRIPE_PUBLISHABLE_KEY
+   bunx wrangler pages secret put STRIPE_PRICE_ID_MONTHLY
+   bunx wrangler pages secret put STRIPE_PRICE_ID_ANNUAL
+   ```
+
+### Local webhook dev loop
+
+```bash
+# Terminal 1 — start the dev server
+bun run dev
+
+# Terminal 2 — forward live test-mode events to your local handler.
+# The first line of output is the listen-secret to use as STRIPE_WEBHOOK_SECRET.
+stripe listen --forward-to localhost:5173/api/stripe/webhook \
+  --events customer.subscription.created,customer.subscription.updated,customer.subscription.deleted
+
+# Terminal 3 — fire a test event
+stripe trigger customer.subscription.created
+```
+
 ## See also
 
 - Plan: `~/.claude/plans/twinkly-plotting-torvalds.md`

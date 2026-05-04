@@ -2,7 +2,7 @@ name = "fairshare-web"
 compatibility_date = "2025-04-01"
 pages_build_output_dir = ".svelte-kit/cloudflare"
 
-# Waitlist signups captured from /pricing before Phase D launches.
+# Waitlist signups captured from /pricing.
 # Replace `id` and `preview_id` with the values returned by:
 #   bunx wrangler kv namespace create WAITLIST_KV
 #   bunx wrangler kv namespace create WAITLIST_KV --preview
@@ -10,3 +10,25 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 binding = "WAITLIST_KV"
 id = "REPLACE_WITH_PROD_KV_ID"
 preview_id = "REPLACE_WITH_PREVIEW_KV_ID"
+
+# Stripe Managed Payments handles billing — Stripe is the merchant of
+# record, so global VAT / sales-tax / fraud / disputes are absorbed by
+# Stripe (no separate Tax/Radar subscription).
+#
+# Set as Pages secrets:
+#   wrangler pages secret put STRIPE_SECRET_KEY
+#   wrangler pages secret put STRIPE_WEBHOOK_SECRET
+#   wrangler pages secret put STRIPE_PUBLISHABLE_KEY
+#   wrangler pages secret put STRIPE_PRICE_ID_MONTHLY
+#   wrangler pages secret put STRIPE_PRICE_ID_ANNUAL
+#
+# Webhook URL (paste into Stripe Dashboard → Developers → Webhooks):
+#   https://fairshare.guigalabs.com/api/stripe/webhook
+# Subscribe to: customer.subscription.{created,updated,deleted,paused,resumed}
+#
+# Activate Managed Payments (Dashboard only — no API):
+#   https://dashboard.stripe.com/settings/managed-payments
+# All products must use an MP-eligible tax code; the price IDs above
+# must be on Managed-Payments-eligible products.
+#
+# API version is pinned in src/lib/server/stripe.ts to 2025-03-31.basil.

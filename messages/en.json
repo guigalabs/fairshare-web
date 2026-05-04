@@ -78,6 +78,8 @@
   "pricing.feature.compare": "Side-by-side madhab comparison",
   "pricing.feature.export": "JSON / CSV export",
   "pricing.comingSoon": "Pro launches soon. Join the waitlist to get early access.",
+  "pricing.subscribe": "Subscribe to Pro",
+  "pricing.checkoutNote": "Secure checkout via Stripe. Cancel any time.",
   "pricing.waitlist.title": "Join the waitlist",
   "pricing.waitlist.sub": "We'll email you the day Pro opens to early customers.",
   "pricing.waitlist.emailLabel": "Email",

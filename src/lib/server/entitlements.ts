@@ -10,12 +10,12 @@ export interface SubscriptionRow {
   currentPeriodEnd: Date | null;
   cadence?: string;
   plan?: string;
-  paddleCustomerId?: string | null;
+  stripeCustomerId?: string | null;
 }
 
 /**
  * A user has Pro right now iff:
- *  - status is 'active' (Paddle is happily billing them), OR
+ *  - status is 'active' (Stripe is happily billing them), OR
  *  - status is 'past_due' but the current period hasn't ended yet
  *    (give one billing cycle of grace), OR
  *  - status is 'canceled' but the cancellation hasn't taken effect yet.
@@ -39,7 +39,7 @@ export async function getSubscription(db: DB, userId: string): Promise<Subscript
       currentPeriodEnd: subscriptions.currentPeriodEnd,
       cadence: subscriptions.cadence,
       plan: subscriptions.plan,
-      paddleCustomerId: subscriptions.paddleCustomerId,
+      stripeCustomerId: subscriptions.stripeCustomerId,
     })
     .from(subscriptions)
     .where(eq(subscriptions.userId, userId))

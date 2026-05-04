@@ -26,14 +26,10 @@
         <dd>{new Date(data.subscription.currentPeriodEnd).toLocaleDateString()}</dd>
       {/if}
     </dl>
-    <p class="muted">
-      Manage your card, change cadence, or cancel from the Paddle customer portal.
-    </p>
-    <p class="actions">
-      <Button href="https://customer-portal.paddle.com" target="_blank" rel="noopener">
-        Open billing portal
-      </Button>
-    </p>
+    <p class="muted">Manage your card, change cadence, or cancel from the Stripe billing portal.</p>
+    <form method="POST" action="/api/stripe/portal" class="actions">
+      <Button type="submit">Open billing portal</Button>
+    </form>
   </div>
 {:else}
   <div class="card">

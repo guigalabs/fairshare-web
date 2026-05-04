@@ -94,7 +94,11 @@
           {/each}
         </ul>
 
-        <p class="comingSoon">{t("pricing.comingSoon")}</p>
+        <form method="POST" action="/api/stripe/checkout" class="subscribe">
+          <input type="hidden" name="cadence" value={cadence} />
+          <Button type="submit" fullWidth>{t("pricing.subscribe")}</Button>
+        </form>
+        <p class="comingSoon">{t("pricing.checkoutNote")}</p>
       </div>
     {/snippet}
   </Card>
@@ -226,6 +230,11 @@
     flex-shrink: 0;
   }
 
+  .subscribe {
+    width: 100%;
+    max-width: 18rem;
+    margin: 0.5rem 0 0.25rem;
+  }
   .comingSoon {
     font-size: 0.8125rem;
     color: var(--color-text-muted);

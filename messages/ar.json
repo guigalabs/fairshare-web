@@ -78,6 +78,8 @@
   "pricing.feature.compare": "مقارنة المذاهب جنبًا إلى جنب",
   "pricing.feature.export": "تصدير JSON / CSV",
   "pricing.comingSoon": "Pro قريبًا. سجّل في قائمة الانتظار للحصول على الوصول المبكر.",
+  "pricing.subscribe": "اشترك في Pro",
+  "pricing.checkoutNote": "دفع آمن عبر Stripe. يمكنك الإلغاء في أي وقت.",
   "pricing.waitlist.title": "انضم إلى قائمة الانتظار",
   "pricing.waitlist.sub": "سنراسلك يوم إطلاق Pro للعملاء الأوائل.",
   "pricing.waitlist.emailLabel": "البريد الإلكتروني",

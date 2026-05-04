@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { verifyPaddleSignature } from "./paddle";
+import { verifyStripeSignature } from "./stripe";
 
-const SECRET = "pdl_ntfset_01_test_secret";
+const SECRET = "whsec_test_secret_xyz";
 const NOW = new Date("2026-05-04T12:00:00Z");
 
 async function sign(body: string, ts: number, secret = SECRET): Promise<string> {
@@ -13,21 +13,36 @@ async function sign(body: string, ts: number, secret = SECRET): Promise<string> 
     false,
     ["sign"],
   );
-  const buf = await crypto.subtle.sign("HMAC", key, enc.encode(`${ts}:${body}`));
+  const buf = await crypto.subtle.sign("HMAC", key, enc.encode(`${ts}.${body}`));
   return Array.from(new Uint8Array(buf))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
 
-describe("verifyPaddleSignature", () => {
+describe("verifyStripeSignature", () => {
   it("accepts a freshly-signed payload", async () => {
-    const body = '{"event_type":"subscription.updated"}';
+    const body = '{"type":"customer.subscription.updated"}';
     const ts = Math.floor(NOW.getTime() / 1000);
-    const h1 = await sign(body, ts);
+    const v1 = await sign(body, ts);
     expect(
-      await verifyPaddleSignature({
+      await verifyStripeSignature({
         rawBody: body,
-        signatureHeader: `ts=${ts};h1=${h1}`,
+        signatureHeader: `t=${ts},v1=${v1}`,
+        secret: SECRET,
+        now: NOW,
+      }),
+    ).toBe(true);
+  });
+
+  it("accepts when one of multiple v1 entries matches (Stripe rotates by appending)", async () => {
+    const body = "{}";
+    const ts = Math.floor(NOW.getTime() / 1000);
+    const valid = await sign(body, ts);
+    const header = `t=${ts},v1=${"0".repeat(64)},v1=${valid}`;
+    expect(
+      await verifyStripeSignature({
+        rawBody: body,
+        signatureHeader: header,
         secret: SECRET,
         now: NOW,
       }),
@@ -35,13 +50,12 @@ describe("verifyPaddleSignature", () => {
   });
 
   it("rejects a tampered body", async () => {
-    const body = '{"event_type":"subscription.updated"}';
     const ts = Math.floor(NOW.getTime() / 1000);
-    const h1 = await sign(body, ts);
+    const v1 = await sign("{}", ts);
     expect(
-      await verifyPaddleSignature({
-        rawBody: '{"event_type":"subscription.created"}',
-        signatureHeader: `ts=${ts};h1=${h1}`,
+      await verifyStripeSignature({
+        rawBody: '{"tampered":true}',
+        signatureHeader: `t=${ts},v1=${v1}`,
         secret: SECRET,
         now: NOW,
       }),
@@ -49,13 +63,12 @@ describe("verifyPaddleSignature", () => {
   });
 
   it("rejects a wrong secret", async () => {
-    const body = '{"event_type":"x"}';
     const ts = Math.floor(NOW.getTime() / 1000);
-    const h1 = await sign(body, ts, "wrong-secret");
+    const v1 = await sign("{}", ts, "wrong");
     expect(
-      await verifyPaddleSignature({
-        rawBody: body,
-        signatureHeader: `ts=${ts};h1=${h1}`,
+      await verifyStripeSignature({
+        rawBody: "{}",
+        signatureHeader: `t=${ts},v1=${v1}`,
         secret: SECRET,
         now: NOW,
       }),
@@ -63,13 +76,12 @@ describe("verifyPaddleSignature", () => {
   });
 
   it("rejects timestamps outside the tolerance window", async () => {
-    const body = "{}";
     const tooOld = Math.floor(NOW.getTime() / 1000) - 600;
-    const h1 = await sign(body, tooOld);
+    const v1 = await sign("{}", tooOld);
     expect(
-      await verifyPaddleSignature({
-        rawBody: body,
-        signatureHeader: `ts=${tooOld};h1=${h1}`,
+      await verifyStripeSignature({
+        rawBody: "{}",
+        signatureHeader: `t=${tooOld},v1=${v1}`,
         secret: SECRET,
         now: NOW,
       }),
@@ -78,7 +90,7 @@ describe("verifyPaddleSignature", () => {
 
   it("rejects a malformed signature header", async () => {
     expect(
-      await verifyPaddleSignature({
+      await verifyStripeSignature({
         rawBody: "{}",
         signatureHeader: "garbage",
         secret: SECRET,
@@ -86,9 +98,9 @@ describe("verifyPaddleSignature", () => {
       }),
     ).toBe(false);
     expect(
-      await verifyPaddleSignature({
+      await verifyStripeSignature({
         rawBody: "{}",
-        signatureHeader: "ts=abc;h1=def",
+        signatureHeader: "t=abc,v1=def",
         secret: SECRET,
         now: NOW,
       }),
