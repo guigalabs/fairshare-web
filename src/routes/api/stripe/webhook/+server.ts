@@ -37,13 +37,18 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 
   const db = makeDb(env.DATABASE_URL);
 
-  // Stripe redelivers on 5xx/timeouts. Record the event id atomically;
-  // if it was already processed, return 200 so Stripe stops retrying.
-  const fresh = await markEventProcessed(db, { id: parsed.id, type: parsed.type });
-  if (!fresh) return json({ ok: true, dedup: true });
-
+  // Apply BEFORE marking the event processed. applySubscriptionEvent is
+  // idempotent (its `lastEventAt >= event.created` guard short-circuits
+  // a replayed event), so a transient failure here just means Stripe
+  // retries and the next attempt converges. If we marked first and the
+  // apply threw, Stripe's retry would dedup against the marker, return
+  // 200, and the subscription state would be permanently lost.
+  //
+  // Marking is also gated on the event type so non-subscription events
+  // don't pollute the dedup table.
   if (SUBSCRIPTION_EVENT_TYPES.has(parsed.type)) {
     await applySubscriptionEvent(db, parsed as Parameters<typeof applySubscriptionEvent>[1]);
+    await markEventProcessed(db, { id: parsed.id, type: parsed.type });
   }
 
   return json({ ok: true });

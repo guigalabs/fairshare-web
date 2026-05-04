@@ -1,14 +1,17 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import { env } from "$env/dynamic/public";
   import Coffee from "@lucide/svelte/icons/coffee";
 
   const year = new Date().getFullYear();
 
-  // Configurable via PUBLIC_BMC_URL at build time; defaults to the placeholder
-  // page so the link doesn't 404 in dev.
-  const BMC_URL = import.meta.env.PUBLIC_BMC_URL ?? "https://www.buymeacoffee.com/guigalabs";
+  // SvelteKit routes PUBLIC_* vars through $env/{static,dynamic}/public,
+  // not through Vite's import.meta.env (whose envPrefix only matches
+  // VITE_*). Using dynamic/public so an override in Cloudflare Pages env
+  // settings takes effect without a rebuild.
+  const BMC_URL = env.PUBLIC_BMC_URL || "https://www.buymeacoffee.com/guigalabs";
 
-  // Don't render on the Pro app — the donation prompt belongs only on the
+  // Don't render on the Pro app: the donation prompt belongs only on the
   // free consumer surface (the iOS-mirror calculator and its companion pages).
   const isProApp = $derived(page.url.pathname.startsWith("/app"));
 </script>

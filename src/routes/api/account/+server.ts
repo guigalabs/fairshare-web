@@ -35,18 +35,24 @@ export const DELETE: RequestHandler = async (event) => {
   const apiKey = event.platform?.env?.STRIPE_SECRET_KEY;
 
   if (stripeSubId && !isManual && apiKey) {
-    const res = await stripeRequest({
-      method: "POST",
-      path: `/subscriptions/${stripeSubId}`,
-      apiKey,
-      body: { cancel_at_period_end: "true" },
-    });
-    if (!res.ok && res.status !== 404) {
-      // 404 means the subscription was already gone at Stripe, which is
-      // fine. Any other error is non-recoverable here — the user has
-      // asked to delete their account, and we shouldn't block on Stripe.
-      // Log and proceed; manual reconciliation if it matters.
-      console.error("stripe cancel-at-period-end failed", res.status, await res.text());
+    // Network failures on this fetch (DNS, connection reset, timeout)
+    // throw rather than returning a non-ok Response, so we have to
+    // try/catch as well as branch on res.ok. Either way, the user's
+    // delete request must not be blocked on Stripe — manual
+    // reconciliation is fine if Stripe is briefly unreachable.
+    try {
+      const res = await stripeRequest({
+        method: "POST",
+        path: `/subscriptions/${stripeSubId}`,
+        apiKey,
+        body: { cancel_at_period_end: "true" },
+      });
+      if (!res.ok && res.status !== 404) {
+        // 404 means the subscription was already gone at Stripe.
+        console.error("stripe cancel-at-period-end failed", res.status, await res.text());
+      }
+    } catch (err) {
+      console.error("stripe cancel-at-period-end fetch threw", err);
     }
   }
 
