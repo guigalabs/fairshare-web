@@ -4,6 +4,8 @@
 /// <reference types="vite-plugin-pwa/info" />
 /// <reference types="vite-plugin-pwa/svelte" />
 
+import type { Session } from "@auth/sveltekit";
+
 declare global {
   interface KVNamespace {
     get(key: string): Promise<string | null>;
@@ -13,7 +15,9 @@ declare global {
 
   namespace App {
     // interface Error {}
-    // interface Locals {}
+    interface Locals {
+      auth: () => Promise<Session | null>;
+    }
     // interface PageData {}
     // interface PageState {}
     interface Platform {
