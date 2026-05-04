@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ArticleHeader from "$lib/components/ArticleHeader.svelte";
   import { Button, Card, Field } from "$lib/ui";
   import Check from "@lucide/svelte/icons/check";
   import { t } from "$lib/i18n/index.svelte";
@@ -38,11 +39,12 @@
 </svelte:head>
 
 <section class="container">
-  <header class="head">
-    <p class="kicker">{t("pricing.kicker")}</p>
-    <h1>{t("pricing.title")}</h1>
-    <p class="lede">{t("pricing.lede")}</p>
-  </header>
+  <ArticleHeader
+    align="center"
+    kicker={t("pricing.kicker")}
+    title={t("pricing.title")}
+    lede={t("pricing.lede")}
+  />
 
   <Card>
     {#snippet children()}
@@ -122,29 +124,6 @@
     max-width: 760px;
     margin: 0 auto;
     padding: 2rem 1rem 4rem;
-  }
-  .head {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-  .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-  .head h1 {
-    margin-top: 0.5rem;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .lede {
-    margin: 1rem auto 0;
-    max-width: 36rem;
-    color: var(--color-text-secondary);
-    line-height: 1.55;
   }
 
   .plan {
