@@ -28,6 +28,7 @@
     padding: 0.25rem 0.375rem;
     background: var(--color-bg-elevated);
     gap: 0.25rem;
+    direction: ltr;
   }
   :global(.seg-icon) {
     margin-inline-end: 0.125rem;
