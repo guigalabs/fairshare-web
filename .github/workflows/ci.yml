@@ -66,7 +66,11 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out --project-name=fairshare-web --branch=main --commit-hash=${{ github.sha }}
+          # adapter-cloudflare emits the deployable bundle to
+          # .svelte-kit/cloudflare/. Pre-PR-1 the project used
+          # adapter-static which wrote to ./out; the Pages project
+          # itself is the same.
+          command: pages deploy .svelte-kit/cloudflare --project-name=fairshare-web --branch=main --commit-hash=${{ github.sha }}
       - name: Smoke test live site
         env:
           SHA: ${{ github.sha }}

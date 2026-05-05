@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ArticleHeader from "$lib/components/ArticleHeader.svelte";
   import Prose from "$lib/components/Prose.svelte";
   import { Button } from "$lib/ui";
 </script>
@@ -13,10 +14,7 @@
 </svelte:head>
 
 <section class="container">
-  <header class="head">
-    <p class="kicker">About</p>
-    <h1>FairShare</h1>
-  </header>
+  <ArticleHeader kicker="About" title="FairShare" />
 
   <Prose>
     {#snippet children()}
@@ -80,22 +78,6 @@
     max-width: 760px;
     margin: 0 auto;
     padding: 2rem 1rem 4rem;
-  }
-  .head {
-    margin-bottom: 2rem;
-  }
-  .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-  .head h1 {
-    margin-top: 0.5rem;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
   }
   .cta {
     margin-top: 2.5rem;

@@ -11,7 +11,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       strategies: "generateSW",
       manifest: {
-        name: "FairShare — Islamic Inheritance Calculator",
+        name: "FairShare: Islamic Inheritance Calculator",
         short_name: "FairShare",
         description:
           "Calculate Fara'id (Islamic inheritance) shares with confidence. Five madhabs, full Quranic citations, bilingual EN/AR. Free, offline-first.",
@@ -33,6 +33,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,woff2,ico,png}"],
+        // SSR routes (Pro app, auth, API) must always hit the network so
+        // the user gets fresh entitlement state and signed-in markup.
+        // Without this denylist, Workbox's default navigation handler
+        // serves the precached HTML shell for these paths and bypasses
+        // the auth guard entirely.
+        navigateFallbackDenylist: [/^\/app\//, /^\/api\//, /^\/login/, /^\/auth\//],
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.pathname.startsWith("/methodology/"),

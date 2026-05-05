@@ -14,6 +14,13 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/a11y",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "pro:grant": "bun scripts/pro.ts grant",
+    "pro:revoke": "bun scripts/pro.ts revoke",
+    "pro:list": "bun scripts/pro.ts list",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check ."
   },
@@ -21,13 +28,14 @@
     "@axe-core/playwright": "^4.10.0",
     "@lucide/svelte": "^1.14.0",
     "@playwright/test": "^1.59.0",
-    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/adapter-cloudflare": "^7.2.8",
     "@sveltejs/kit": "^2.57.0",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tailwindcss/vite": "^4.2.2",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.0.0",
     "@vite-pwa/sveltekit": "^1.0.0",
+    "drizzle-kit": "^0.31.10",
     "prettier": "^3.8.1",
     "prettier-plugin-svelte": "^3.5.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
@@ -39,10 +47,16 @@
     "vitest": "^4.0.0"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.11.2",
+    "@auth/sveltekit": "^1.11.2",
     "@inlang/paraglide-js": "^2.0.0",
+    "@neondatabase/serverless": "^1.1.0",
     "@pdf-lib/fontkit": "^1.1.1",
     "canvas-confetti": "^1.9.4",
     "dexie": "^4.0.10",
-    "pdf-lib": "^1.17.1"
+    "drizzle-orm": "^0.45.2",
+    "pdf-lib": "^1.17.1",
+    "resend": "^6.12.2",
+    "zod": "^4.4.3"
   }
 }

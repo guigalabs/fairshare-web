@@ -83,7 +83,7 @@ const COPY: Record<QuestionStep, StepCopy> = {
   },
   hasGrandmothers: {
     prompt: "Are any grandmothers alive?",
-    help: "Maternal or paternal — only those whose intermediate parent has died inherit.",
+    help: "Maternal or paternal. Only those whose intermediate parent has died inherit.",
     trueLabel: "Yes",
     falseLabel: "No",
   },

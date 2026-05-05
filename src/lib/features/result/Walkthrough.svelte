@@ -29,7 +29,7 @@
       <ul>
         {#each result.blockedHeirs as b (b.heirType)}
           <li>
-            <strong>{b.heirType}</strong> blocked by <strong>{b.blockedBy}</strong> — {b.reason}
+            <strong>{b.heirType}</strong> blocked by <strong>{b.blockedBy}</strong>: {b.reason}
           </li>
         {/each}
       </ul>

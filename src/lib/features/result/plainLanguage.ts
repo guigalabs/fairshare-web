@@ -88,8 +88,8 @@ export function generatePlainLanguage(
 
     const text =
       share.count > 1
-        ? `The ${share.count} ${name.toLowerCase()}s share ${pct} (${frac}) — ${reason}.`
-        : `The ${name} receives ${pct} (${frac}) — ${reason}.`;
+        ? `The ${share.count} ${name.toLowerCase()}s share ${pct} (${frac}); ${reason}.`
+        : `The ${name} receives ${pct} (${frac}); ${reason}.`;
 
     sentences.push({
       id: share.heirType,
@@ -103,7 +103,7 @@ export function generatePlainLanguage(
     const blockerName = labelFor(blocked.blockedBy, 1);
     sentences.push({
       id: `blocked_${blocked.heirType}`,
-      text: `The ${name} receives nothing — blocked by the ${blockerName}.`,
+      text: `The ${name} receives nothing, blocked by the ${blockerName}.`,
       color: "var(--color-text-muted)",
     });
   }
