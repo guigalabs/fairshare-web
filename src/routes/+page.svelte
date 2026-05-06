@@ -132,6 +132,50 @@
   </div>
 </section>
 
+<!-- FairShare Pro pitch -->
+<section class="pro-section">
+  <div class="pro-inner">
+    <div class="pro-header">
+      <p class="pro-kicker">{t("landing.pro.kicker")}</p>
+      <h2>{t("landing.pro.heading")}</h2>
+      <p class="pro-lede">{t("landing.pro.lede")}</p>
+    </div>
+
+    <ul class="pro-features">
+      <li>
+        <strong>{t("landing.pro.f1.title")}</strong>
+        <span>{t("landing.pro.f1.body")}</span>
+      </li>
+      <li>
+        <strong>{t("landing.pro.f2.title")}</strong>
+        <span>{t("landing.pro.f2.body")}</span>
+      </li>
+      <li>
+        <strong>{t("landing.pro.f3.title")}</strong>
+        <span>{t("landing.pro.f3.body")}</span>
+      </li>
+      <li>
+        <strong>{t("landing.pro.f4.title")}</strong>
+        <span>{t("landing.pro.f4.body")}</span>
+      </li>
+    </ul>
+
+    <div class="pro-price">
+      <span class="pro-amount">$19<span class="pro-unit">/mo</span></span>
+      <span class="pro-or">{t("landing.pro.orAnnual")}</span>
+    </div>
+
+    <div class="pro-ctas">
+      <Button href="/pricing" size="lg">{t("landing.pro.cta.primary")}</Button>
+      <Button href="/for-attorneys" variant="ghost" size="lg"
+        >{t("landing.pro.cta.attorneys")}</Button
+      >
+      <Button href="/for-scholars" variant="ghost" size="lg">{t("landing.pro.cta.scholars")}</Button
+      >
+    </div>
+  </div>
+</section>
+
 <!-- Methodology preview -->
 <section class="methodology container">
   <div class="section-header">
@@ -343,6 +387,107 @@
   .feature p {
     color: var(--color-text-secondary);
     line-height: 1.55;
+  }
+
+  /* Pro pitch */
+  .pro-section {
+    margin-top: 5rem;
+    padding: 4rem 1rem;
+    background:
+      radial-gradient(
+        ellipse at 70% 0%,
+        color-mix(in srgb, var(--color-accent) 12%, transparent),
+        transparent 60%
+      ),
+      var(--color-bg-elevated);
+    border-block: 1px solid var(--color-border);
+  }
+  .pro-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .pro-header {
+    max-width: 38rem;
+    margin-bottom: 2.5rem;
+  }
+  .pro-kicker {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .pro-header h2 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+  .pro-lede {
+    margin-top: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    font-size: 1.0625rem;
+  }
+  .pro-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 720px) {
+    .pro-features {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem 2rem;
+    }
+  }
+  .pro-features li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-inline-start: 1rem;
+    border-inline-start: 2px solid var(--color-accent);
+  }
+  .pro-features strong {
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .pro-features span {
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    font-size: 0.9375rem;
+  }
+  .pro-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.625rem;
+    margin-bottom: 1.5rem;
+  }
+  .pro-amount {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+  .pro-unit {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-inline-start: 0.25rem;
+  }
+  .pro-or {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+  .pro-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   /* Methodology */

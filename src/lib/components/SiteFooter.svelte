@@ -25,6 +25,7 @@
           <a href="/calculate">Calculate</a>
           <a href="/methodology">Methodology</a>
           <a href="/saved">Saved</a>
+          <a href="/pricing" class="footer-pro">Pro</a>
           <a href="/about">About</a>
           <a href="/disclaimer">Disclaimer</a>
           <a href="/privacy">Privacy</a>
@@ -88,6 +89,10 @@
   }
   .footer-links a:hover {
     color: var(--color-text);
+  }
+  .footer-links a.footer-pro {
+    color: var(--color-accent);
+    font-weight: 500;
   }
   .footer-tip {
     margin-top: 1.5rem;

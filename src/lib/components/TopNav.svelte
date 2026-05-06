@@ -9,6 +9,9 @@
   const isCalc = $derived(path === "/calculate" || path.startsWith("/calculate/"));
   const isMethodology = $derived(path.startsWith("/methodology"));
   const isSaved = $derived(path === "/saved");
+  const isPro = $derived(
+    path === "/pricing" || path.startsWith("/for-attorneys") || path.startsWith("/for-scholars"),
+  );
 </script>
 
 <header class="topnav">
@@ -51,6 +54,14 @@
         aria-current={isSaved ? "page" : undefined}
       >
         {t("nav.saved")}
+      </a>
+      <a
+        href="/pricing"
+        class="nav-link nav-link--pro"
+        class:nav-link--active={isPro}
+        aria-current={isPro ? "page" : undefined}
+      >
+        {t("nav.pro")}
       </a>
     </nav>
 
@@ -122,6 +133,15 @@
   .nav-link--active {
     color: var(--color-text);
     font-weight: 500;
+  }
+  .nav-link--pro {
+    color: var(--color-accent);
+    font-weight: 500;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+  .nav-link--pro:hover {
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   }
   .nav-end {
     display: flex;
