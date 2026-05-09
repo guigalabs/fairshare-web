@@ -58,18 +58,24 @@ export function shareUrlFor(c: InheritanceCase, origin?: string): string {
   return `${base}/result?case=${encodeCase(c)}`;
 }
 
-/** Try Web Share API; fall back to clipboard. Returns "share" | "clipboard" | "error". */
+/** Try Web Share API; fall back to clipboard. Returns "share" | "clipboard" | "cancelled" | "error". */
 export async function share(opts: {
   title: string;
   text: string;
   url: string;
-}): Promise<"share" | "clipboard" | "error"> {
+}): Promise<"share" | "clipboard" | "cancelled" | "error"> {
   if (typeof navigator !== "undefined" && "share" in navigator) {
     try {
       await navigator.share(opts);
       return "share";
-    } catch {
-      // user cancelled, or share rejected — fall through to clipboard
+    } catch (err) {
+      // AbortError = user dismissed the share sheet on purpose. Don't
+      // silently overwrite their clipboard as a "consolation prize".
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return "cancelled";
+      }
+      // Other errors (NotAllowedError, DataError, etc.) — fall through to
+      // clipboard so the user still has a way to share.
     }
   }
   if (typeof navigator !== "undefined" && navigator.clipboard) {

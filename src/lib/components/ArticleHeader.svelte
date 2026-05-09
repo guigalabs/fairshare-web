@@ -23,9 +23,11 @@
 <style>
   .head {
     margin-bottom: 2rem;
+    max-width: 38rem;
   }
   .head.center {
     text-align: center;
+    max-width: none;
   }
   .kicker {
     font-size: 0.75rem;
@@ -37,6 +39,7 @@
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
   }

@@ -37,7 +37,7 @@
   .seg-option {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.5rem;
+    padding: 0.4375rem 0.5rem;
     border-radius: var(--radius-pill);
     font-size: 0.75rem;
     font-weight: 600;

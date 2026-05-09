@@ -13,6 +13,17 @@
   let cadence: Cadence = $state("monthly");
   let email = $state("");
   let status: "idle" | "pending" | "ok" | "error" = $state("idle");
+  let subscribing = $state(false);
+
+  function onSubscribe(e: SubmitEvent): void {
+    // Block re-submits if Stripe is already being contacted; let the first
+    // submission proceed normally so the browser handles the 303 redirect.
+    if (subscribing) {
+      e.preventDefault();
+      return;
+    }
+    subscribing = true;
+  }
 
   async function submitWaitlist(e: SubmitEvent): Promise<void> {
     e.preventDefault();
@@ -47,6 +58,13 @@
     content="FairShare Pro for Islamic estate practitioners. Case folders, named heirs, estate amounts, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
   />
   <link rel="canonical" href="https://fairshare.guigalabs.com/pricing/" />
+  <meta property="og:title" content="FairShare Pro for Practitioners" />
+  <meta
+    property="og:description"
+    content="A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fairshare.guigalabs.com/pricing/" />
 </svelte:head>
 
 <section class="container">
@@ -94,9 +112,16 @@
           {/each}
         </ul>
 
-        <form method="POST" action="/api/stripe/checkout" class="subscribe">
+        <form
+          method="POST"
+          action="/api/stripe/checkout"
+          class="subscribe"
+          onsubmit={onSubscribe}
+        >
           <input type="hidden" name="cadence" value={cadence} />
-          <Button type="submit" fullWidth>{t("pricing.subscribe")}</Button>
+          <Button type="submit" fullWidth loading={subscribing}>
+            {t("pricing.subscribe")}
+          </Button>
         </form>
         <p class="comingSoon">{t("pricing.checkoutNote")}</p>
       </div>
@@ -132,7 +157,7 @@
 
   <div class="cta">
     <Button href="/calculate" variant="secondary">{t("pricing.tryFree")}</Button>
-    <Button href="/methodology" variant="ghost">{t("pricing.readMethodology")}</Button>
+    <Button href="/methodology" variant="secondary">{t("pricing.readMethodology")}</Button>
   </div>
 </section>
 
@@ -159,7 +184,7 @@
     background: var(--color-bg-elevated);
   }
   .cadence-btn {
-    padding: 0.4rem 1rem;
+    padding: 0.5625rem 1rem;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-secondary);

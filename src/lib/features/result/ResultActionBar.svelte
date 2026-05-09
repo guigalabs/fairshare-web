@@ -69,7 +69,9 @@
     });
     if (outcome === "share") toast.show("Shared", "success");
     else if (outcome === "clipboard") toast.show("Link copied to clipboard", "success");
-    else toast.show("Couldn't share. Copy the URL from the address bar.", "error");
+    else if (outcome === "cancelled") {
+      // User dismissed the share sheet — respect that, no toast.
+    } else toast.show("Couldn't share. Copy the URL from the address bar.", "error");
   }
 
   async function onExportPdf() {

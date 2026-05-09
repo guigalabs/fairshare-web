@@ -98,6 +98,7 @@
   }
   .head {
     margin: 1rem 0 2rem;
+    max-width: 38rem;
   }
   .kicker {
     font-size: 0.75rem;

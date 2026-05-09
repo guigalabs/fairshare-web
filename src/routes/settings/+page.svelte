@@ -8,12 +8,23 @@
   import { exportAll, listCalculations } from "$lib/persistence";
 
   let savedCount = $state(0);
+  let clearing = $state(false);
 
   async function refresh() {
     savedCount = (await listCalculations()).length;
   }
 
-  onMount(refresh);
+  onMount(async () => {
+    try {
+      await refresh();
+    } catch {
+      toast.show(
+        "Couldn't read saved calculations. Your browser may have IndexedDB disabled (e.g. private browsing).",
+        "error",
+        6000,
+      );
+    }
+  });
 
   async function exportJson() {
     try {
@@ -37,6 +48,7 @@
   }
 
   async function clearAll() {
+    if (clearing) return;
     if (
       !confirm(
         "Delete ALL saved calculations and reset preferences on this device? This cannot be undone.",
@@ -44,14 +56,22 @@
     ) {
       return;
     }
-    // Wipe IndexedDB + localStorage scoped to FairShare.
-    indexedDB.deleteDatabase("fairshareDB");
-    Object.keys(localStorage)
-      .filter((k) => k.startsWith("fairshare:"))
-      .forEach((k) => localStorage.removeItem(k));
-    sessionStorage.removeItem("fairshare:case");
-    await refresh();
-    toast.show("All local data cleared", "success");
+    clearing = true;
+    try {
+      // Wipe IndexedDB + localStorage scoped to FairShare.
+      indexedDB.deleteDatabase("fairshareDB");
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith("fairshare:"))
+        .forEach((k) => localStorage.removeItem(k));
+      sessionStorage.removeItem("fairshare:case");
+      await refresh();
+      toast.show("All local data cleared", "success");
+    } catch (err) {
+      console.error(err);
+      toast.show("Couldn't clear local data. Try again.", "error");
+    } finally {
+      clearing = false;
+    }
   }
 </script>
 
@@ -98,7 +118,7 @@
             <FileDown size={16} aria-hidden="true" />
             Export all (JSON)
           </Button>
-          <Button variant="destructive" onclick={clearAll} size="sm">
+          <Button variant="destructive" onclick={clearAll} size="sm" loading={clearing}>
             <Trash2 size={16} aria-hidden="true" />
             Clear all data
           </Button>

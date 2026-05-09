@@ -11,6 +11,7 @@
     type SavedCalculation,
   } from "$lib/persistence";
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
+  import { i18n } from "$lib/i18n/index.svelte";
 
   let loading = $state(true);
   let rows = $state<SavedCalculation[]>([]);
@@ -24,20 +25,35 @@
   onMount(async () => {
     try {
       await refresh();
+    } catch {
+      toast.show(
+        "Couldn't load saved calculations. Your browser may have IndexedDB disabled (e.g. private browsing).",
+        "error",
+        6000,
+      );
     } finally {
       loading = false;
     }
   });
 
   async function open(row: SavedCalculation) {
-    sessionStorage.setItem(
-      "fairshare:case",
-      JSON.stringify({
-        subjectGender: row.subjectGender,
-        madhhab: row.madhhab,
-        heirs: row.heirs,
-      }),
-    );
+    try {
+      sessionStorage.setItem(
+        "fairshare:case",
+        JSON.stringify({
+          subjectGender: row.subjectGender,
+          madhhab: row.madhhab,
+          heirs: row.heirs,
+        }),
+      );
+    } catch {
+      toast.show(
+        "Couldn't open this calculation. Your browser may have storage disabled (e.g. private browsing).",
+        "error",
+        6000,
+      );
+      return;
+    }
     await goto("/result");
   }
 
@@ -55,15 +71,28 @@
 
   async function commitEdit() {
     if (editingId === null) return;
-    await renameCalculation(editingId, editingName.trim() || "Untitled");
-    editingId = null;
-    editingName = "";
-    await refresh();
+    try {
+      await renameCalculation(editingId, editingName.trim() || "Untitled");
+      await refresh();
+      toast.show("Renamed", "success");
+    } catch {
+      toast.show("Couldn't rename. Try again.", "error");
+    } finally {
+      editingId = null;
+      editingName = "";
+    }
   }
 
   function cancelEdit() {
     editingId = null;
     editingName = "";
+  }
+
+  // Focus and select the rename input the moment it appears, so the user
+  // can click "Rename" and immediately start typing without a second click.
+  function focusAndSelect(node: HTMLInputElement) {
+    node.focus();
+    node.select();
   }
 </script>
 
@@ -79,7 +108,7 @@
   </header>
 
   {#if loading}
-    <p class="hint">Loading…</p>
+    <p class="hint" role="status">Loading…</p>
   {:else if rows.length === 0}
     <EmptyState
       title="No saved calculations yet"
@@ -101,6 +130,7 @@
                     <input
                       class="rename"
                       bind:value={editingName}
+                      use:focusAndSelect
                       onkeydown={(e) => {
                         if (e.key === "Enter") commitEdit();
                         if (e.key === "Escape") cancelEdit();
@@ -113,7 +143,7 @@
                   {/if}
                   <p class="row-meta">
                     {row.madhhab} · {row.subjectGender}
-                    · {new Date(row.updatedAt).toLocaleDateString("en")}
+                    · {new Date(row.updatedAt).toLocaleDateString(i18n.current)}
                   </p>
                   <p class="row-heirs">
                     {row.heirs.map((h) => labelFor(h.type, h.count)).join(" · ")}
@@ -154,6 +184,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    line-height: 1.15;
   }
   .head p {
     margin-top: 0.5rem;

@@ -1,11 +1,19 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
   import { toast } from "./toast.svelte";
+
+  // Svelte transitions are JS-driven and bypass the global CSS reduced-motion
+  // override. Toasts fire on every save/share/PDF action, so honoring the
+  // user's preference here matters.
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const toastFly = reducedMotion ? { y: 0, duration: 0 } : { y: 16, duration: 200 };
 </script>
 
 <div class="toast-host" aria-live="polite" aria-atomic="true">
   {#each toast.entries as t (t.id)}
-    <div class="toast toast--{t.tone}" role="status" transition:fly={{ y: 16, duration: 200 }}>
+    <div class="toast toast--{t.tone}" role="status" transition:fly={toastFly}>
       {t.message}
     </div>
   {/each}

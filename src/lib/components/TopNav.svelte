@@ -18,11 +18,12 @@
   <div class="topnav-inner">
     <a href="/" class="brand" aria-label={t("nav.brand")}>
       <img
-        src="/icons/pwa-192.png"
+        src="/icons/brand-64.png"
         alt=""
         class="brand-mark"
         width="32"
         height="32"
+        decoding="async"
         aria-hidden="true"
       />
       <span class="brand-name">{t("nav.brand")}</span>
@@ -77,6 +78,7 @@
     top: 0;
     z-index: 30;
     background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
     backdrop-filter: saturate(180%) blur(10px);
     border-bottom: 1px solid var(--color-border);
   }
@@ -94,6 +96,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    padding-block: 1rem;
     text-decoration: none;
     color: var(--color-text);
   }

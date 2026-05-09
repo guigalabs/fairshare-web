@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import { Button, Card, Banner, Counter } from "$lib/ui";
+  import { Button, Card, Banner, Counter, toast } from "$lib/ui";
   import ChevronLeft from "@lucide/svelte/icons/chevron-left";
   import ChevronRight from "@lucide/svelte/icons/chevron-right";
   import RotateCcw from "@lucide/svelte/icons/rotate-ccw";
@@ -11,10 +12,35 @@
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
 
-  const runner = new QuestionnaireRunner();
+  // Persist the user's school of thought across sessions. Practitioners who
+  // specialize in one school shouldn't have to re-pick on every visit. Follows
+  // the same localStorage pattern as the i18n module. A `?madhhab=` URL param
+  // takes precedence so a colleague-shared link can pin the right school.
+  const MADHHAB_STORAGE_KEY = "fairshare:madhhab";
+  function readInitialMadhhab(): Madhhab {
+    if (!browser) return "general";
+    const fromUrl = new URLSearchParams(window.location.search).get("madhhab");
+    if (fromUrl && MADHHABS.includes(fromUrl as Madhhab)) return fromUrl as Madhhab;
+    const stored = localStorage.getItem(MADHHAB_STORAGE_KEY);
+    return MADHHABS.includes(stored as Madhhab) ? (stored as Madhhab) : "general";
+  }
+
+  const initialMadhhab = readInitialMadhhab();
+  let madhhab = $state<Madhhab>(initialMadhhab);
+  const runner = new QuestionnaireRunner(initialMadhhab);
+
+  // Svelte transitions are JS-driven and bypass the global CSS reduced-motion
+  // override. The step `fly` runs on every question advance (10-30× per case),
+  // so honoring the user's preference here matters more than on a single page
+  // hero.
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stepEnter = reducedMotion
+    ? { y: 0, duration: 0, easing: cubicOut }
+    : { y: 12, duration: 240, easing: cubicOut };
 
   let counterValue = $state(0);
-  let madhhab = $state<Madhhab>("general");
 
   const step = $derived(runner.step);
   const copy = $derived(copyFor(step));
@@ -24,6 +50,7 @@
 
   function changeMadhhab(value: Madhhab) {
     madhhab = value;
+    if (browser) localStorage.setItem(MADHHAB_STORAGE_KEY, value);
     runner.reset(value);
     counterValue = 0;
   }
@@ -51,17 +78,28 @@
 
   function calculate() {
     // The result page reads from sessionStorage in this phase. Shareable URLs
-    // come in B6.
+    // come in B6. Wrap the write — Safari Private Browsing pre-iOS-16 has a
+    // sessionStorage quota of 0, so setItem throws QuotaExceededError and the
+    // user would otherwise land on /result's empty state with no explanation.
     if (typeof sessionStorage !== "undefined") {
       const c = runner.buildCase();
-      sessionStorage.setItem(
-        "fairshare:case",
-        JSON.stringify({
-          subjectGender: c.subjectGender,
-          heirs: c.heirs,
-          madhhab: c.madhhab,
-        }),
-      );
+      try {
+        sessionStorage.setItem(
+          "fairshare:case",
+          JSON.stringify({
+            subjectGender: c.subjectGender,
+            heirs: c.heirs,
+            madhhab: c.madhhab,
+          }),
+        );
+      } catch {
+        toast.show(
+          "Couldn't save your inputs. Your browser may have storage disabled (e.g. private browsing).",
+          "error",
+          6000,
+        );
+        return;
+      }
     }
     goto("/result");
   }
@@ -73,11 +111,12 @@
     name="description"
     content="Walk through a short questionnaire to compute Islamic inheritance shares for any family."
   />
+  <link rel="canonical" href="https://fairshare.guigalabs.com/calculate/" />
 </svelte:head>
 
 <section class="container">
   <header class="head">
-    <p class="kicker">Step {Math.min(progress, 99)}%</p>
+    <p class="kicker" aria-live="polite">Step {Math.min(progress, 99)}%</p>
     <h1>Calculate</h1>
     <div
       class="progress"
@@ -90,13 +129,14 @@
       <div class="progress-bar" style="--p: {progress}%"></div>
     </div>
     <div class="madhhab-row">
-      <span class="madhhab-label">School:</span>
-      <div class="madhhab-pills">
+      <span class="madhhab-label" id="madhhab-label">School:</span>
+      <div class="madhhab-pills" role="group" aria-labelledby="madhhab-label">
         {#each MADHHABS as m (m)}
           <button
             type="button"
             class="madhhab-pill"
             class:madhhab-pill--active={madhhab === m}
+            aria-pressed={madhhab === m}
             onclick={() => changeMadhhab(m)}
           >
             {m === "shafii" ? "Shafi'i" : m[0].toUpperCase() + m.slice(1)}
@@ -115,7 +155,7 @@
   {/if}
 
   {#key step}
-    <div class="step" in:fly={{ y: 12, duration: 240, easing: cubicOut }}>
+    <div class="step" in:fly={stepEnter}>
       <Card>
         {#snippet children()}
           <h2 class="prompt">{copy.prompt}</h2>
@@ -202,6 +242,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    line-height: 1.15;
   }
   .progress {
     margin-top: 1rem;
@@ -233,7 +274,7 @@
     gap: 0.25rem;
   }
   .madhhab-pill {
-    padding: 0.25rem 0.625rem;
+    padding: 0.4375rem 0.6875rem;
     border-radius: var(--radius-pill);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);

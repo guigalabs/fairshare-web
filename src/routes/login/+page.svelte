@@ -2,6 +2,25 @@
   import ArticleHeader from "$lib/components/ArticleHeader.svelte";
   import { Button, Field, TextInput } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
+
+  let emailSubmitting = $state(false);
+  let googleSubmitting = $state(false);
+
+  function onEmailSubmit(e: SubmitEvent): void {
+    if (emailSubmitting || googleSubmitting) {
+      e.preventDefault();
+      return;
+    }
+    emailSubmitting = true;
+  }
+
+  function onGoogleSubmit(e: SubmitEvent): void {
+    if (emailSubmitting || googleSubmitting) {
+      e.preventDefault();
+      return;
+    }
+    googleSubmitting = true;
+  }
 </script>
 
 <svelte:head>
@@ -17,7 +36,7 @@
     lede={t("login.lede")}
   />
 
-  <form class="form" method="POST" action="?/default">
+  <form class="form" method="POST" action="?/default" onsubmit={onEmailSubmit}>
     <input type="hidden" name="providerId" value="resend" />
     <input type="hidden" name="callbackUrl" value="/app" />
 
@@ -33,17 +52,19 @@
       {/snippet}
     </Field>
 
-    <Button type="submit" fullWidth>{t("login.submit")}</Button>
+    <Button type="submit" fullWidth loading={emailSubmitting}>{t("login.submit")}</Button>
   </form>
 
   <div class="divider" role="separator" aria-orientation="horizontal">
     <span>{t("login.or")}</span>
   </div>
 
-  <form class="form" method="POST" action="?/default">
+  <form class="form" method="POST" action="?/default" onsubmit={onGoogleSubmit}>
     <input type="hidden" name="providerId" value="google" />
     <input type="hidden" name="callbackUrl" value="/app" />
-    <Button type="submit" variant="secondary" fullWidth>{t("login.google")}</Button>
+    <Button type="submit" variant="secondary" fullWidth loading={googleSubmitting}>
+      {t("login.google")}
+    </Button>
   </form>
 
   <p class="legal">{t("login.legal")}</p>

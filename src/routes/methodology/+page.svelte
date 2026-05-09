@@ -28,7 +28,7 @@
 <section class="container">
   <header class="head">
     <p class="kicker">Methodology</p>
-    <h1>Islamic inheritance, in 13 short reads.</h1>
+    <h1>Islamic inheritance, in {METHODOLOGY.length} short reads.</h1>
     <p class="lede">
       Each page covers one school, rule, or special case: the source verses, the worked examples,
       and where the schools diverge. Useful before you trust any calculator output.
@@ -79,6 +79,7 @@
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -86,6 +87,7 @@
     margin-top: 1rem;
     color: var(--color-text-secondary);
     line-height: 1.55;
+    font-size: 1.0625rem;
   }
   .group {
     margin-top: 2.5rem;
@@ -120,10 +122,15 @@
     color: inherit;
     display: block;
     height: 100%;
+    border-radius: var(--radius-lg);
     transition: transform 0.15s;
   }
   .card-link:hover {
     transform: translateY(-2px);
+  }
+  .card-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
   .entry-title {
     font-size: 1.0625rem;

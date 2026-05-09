@@ -15,29 +15,40 @@ import { decodeCase } from "$lib/share";
 
 const STORAGE_KEY = "fairshare:case";
 
-function readStoredCase(): InheritanceCase | null {
-  if (!browser) return null;
+interface ReadResult {
+  case: InheritanceCase | null;
+  /** True only when the URL carried a `?case=` token that we couldn't decode. */
+  linkError: boolean;
+}
+
+function readStoredCase(): ReadResult {
+  if (!browser) return { case: null, linkError: false };
   // URL takes precedence so shareable links just work.
   const params = new URLSearchParams(window.location.search);
   const token = params.get("case");
   if (token) {
     const fromUrl = decodeCase(token);
-    if (fromUrl) return fromUrl;
+    if (fromUrl) return { case: fromUrl, linkError: false };
+    // Token present but unreadable — likely truncated by SMS/Twitter/WhatsApp.
+    // Don't fall through silently; surface it to the user.
+    return { case: null, linkError: true };
   }
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
+    if (!raw) return { case: null, linkError: false };
     const parsed = JSON.parse(raw) as InheritanceCase;
-    if (!parsed.heirs || !Array.isArray(parsed.heirs)) return null;
-    return parsed;
+    if (!parsed.heirs || !Array.isArray(parsed.heirs)) return { case: null, linkError: false };
+    return { case: parsed, linkError: false };
   } catch {
-    return null;
+    return { case: null, linkError: false };
   }
 }
 
 export class ResultStore {
   // Original case (URL or sessionStorage). Never mutated.
   baseCase = $state<InheritanceCase | null>(null);
+  // True if the visitor arrived with a `?case=` token we couldn't decode.
+  linkError = $state(false);
   // Set of heir types the user has toggled OFF in what-if mode.
   disabled = $state<Set<HeirType>>(new Set());
 
@@ -59,7 +70,9 @@ export class ResultStore {
   whatIfActive = $derived(this.disabled.size > 0);
 
   load(): void {
-    this.baseCase = readStoredCase();
+    const { case: c, linkError } = readStoredCase();
+    this.baseCase = c;
+    this.linkError = linkError;
     this.disabled = new Set();
   }
 

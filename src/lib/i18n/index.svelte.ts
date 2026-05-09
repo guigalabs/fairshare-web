@@ -21,7 +21,13 @@ const STORAGE_KEY = "fairshare:locale";
 function readStored(): Locale {
   if (!browser) return "en";
   const v = localStorage.getItem(STORAGE_KEY);
-  return v === "ar" ? "ar" : "en";
+  if (v === "ar" || v === "en") return v;
+  // No saved choice — respect the browser's language preference on first visit.
+  // navigator.language returns tags like "ar", "ar-EG", "ar-SA", etc.
+  if (typeof navigator !== "undefined" && navigator.language?.toLowerCase().startsWith("ar")) {
+    return "ar";
+  }
+  return "en";
 }
 
 function applyToDocument(locale: Locale): void {

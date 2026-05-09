@@ -53,14 +53,14 @@
         </div>
 
         <div class="text">
-          <span class="name">{s.name}</span>
-          <span class="desc">{s.description}</span>
+          <span class="name">{t(s.nameKey)}</span>
+          <span class="desc">{t(s.descKey)}</span>
         </div>
 
         <span class="pill">
           <Users size={11} aria-hidden="true" />
           {count}
-          {count === 1 ? "heir" : "heirs"}
+          {t(count === 1 ? "scenarios.heir" : "scenarios.heirs")}
         </span>
       </a>
     {/each}

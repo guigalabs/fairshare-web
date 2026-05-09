@@ -21,7 +21,10 @@
 
 <style>
   main {
+    /* 100vh fallback for browsers without dvh; 100dvh is the modern fix
+     * for iOS Safari's chrome-collapsed viewport quirk. */
     min-height: calc(100vh - 60px);
+    min-height: calc(100dvh - 60px);
   }
   /* Accessibility: visible skip-link on focus, hidden otherwise. */
   .skip {

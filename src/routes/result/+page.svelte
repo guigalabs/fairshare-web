@@ -26,6 +26,14 @@
 
 <section class="container">
   {#if !store.baseCase}
+    {#if store.linkError}
+      <Banner tone="warning">
+        {#snippet children()}
+          <strong>We couldn't read that shared link.</strong> The URL may have been truncated when
+          it was sent. Ask the sender to share again, or start a fresh calculation below.
+        {/snippet}
+      </Banner>
+    {/if}
     <EmptyState
       title="No calculation in progress"
       description="Start a new calculation to see a result here."
@@ -114,6 +122,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    line-height: 1.15;
     text-transform: capitalize;
   }
   .subject-meta {
