@@ -50,8 +50,7 @@
         // The selection still applies to this session; we just can't persist it.
       }
     }
-    runner.reset(value);
-    counterValue = 0;
+    runner.setMadhhab(value);
   }
 
   function answerYes() {

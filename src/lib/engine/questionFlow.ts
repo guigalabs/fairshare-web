@@ -171,6 +171,34 @@ export class QuestionFlow {
     return inheritanceCase(this.subjectGender ?? "male", this.collectedHeirs, this.madhhab);
   }
 
+  /**
+   * Build a new flow under a different madhhab while preserving every answer
+   * the user has already given. The questionnaire collects family facts
+   * (gender, who's alive, counts) that are valid across all schools; only the
+   * `shouldAskSiblings` branch in `computeNextStep` actually depends on
+   * madhhab. Switching mid-flow used to wipe progress; this preserves it.
+   */
+  cloneWithMadhhab(newMadhhab: Madhhab): QuestionFlow {
+    const next = new QuestionFlow(newMadhhab);
+    next.currentStep = this.currentStep;
+    next.isForSelf = this.isForSelf;
+    next.subjectGender = this.subjectGender;
+    next.collectedHeirs = [...this.collectedHeirs];
+    next.hasSpouseAnswer = this.hasSpouseAnswer;
+    next.hasChildrenAnswer = this.hasChildrenAnswer;
+    next.sonCount = this.sonCount;
+    next.daughterCount = this.daughterCount;
+    next.hasGrandchildrenThroughSonsAnswer = this.hasGrandchildrenThroughSonsAnswer;
+    next.fatherAlive = this.fatherAlive;
+    next.motherAlive = this.motherAlive;
+    next.grandfatherAlive = this.grandfatherAlive;
+    next.hasGrandmothersAnswer = this.hasGrandmothersAnswer;
+    next.hasFullSiblingsAnswer = this.hasFullSiblingsAnswer;
+    next.hasPaternalHalfSiblingsAnswer = this.hasPaternalHalfSiblingsAnswer;
+    next.hasMaternalHalfSiblingsAnswer = this.hasMaternalHalfSiblingsAnswer;
+    return next;
+  }
+
   // MARK: - Reset
 
   reset(): void {

@@ -34,6 +34,17 @@ export class QuestionnaireRunner {
     this.snapshot();
   }
 
+  /**
+   * Switch madhhab without losing answers. Most steps are identical across
+   * schools, so the user stays where they were. The history stack is kept
+   * intact — Back replays under the new madhhab, which is the desired behavior.
+   */
+  setMadhhab(madhhab: Madhhab): void {
+    if (this.flow.madhhab === madhhab) return;
+    this.flow = this.flow.cloneWithMadhhab(madhhab);
+    this.snapshot();
+  }
+
   private snapshot(): void {
     this.step = this.flow.currentStep;
     this.heirs = [...this.flow.collectedHeirs];
