@@ -45,6 +45,33 @@
     { stat: "EN/AR", labelKey: "landing.trust.bilingual" },
     { stat: "100%", labelKey: "landing.trust.offline" },
   ];
+
+  type ProAudience = "practitioners" | "attorneys" | "scholars";
+  let proAudience = $state<ProAudience>("practitioners");
+
+  const PRO_TABS: Record<ProAudience, { headingKey: string; ledeKey: string; prefix: string }> = {
+    practitioners: {
+      headingKey: "landing.pro.heading",
+      ledeKey: "landing.pro.lede",
+      prefix: "landing.pro",
+    },
+    attorneys: {
+      headingKey: "landing.pro.attorneys.heading",
+      ledeKey: "landing.pro.attorneys.lede",
+      prefix: "landing.pro.attorneys",
+    },
+    scholars: {
+      headingKey: "landing.pro.scholars.heading",
+      ledeKey: "landing.pro.scholars.lede",
+      prefix: "landing.pro.scholars",
+    },
+  };
+
+  const proTab = $derived(PRO_TABS[proAudience]);
+
+  function toggleProAudience(target: Exclude<ProAudience, "practitioners">) {
+    proAudience = proAudience === target ? "practitioners" : target;
+  }
 </script>
 
 <svelte:head>
@@ -147,26 +174,26 @@
   <div class="pro-inner">
     <div class="pro-header">
       <p class="pro-kicker">{t("landing.pro.kicker")}</p>
-      <h2>{t("landing.pro.heading")}</h2>
-      <p class="pro-lede">{t("landing.pro.lede")}</p>
+      <h2>{t(proTab.headingKey)}</h2>
+      <p class="pro-lede">{t(proTab.ledeKey)}</p>
     </div>
 
     <ul class="pro-features">
       <li>
-        <strong>{t("landing.pro.f1.title")}</strong>
-        <span>{t("landing.pro.f1.body")}</span>
+        <strong>{t(`${proTab.prefix}.f1.title`)}</strong>
+        <span>{t(`${proTab.prefix}.f1.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f2.title")}</strong>
-        <span>{t("landing.pro.f2.body")}</span>
+        <strong>{t(`${proTab.prefix}.f2.title`)}</strong>
+        <span>{t(`${proTab.prefix}.f2.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f3.title")}</strong>
-        <span>{t("landing.pro.f3.body")}</span>
+        <strong>{t(`${proTab.prefix}.f3.title`)}</strong>
+        <span>{t(`${proTab.prefix}.f3.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f4.title")}</strong>
-        <span>{t("landing.pro.f4.body")}</span>
+        <strong>{t(`${proTab.prefix}.f4.title`)}</strong>
+        <span>{t(`${proTab.prefix}.f4.body`)}</span>
       </li>
     </ul>
 
@@ -175,15 +202,28 @@
       <span class="pro-or">{t("landing.pro.orAnnual")}</span>
     </div>
 
-    <div class="pro-ctas">
+    <div class="pro-ctas" role="group" aria-label={t("landing.pro.tabsAria")}>
       <Button href="/pricing" size="lg" data-sveltekit-preload-code="viewport">
         {t("landing.pro.cta.primary")}
       </Button>
-      <Button href="/for-attorneys" variant="ghost" size="lg"
-        >{t("landing.pro.cta.attorneys")}</Button
+      <button
+        type="button"
+        class="pro-tab"
+        class:pro-tab--active={proAudience === "attorneys"}
+        aria-pressed={proAudience === "attorneys"}
+        onclick={() => toggleProAudience("attorneys")}
       >
-      <Button href="/for-scholars" variant="ghost" size="lg">{t("landing.pro.cta.scholars")}</Button
+        {t("landing.pro.cta.attorneys")}
+      </button>
+      <button
+        type="button"
+        class="pro-tab"
+        class:pro-tab--active={proAudience === "scholars"}
+        aria-pressed={proAudience === "scholars"}
+        onclick={() => toggleProAudience("scholars")}
       >
+        {t("landing.pro.cta.scholars")}
+      </button>
     </div>
   </div>
 </section>
@@ -505,7 +545,38 @@
   .pro-ctas {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.75rem;
+  }
+  .pro-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .pro-tab:hover {
+    color: var(--color-text);
+    background: var(--color-bg-elevated);
+  }
+  .pro-tab:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .pro-tab--active {
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
   }
 
   /* Methodology */
