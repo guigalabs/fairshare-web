@@ -6,6 +6,7 @@
   import type { CalculationResult, Gender } from "$engine";
   import { generatePlainLanguage, specialRuleNote } from "./plainLanguage";
   import { reducedMotion } from "$lib/ui/motion";
+  import { t } from "$lib/i18n/index.svelte";
 
   interface Props {
     result: CalculationResult;
@@ -38,7 +39,7 @@
     onclick={() => (expanded = !expanded)}
   >
     <Quote size={14} aria-hidden="true" />
-    <span id="plain-language-title">In plain words</span>
+    <span id="plain-language-title">{t("plain.title")}</span>
     <span class="chevron" class:open={expanded} aria-hidden="true">
       <ChevronDown size={14} />
     </span>

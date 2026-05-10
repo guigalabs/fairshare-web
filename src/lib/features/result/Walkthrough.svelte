@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { CalculationResult } from "$engine";
+  import { t } from "$lib/i18n/index.svelte";
+  import { labelFor } from "$lib/features/questionnaire/heirLabels";
 
   let { result }: { result: CalculationResult } = $props();
   let open = $state(false);
@@ -7,8 +9,10 @@
 
 <details class="walk" bind:open>
   <summary>
-    <span class="walk-title">How was this calculated?</span>
-    <span class="walk-toggle" aria-hidden="true">{open ? "Hide" : "Show"}</span>
+    <span class="walk-title">{t("walkthrough.title")}</span>
+    <span class="walk-toggle" aria-hidden="true">
+      {open ? t("walkthrough.hide") : t("walkthrough.show")}
+    </span>
   </summary>
 
   <ol class="steps">
@@ -17,7 +21,7 @@
         <span class="rule">{step.ruleApplied}</span>
         <p class="desc">{step.description}</p>
         {#if step.verseKey}
-          <p class="verse">An-Nisa {step.verseKey}</p>
+          <p class="verse">{t("walkthrough.surah", { verse: step.verseKey })}</p>
         {/if}
       </li>
     {/each}
@@ -25,11 +29,15 @@
 
   {#if result.blockedHeirs.length > 0}
     <div class="blocked">
-      <h4>Blocked heirs</h4>
+      <h4>{t("walkthrough.blocked")}</h4>
       <ul>
         {#each result.blockedHeirs as b (b.heirType)}
           <li>
-            <strong>{b.heirType}</strong> blocked by <strong>{b.blockedBy}</strong>: {b.reason}
+            {t("walkthrough.blockedLine", {
+              heir: labelFor(b.heirType, 1),
+              by: labelFor(b.blockedBy, 1),
+              reason: b.reason,
+            })}
           </li>
         {/each}
       </ul>
@@ -37,14 +45,14 @@
   {/if}
 
   <div class="meta">
-    <p>Common denominator: <strong>{result.commonDenominator.toString()}</strong></p>
+    <p>{t("walkthrough.commonDenom", { value: result.commonDenominator.toString() })}</p>
     {#if result.adjustedDenominator}
-      <p>Adjusted denominator: <strong>{result.adjustedDenominator.toString()}</strong></p>
+      <p>{t("walkthrough.adjustedDenom", { value: result.adjustedDenominator.toString() })}</p>
     {/if}
-    {#if result.appliedAwl}<p class="flag">Awl applied (proportional reduction)</p>{/if}
-    {#if result.appliedRadd}<p class="flag">Radd applied (surplus redistribution)</p>{/if}
+    {#if result.appliedAwl}<p class="flag">{t("walkthrough.awl")}</p>{/if}
+    {#if result.appliedRadd}<p class="flag">{t("walkthrough.radd")}</p>{/if}
     {#if result.appliedSpecialCase}
-      <p class="flag">Special case: <strong>{result.appliedSpecialCase}</strong></p>
+      <p class="flag">{t("walkthrough.special", { name: result.appliedSpecialCase })}</p>
     {/if}
   </div>
 </details>

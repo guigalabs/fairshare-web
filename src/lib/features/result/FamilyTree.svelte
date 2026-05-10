@@ -3,6 +3,8 @@
   import HeirNode from "./HeirNode.svelte";
   import { buildAncestorTiers, buildDescendantTiers, type HeirTier } from "./tiers";
   import { colorFor } from "./heirHelpers";
+  import { labelFor } from "$lib/features/questionnaire/heirLabels";
+  import { t } from "$lib/i18n/index.svelte";
   import User from "@lucide/svelte/icons/user";
 
   let { result, subjectGender }: { result: CalculationResult; subjectGender: Gender } = $props();
@@ -16,18 +18,24 @@
 </script>
 
 <div class="tree" role="img" aria-labelledby="tree-title" aria-describedby="tree-desc">
-  <span id="tree-title" class="sr-only">Family tree showing heirs and their shares</span>
+  <span id="tree-title" class="sr-only">{t("result.tree.aria.title")}</span>
   <span id="tree-desc" class="sr-only">
     {result.shares
-      .map((s) => `${s.heirType}: ${s.fraction.toString()} (${s.percentage.toFixed(1)} percent)`)
+      .map((s) =>
+        t("result.tree.aria.line", {
+          type: labelFor(s.heirType, 1),
+          fraction: s.fraction.toString(),
+          percent: s.percentage.toFixed(1),
+        }),
+      )
       .join("; ")}
   </span>
 
-  {#each ancestors as tier (tier.label)}
+  {#each ancestors as tier (tier.category)}
     {@const tint = tierTint(tier)}
     <div class="tier" style="--tint: {tint};">
       <div class="trunk"></div>
-      <span class="tier-label">{tier.label}</span>
+      <span class="tier-label">{t(tier.labelKey)}</span>
       <div class="branch">
         {#if tier.heirs.length === 1}
           <div class="single-drop"></div>
@@ -60,20 +68,25 @@
     <div class="trunk"></div>
   {/if}
 
-  <div class="subject" aria-label={subjectGender === "male" ? "Male subject" : "Female subject"}>
+  <div
+    class="subject"
+    aria-label={subjectGender === "male"
+      ? t("result.tree.aria.subjectMale")
+      : t("result.tree.aria.subjectFemale")}
+  >
     <div class="subject-glow"></div>
     <div class="subject-ring"></div>
     <div class="subject-fill">
       <User size={20} color="var(--color-accent)" aria-hidden="true" />
     </div>
-    <p class="subject-label">Deceased</p>
+    <p class="subject-label">{t("result.tree.deceased")}</p>
   </div>
 
-  {#each descendants as tier (tier.label)}
+  {#each descendants as tier (tier.category)}
     {@const tint = tierTint(tier)}
     <div class="tier" style="--tint: {tint};">
       <div class="trunk"></div>
-      <span class="tier-label">{tier.label}</span>
+      <span class="tier-label">{t(tier.labelKey)}</span>
       <div class="branch">
         {#if tier.heirs.length === 1}
           <div class="single-drop"></div>
