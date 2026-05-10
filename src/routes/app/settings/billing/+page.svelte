@@ -1,45 +1,43 @@
 <script lang="ts">
   import { Button } from "$lib/ui";
+  import { t } from "$lib/i18n/index.svelte";
   import type { PageData } from "./$types";
 
   let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
-  <title>Billing · FairShare Pro</title>
+  <title>{t("app.billing.title")} · FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
-  <h1>Billing</h1>
+  <h1>{t("app.billing.title")}</h1>
 </section>
 
 {#if data.isPro && data.subscription}
   <div class="card">
-    <h2>FairShare Pro</h2>
+    <h2>{t("app.billing.proHeading")}</h2>
     <dl class="kv">
-      <dt>Plan</dt>
-      <dd>Pro · {data.subscription.cadence}</dd>
-      <dt>Status</dt>
+      <dt>{t("app.billing.plan")}</dt>
+      <dd>{t("app.billing.planValue", { cadence: data.subscription.cadence ?? "" })}</dd>
+      <dt>{t("app.billing.status")}</dt>
       <dd>{data.subscription.status}</dd>
       {#if data.subscription.currentPeriodEnd}
-        <dt>Current period ends</dt>
+        <dt>{t("app.billing.periodEnds")}</dt>
         <dd>{new Date(data.subscription.currentPeriodEnd).toLocaleDateString()}</dd>
       {/if}
     </dl>
-    <p class="muted">Manage your card, change cadence, or cancel from the Stripe billing portal.</p>
+    <p class="muted">{t("app.billing.portalNote")}</p>
     <form method="POST" action="/api/stripe/portal" class="actions">
-      <Button type="submit">Open billing portal</Button>
+      <Button type="submit">{t("app.billing.openPortal")}</Button>
     </form>
   </div>
 {:else}
   <div class="card">
-    <h2>You're on the free plan</h2>
-    <p>
-      The free site (the calculator at /calculate) stays free forever. Subscribe to Pro for case
-      folders, branded PDFs, side-by-side madhab compare, and JSON export.
-    </p>
+    <h2>{t("app.billing.freeHeading")}</h2>
+    <p>{t("app.billing.freeBody")}</p>
     <p class="actions">
-      <Button href="/pricing">See Pro plans</Button>
+      <Button href="/pricing">{t("app.billing.seePlans")}</Button>
     </p>
   </div>
 {/if}
