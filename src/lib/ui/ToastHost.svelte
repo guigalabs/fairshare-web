@@ -6,8 +6,7 @@
   // override. Toasts fire on every save/share/PDF action, so honoring the
   // user's preference here matters.
   const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const toastFly = reducedMotion ? { y: 0, duration: 0 } : { y: 16, duration: 200 };
 </script>
 

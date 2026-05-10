@@ -29,8 +29,8 @@
     {#if store.linkError}
       <Banner tone="warning">
         {#snippet children()}
-          <strong>We couldn't read that shared link.</strong> The URL may have been truncated when
-          it was sent. Ask the sender to share again, or start a fresh calculation below.
+          <strong>We couldn't read that shared link.</strong> The URL may have been truncated when it
+          was sent. Ask the sender to share again, or start a fresh calculation below.
         {/snippet}
       </Banner>
     {/if}

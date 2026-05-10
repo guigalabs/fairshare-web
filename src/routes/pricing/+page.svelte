@@ -112,12 +112,7 @@
           {/each}
         </ul>
 
-        <form
-          method="POST"
-          action="/api/stripe/checkout"
-          class="subscribe"
-          onsubmit={onSubscribe}
-        >
+        <form method="POST" action="/api/stripe/checkout" class="subscribe" onsubmit={onSubscribe}>
           <input type="hidden" name="cadence" value={cadence} />
           <Button type="submit" fullWidth loading={subscribing}>
             {t("pricing.subscribe")}

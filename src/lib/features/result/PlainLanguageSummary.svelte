@@ -21,8 +21,7 @@
   // override. Honor the user's preference here — same factory pattern Pass 15
   // (homepage hero), Pass 21 (calculate step), and Pass 36 (toasts) used.
   const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const bodySlide = reducedMotion ? { duration: 0 } : { duration: 200 };
 
   // Bold percentages and fractions inside a sentence — keeps the math

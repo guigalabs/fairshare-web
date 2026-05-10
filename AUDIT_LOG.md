@@ -12,6 +12,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 1 — Typography & hierarchy — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage, desktop 1440x900 + mobile 390x844)
@@ -21,6 +22,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed computed line-height via agent-browser (was 60px / 51px / 51px on h2; now 46px / 39.1px / 39.1px, all ratio 1.150). Captured desktop and mobile screenshots before and after at /tmp/audit_home_desktop_after.png and /tmp/audit_home_mobile_after.png; the wrapped Pro section heading now reads as a single visual unit. No console errors. HMR picked the change up cleanly.
 
 ## Pass 2 — Spacing & layout rhythm — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage, desktop 1440x900 + mobile 390x844)
@@ -30,6 +32,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed computed padding via agent-browser (was 64/32 on both; now 64/64). Captured before/after at /tmp/spacing_home_desktop_after.png and /tmp/spacing_home_mobile_after.png; section rhythm now reads as intentional. No layout shift, no console errors. HMR clean.
 
 ## Pass 3 — Color & contrast — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide (Button.svelte is reused on /, /pricing, /for-attorneys, /for-scholars, /methodology, /calculate, /saved, and elsewhere)
@@ -39,6 +42,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed border-color via agent-browser before (rgb(229,229,229)) and after (rgb(204,204,204)). Captured /tmp/contrast_home_desktop.png; secondary buttons now read as paired CTAs alongside the primary, not as floating link text. Affects every secondary button site-wide; spot-checked on hero CTA row and bottom CTA. Type-check 0 errors.
 
 ## Pass 4 — CTAs & interactive elements — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage bottom CTA section)
@@ -48,6 +52,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Verified the rendered class via agent-browser is now `btn--secondary btn--lg` (was `btn--ghost btn--lg`). Captured /tmp/cta_home_top.png; the bottom CTA now shows two pill buttons (green primary + outlined secondary) matching the hero pattern, instead of one button plus floating text. Type-check 0 errors. The Pro section's two ghost buttons ("For attorneys", "For scholars") were left unchanged for now; they sit on a tinted background with a primary CTA that already dominates, so the visual call is less clear-cut and worth its own pass if needed.
 
 ## Pass 5 — Mobile responsiveness — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide footer (renders on every non-`/app` page)
@@ -57,6 +62,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed `.footer-links a` heights at iPhone 14 viewport (was 23px on every link; now 39px). Captured /tmp/mobile_full_after.png; footer renders cleanly, no overflow, no visual regressions. Type-check 0 errors. Pre-existing 5 warnings unchanged.
 
 ## Pass 6 — Motion & polish — 2026-05-07
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage hero stagger)
@@ -66,6 +72,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors. Verified normal-motion path: page loads with hero animating in as before, all elements visible, opacity 1 after transition. Spoofed `matchMedia` in the live page via eval to confirm the reduce-motion query surface returns `matches: true` — the `enter()` factory now branches correctly. Captured /tmp/motion_home.png (normal motion) showing the page renders cleanly. Real reduced-motion verification requires OS-level preference, but the logic is straightforward and matches the documented Svelte transition API.
 
 ## Pass 7 — Overall composition — 2026-05-07
+
 **Type:** visual
 **Status:** skip
 **Page(s):** /, /pricing, /for-attorneys (audited)
@@ -75,6 +82,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Captured /tmp/comp_above_fold.png, /tmp/comp_pricing_full.png, /tmp/comp_attorneys.png at 1440x900 desktop and reviewed for hierarchy, focal points, whitespace, and above-the-fold impact. All three pages compose cleanly.
 
 ## Pass 8 — Edge cases & error handling — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** site-wide error boundary (any 404 / 500 / etc.)
@@ -84,6 +92,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Visited `/this-page-does-not-exist` at desktop 1440x900 and iPhone 14 viewport; both render the new layout with full nav, footer, branded hero composition, and two visible CTAs. Captured /tmp/error_404_after.png and /tmp/error_404_mobile.png. Type-check 0 errors (1148 files, +1 from new component). i18n keys added in both locales using the same composition pattern as the rest of the site (no em dashes, plain copy).
 
 ## Pass 9 — User feedback & responsiveness — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /pricing (Stripe Checkout subscribe form)
@@ -93,6 +102,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors. Captured /tmp/pricing_after.png; page renders cleanly with all elements present (cadence toggle, $19/month label, feature checks, Subscribe to Pro button, waitlist below, two bottom links). The form's structure is preserved (POST to /api/stripe/checkout, hidden `cadence` input, submit button) so server-side flow is unchanged. Tried a programmatic click (will only complete with a real authed user + Stripe key) but visual structure verified through static probe; the form is wired and ready.
 
 ## Pass 10 — Performance & Core Web Vitals — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide topnav (renders on every page)
@@ -102,6 +112,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors. Verified the rendered img via agent-browser: src=`brand-64.png`, naturalWidth=64, naturalHeight=64, displayWidth=28, displayHeight=28. Captured /tmp/perf_home.png; brand mark renders identically to before. PWA manifest icons unchanged (still pointing at pwa-192/512/maskable for install).
 
 ## Pass 11 — SEO & metadata — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** sitemap.xml (covers /pricing, /for-attorneys, /for-scholars indirectly)
@@ -111,6 +122,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors. Fetched `/sitemap.xml` and confirmed the three new entries appear in order between `/methodology/` and `/about/`. Other entries unchanged. The endpoint has `prerender = true` so production builds will materialize the file at build time and Cloudflare Pages will serve it as static XML.
 
 ## Pass 12 — Accessibility — 2026-05-08
+
 **Type:** feature
 **Status:** skip
 **Page(s):** /, /pricing, /calculate, layout components
@@ -120,6 +132,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Per-page eval probes for unnamed buttons, unnamed links, unlabeled inputs, missing alts, landmark presence; all clean. Re-read LocaleToggle.svelte, QuickScenarios.svelte, +error.svelte source for context.
 
 ## Pass 13 — Cross-browser & responsive — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide topnav (renders on every page)
@@ -129,6 +142,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Source verified to have both `-webkit-backdrop-filter` (prefixed first) and `backdrop-filter` (standard second) — correct cascade order so unprefixed wins on browsers that support both. Computed `backdropFilter` in Chromium reads `saturate(1.8) blur(10px)`. Type-check 0 errors. Visual unchanged in Chrome (which already supported unprefixed); fix is silent for users on it and visible for Safari 16-17 users.
 
 ## Pass 14 — Quality of life — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate
@@ -138,6 +152,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors, no new warnings (still the 5 pre-existing in branding/+page.svelte). Set `localStorage['fairshare:madhhab'] = 'hanafi'` via agent-browser eval, reloaded `/calculate`, confirmed the Hanafi pill carries `madhhab-pill--active` (was previously General). Stored value survives across full page reloads. SSR safe via `browser` guard.
 
 ## Pass 15 — Code hygiene — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** / (homepage bottom CTA)
@@ -147,6 +162,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Type-check 0 errors. Probed live: with no env var set, `.ios-link` doesn't render; the Install app PWA button still does. Captured /tmp/hygiene_cta.png; bottom CTA reads cleanly with two pill buttons + Install app pill, no broken-link bait. The TODO comment is removed; the in-code comment explains the env-var pattern for future maintainers. Pre-existing branding warnings unchanged at 5.
 
 ## Pass 16 — Typography & hierarchy — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /pricing, /for-attorneys, /for-scholars, /about, /login/verify (via ArticleHeader), and /methodology (its own duplicate rule)
@@ -156,6 +172,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed h1 line-height ratios via agent-browser before (60px / 1.50) and after (46px / 1.15) on /pricing and /methodology. Captured /tmp/typo_attorneys_mobile.png at iPhone 14 viewport; the two-line wrapped heading now reads as a single visual unit. Type-check 0 errors. Pre-existing branding warnings unchanged at 5.
 
 ## Pass 17 — Spacing & layout rhythm — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /for-attorneys, /for-scholars, methodology articles (every page using `<Prose>`)
@@ -165,6 +182,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed `li + li` margin via agent-browser (was 6px, now 12px). Captured /tmp/spacing_scholars_after.png; the "How it gets used" and "What's included" lists now read with clearer item separation. Type-check 0 errors. Pre-existing branding warnings unchanged at 5.
 
 ## Pass 18 — Color & contrast — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /pricing waitlist, /login (and any other form using the shared TextInput)
@@ -174,6 +192,7 @@ Skip streak: **0** consecutive (exit at 7).
 **Testing:** Probed `.input` borderTopColor via agent-browser (was rgb(229,229,229), now rgb(204,204,204)). Captured /tmp/contrast_pricing_after.png; the email input now reads as a defined field. Type-check 0 errors. Pre-existing branding warnings unchanged at 5.
 
 ## Pass 19 — CTAs & interactive elements — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /pricing (bottom CTA row)
@@ -185,6 +204,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 20 — Mobile responsiveness — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /calculate (school selector pills) at iPhone 14 (390×844) and iPhone SE (375×667) viewports
@@ -196,6 +216,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 21 — Motion & polish — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /calculate (every step transition through the questionnaire)
@@ -207,6 +228,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 22 — Overall composition — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /for-attorneys, /for-scholars, /about (any page using the shared `<ArticleHeader>` in left-aligned mode); /pricing, /login, /login/verify (centered mode, regression-checked)
@@ -218,6 +240,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 23 — Edge cases & error handling — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /methodology
@@ -229,17 +252,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 24 — User feedback & responsiveness — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide (every Button.svelte instance with `loading` prop set: /pricing Subscribe, /pricing Notify-me, /login submit, /login/verify resend, /app/* internal save buttons)
 **What:** Added an inline CSS-only spinner (`<span class="btn-spinner">`) that renders before the button label whenever `loading={true}` is passed to `Button.svelte`. The spinner is a 0.875em currentColor ring with a transparent top arc, animated 0.6s linear infinite via a scoped `@keyframes btn-spin`.
-**Why:** Pass 9 wired up the `subscribing` boolean to disable double-submits on the pricing page Stripe checkout button — the disable+aria-busy logic was sound, but the only visual cue was a 60% opacity drop on the button. To a hurried user clicking "Subscribe to Pro" while waiting 1-2s for the Stripe redirect, that dim looks like the click was missed, prompting a second click and a double-submit warning. A visible spinner is the conventional cue for "request in progress" — it converts the silent disabled state into an active "we heard you, working on it" signal. Because every internal form action that takes time already routes through Button's `loading` prop (waitlist subscribe, login submit, save dialogs in /app), this single change improves feedback site-wide without per-page edits. Used `currentColor` so the spinner inherits whichever variant's text color it sits in (white on primary, dark on secondary, white on destructive). Reduced-motion users still see the spinner *shape* (the gap-in-ring is itself a "loading" affordance) — they just won't see it spin, which is exactly what the global app.css `animation-duration: 0.01ms !important` rule specifies. The 14px size at default em scale fits cleanly inside the existing `gap: 0.5rem` flex-row of the button without stretching the pill.
+**Why:** Pass 9 wired up the `subscribing` boolean to disable double-submits on the pricing page Stripe checkout button — the disable+aria-busy logic was sound, but the only visual cue was a 60% opacity drop on the button. To a hurried user clicking "Subscribe to Pro" while waiting 1-2s for the Stripe redirect, that dim looks like the click was missed, prompting a second click and a double-submit warning. A visible spinner is the conventional cue for "request in progress" — it converts the silent disabled state into an active "we heard you, working on it" signal. Because every internal form action that takes time already routes through Button's `loading` prop (waitlist subscribe, login submit, save dialogs in /app), this single change improves feedback site-wide without per-page edits. Used `currentColor` so the spinner inherits whichever variant's text color it sits in (white on primary, dark on secondary, white on destructive). Reduced-motion users still see the spinner *shape\* (the gap-in-ring is itself a "loading" affordance) — they just won't see it spin, which is exactly what the global app.css `animation-duration: 0.01ms !important` rule specifies. The 14px size at default em scale fits cleanly inside the existing `gap: 0.5rem` flex-row of the button without stretching the pill.
 **Files changed:** src/lib/ui/Button.svelte
 **Testing:** Patched `window.fetch` to delay 3s and submitted the /pricing waitlist with a valid email. Inspected the rendered button: `.btn-spinner` element present, computed style `borderRadius: 50%`, `animationName: svelte-g9c1iq-btn-spin`, `animationDuration: 0.6s`, `width: 14px`, `aria-busy: true`. Captured /tmp/spinner_visible.png; the "Notify me" button shows the ring spinner before the label, the button is dimmed, and pointer events disabled. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Resting state regression-checked: hovered Subscribe-to-Pro button has no spinner and no aria-busy.
 
 ---
 
 ## Pass 25 — Performance & Core Web Vitals — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** / (homepage hero CTA)
@@ -251,6 +276,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 26 — SEO & metadata — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** site-wide (every public route now inherits the meta defaults set in `app.html`)
@@ -262,17 +288,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 27 — Accessibility — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate (madhhab selector)
 **What:** Added `role="group"` + `aria-labelledby="madhhab-label"` to the school-selector pill row and `aria-pressed={madhhab === m}` to each individual pill button on /calculate, mirroring the same pattern already in use on /pricing's Monthly/Annual cadence toggle.
-**Why:** The school selector is the most-used selection control on the entire site — practitioners flip between Hanafi/Maliki/Shafi'i/Hanbali constantly, and Pass 14 shipped persistence across sessions. But screen-reader users had no way to perceive *which* madhhab was currently active: the `.madhhab-pill--active` class drove only the visual filled-pill state. Without `aria-pressed`, NVDA/VoiceOver/JAWS announce all five buttons identically as "General, button. Hanafi, button. ..." with no toggle-state context. This pass adds the standard ARIA toggle-button pattern: `role="group"` + a labelledby pointer to the existing visible "School:" text identifies the row as one logical control; `aria-pressed` per button announces "pressed" or "not pressed" so screen readers can navigate the row and know which madhhab is active. Used `aria-labelledby` (pointing to the existing label DOM node) instead of duplicating the label as `aria-label` text, so any future i18n translation of "School:" automatically flows to the AT label without a parallel string. The pricing page's cadence toggle already uses the exact same pattern (Pass-26 audit confirmed) — this fix simply extends the convention to the calculator's parallel selector. No visual changes; the focus-visible outline (Pass-27 audit confirmed `app.css :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px }`) already gives keyboard users a clear "which pill am I on" cue.
+**Why:** The school selector is the most-used selection control on the entire site — practitioners flip between Hanafi/Maliki/Shafi'i/Hanbali constantly, and Pass 14 shipped persistence across sessions. But screen-reader users had no way to perceive _which_ madhhab was currently active: the `.madhhab-pill--active` class drove only the visual filled-pill state. Without `aria-pressed`, NVDA/VoiceOver/JAWS announce all five buttons identically as "General, button. Hanafi, button. ..." with no toggle-state context. This pass adds the standard ARIA toggle-button pattern: `role="group"` + a labelledby pointer to the existing visible "School:" text identifies the row as one logical control; `aria-pressed` per button announces "pressed" or "not pressed" so screen readers can navigate the row and know which madhhab is active. Used `aria-labelledby` (pointing to the existing label DOM node) instead of duplicating the label as `aria-label` text, so any future i18n translation of "School:" automatically flows to the AT label without a parallel string. The pricing page's cadence toggle already uses the exact same pattern (Pass-26 audit confirmed) — this fix simply extends the convention to the calculator's parallel selector. No visual changes; the focus-visible outline (Pass-27 audit confirmed `app.css :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px }`) already gives keyboard users a clear "which pill am I on" cue.
 **Files changed:** src/routes/calculate/+page.svelte
 **Testing:** Loaded /calculate in agent-browser. Probed `.madhhab-pills` — `role="group"`, `aria-labelledby="madhhab-label"`, label text resolves to "School:". Probed all 5 pills — General/Maliki/Shafi'i/Hanbali return `aria-pressed="false"`, Hanafi (the persisted default) returns `aria-pressed="true"`. Clicked Maliki: aria-pressed flipped — Maliki is now "true", Hanafi is "false", others stay "false". Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged.
 
 ---
 
 ## Pass 28 — Cross-browser & responsive — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide (every Button.svelte instance: hero CTAs, pricing Subscribe/Notify, login, methodology cards, calculator answer buttons, etc.)
@@ -284,28 +312,31 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 29 — Quality of life — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate (initial madhhab selection)
 **What:** Renamed `readStoredMadhhab` to `readInitialMadhhab` and prepended a `?madhhab=` URL-search-param read with the same `MADHHABS.includes` validation guard, so a colleague-shared link like `/calculate?madhhab=maliki` pre-selects the right school. Falls through to localStorage (Pass 14) if no valid URL param, then to "general" if neither source has a valid value.
-**Why:** /result already supports rich deep-linking via `?case=` (encoded case payload, used by QuickScenarios on the homepage and the share toolbar), but /calculate had no parallel — practitioners couldn't send a "start a Maliki calculation" link to a colleague. Pass 14 added cross-session madhhab persistence via localStorage, which is the right default for a returning practitioner who specializes in one school. But that pattern actively *prevents* the share-a-starting-point use case: if a colleague clicks a "/calculate?madhhab=maliki" link in their email, they want to land in Maliki — not in whatever they last picked themselves. URL takes precedence over localStorage is the only sensible priority. Validation is identical to the localStorage path (MADHHABS.includes() type-guard) so a tampered or stale URL like `?madhhab=bogus` falls through cleanly. Did not add URL writeback on click (`replaceState`) — that's a UX call that affects browser history depth and can interact badly with the questionnaire's `{#key step}` re-mount; logged for a future pass if practitioner feedback asks for it. Out of scope: deep-linking the questionnaire mid-flow (e.g. a `?step=children` link) — that requires serializing runner state, which is a feature/architecture decision, not a one-pass change.
+**Why:** /result already supports rich deep-linking via `?case=` (encoded case payload, used by QuickScenarios on the homepage and the share toolbar), but /calculate had no parallel — practitioners couldn't send a "start a Maliki calculation" link to a colleague. Pass 14 added cross-session madhhab persistence via localStorage, which is the right default for a returning practitioner who specializes in one school. But that pattern actively _prevents_ the share-a-starting-point use case: if a colleague clicks a "/calculate?madhhab=maliki" link in their email, they want to land in Maliki — not in whatever they last picked themselves. URL takes precedence over localStorage is the only sensible priority. Validation is identical to the localStorage path (MADHHABS.includes() type-guard) so a tampered or stale URL like `?madhhab=bogus` falls through cleanly. Did not add URL writeback on click (`replaceState`) — that's a UX call that affects browser history depth and can interact badly with the questionnaire's `{#key step}` re-mount; logged for a future pass if practitioner feedback asks for it. Out of scope: deep-linking the questionnaire mid-flow (e.g. a `?step=children` link) — that requires serializing runner state, which is a feature/architecture decision, not a one-pass change.
 **Files changed:** src/routes/calculate/+page.svelte
 **Testing:** Loaded /calculate?madhhab=maliki → `aria-pressed=true` resolves on the "Maliki" pill (Pass 27 added the attribute). Cleared the URL → fallback to localStorage value "maliki" still resolves on Maliki. Loaded /calculate?madhhab=bogus → invalid value rejected by the includes() guard, falls through to stored "maliki". All three priority levels (URL valid, URL invalid → storage, no URL → storage) verified via `document.querySelector('.madhhab-pill[aria-pressed=true]').textContent.trim()`. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged.
 
 ---
 
 ## Pass 30 — Code hygiene — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** build/dependency surface (no runtime page changed)
 **What:** Removed `@inlang/paraglide-js@^2.0.0` from `dependencies` in package.json — it was an unreferenced leftover from a planned i18n approach that was replaced by the home-grown `src/lib/i18n` module (which loads `messages/en.json` and `messages/ar.json` directly).
-**Why:** Ran `bunx depcheck` and grepped for `paraglide` and `inlang` across `src/`, `vite.config.ts`, `svelte.config.js`, and the project root for `*.inlang*` / `paraglide*` config files — zero references anywhere in the codebase. The `src/lib/i18n/index.svelte.ts` module's own header comment confirms the swap: "Lightweight i18n. Single bundle of EN + AR loaded statically — no dynamic import gymnastics for two locales." Paraglide was the dep before that decision; package.json never got cleaned up. Removing it shrinks `bun install` time, removes a transitive dependency from the lockfile, and prevents future readers from thinking paraglide is in use and reaching for it accidentally. Other deps that depcheck flagged were verified live: `canvas-confetti` (dynamic-imported in ResultActionBar at line 52), `tailwindcss` (loaded by `@import "tailwindcss"` in app.css and the `@tailwindcss/vite` plugin), `prettier-plugin-svelte`/`prettier-plugin-tailwindcss` (dev tools), `@types/canvas-confetti` (TS types) — kept. `@pdf-lib/fontkit` is mentioned only in a TODO-style comment in `exportPdf.ts` ("Arabic shaping requires registering a Noto Naskh Arabic font via @pdf-lib/fontkit … lands with B7") — flagged as a future-cleanup candidate but kept since it's an explicit forward-looking placeholder for B7 i18n; deleting it now and re-adding later is more work than leaving it. Console.* audit was clean: 7 hits across the codebase, all `console.error` on legitimate error paths (Stripe API failures, save/export errors), no debug leftovers. No `TODO/FIXME/XXX/HACK` markers and zero `: any`/`as any` escape hatches found in non-/app code.
+**Why:** Ran `bunx depcheck` and grepped for `paraglide` and `inlang` across `src/`, `vite.config.ts`, `svelte.config.js`, and the project root for `*.inlang*` / `paraglide*` config files — zero references anywhere in the codebase. The `src/lib/i18n/index.svelte.ts` module's own header comment confirms the swap: "Lightweight i18n. Single bundle of EN + AR loaded statically — no dynamic import gymnastics for two locales." Paraglide was the dep before that decision; package.json never got cleaned up. Removing it shrinks `bun install` time, removes a transitive dependency from the lockfile, and prevents future readers from thinking paraglide is in use and reaching for it accidentally. Other deps that depcheck flagged were verified live: `canvas-confetti` (dynamic-imported in ResultActionBar at line 52), `tailwindcss` (loaded by `@import "tailwindcss"` in app.css and the `@tailwindcss/vite` plugin), `prettier-plugin-svelte`/`prettier-plugin-tailwindcss` (dev tools), `@types/canvas-confetti` (TS types) — kept. `@pdf-lib/fontkit` is mentioned only in a TODO-style comment in `exportPdf.ts` ("Arabic shaping requires registering a Noto Naskh Arabic font via @pdf-lib/fontkit … lands with B7") — flagged as a future-cleanup candidate but kept since it's an explicit forward-looking placeholder for B7 i18n; deleting it now and re-adding later is more work than leaving it. Console.\* audit was clean: 7 hits across the codebase, all `console.error` on legitimate error paths (Stripe API failures, save/export errors), no debug leftovers. No `TODO/FIXME/XXX/HACK` markers and zero `: any`/`as any` escape hatches found in non-/app code.
 **Files changed:** package.json, bun.lock (regenerated)
 **Testing:** `bun run check` — 0 errors, same 5 pre-existing /app/settings/branding warnings unchanged. `curl` HTTP probe of `/`, `/calculate`, `/methodology` all return 200. `bun remove` reported "2 packages installed [1.4s]" + "Removed: 1" — the lockfile updated cleanly. The remaining @pdf-lib/fontkit and other depcheck-flagged-but-actually-used deps were left in place.
 
 ---
 
 ## Pass 31 — Typography & hierarchy — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /calculate (workflow-page h1 "Calculate")
@@ -317,17 +348,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 32 — Spacing & layout rhythm — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /for-attorneys, /for-scholars, /about, /methodology/[group]/[topic] (every page using `<Prose>`)
 **What:** Added `.prose > *:first-child { margin-top: 0 }` to `Prose.svelte` so the first child of any prose body never adds a top margin on top of the hero's own `margin-bottom: 2rem`. Subsequent siblings still get their normal spacing rules.
-**Why:** Probed hero→body vertical rhythm across editorial pages. /about (Prose starts with `<p>`) showed 32px gap; /for-attorneys (Prose starts with `<h2>`) showed 40px gap; /for-scholars and methodology articles likely had the same split depending on whether their first body element was a heading or paragraph. The reason: `.prose :global(h2) { margin-top: 2.5rem }` applies regardless of position, so when an `h2` is the first child it adds 40px on top of the hero's 32px (taking the larger via margin collapse, since `.prose` has no padding or border to break the collapse). The intent of `2.5rem` is *between* sections inside the Prose, not between hero and Prose. Killing margin-top on the first child is the canonical CSS pattern for this and gives every editorial page the same 32px hero→body transition. Verified: `headToProse: 32px` on both /about (`<p>` first) and /for-attorneys (`<h2>` first), matching exactly. The second h2 inside /for-attorneys still picks up its full `marginTop: 40px` for the inter-section spacing — first-child only.
+**Why:** Probed hero→body vertical rhythm across editorial pages. /about (Prose starts with `<p>`) showed 32px gap; /for-attorneys (Prose starts with `<h2>`) showed 40px gap; /for-scholars and methodology articles likely had the same split depending on whether their first body element was a heading or paragraph. The reason: `.prose :global(h2) { margin-top: 2.5rem }` applies regardless of position, so when an `h2` is the first child it adds 40px on top of the hero's 32px (taking the larger via margin collapse, since `.prose` has no padding or border to break the collapse). The intent of `2.5rem` is _between_ sections inside the Prose, not between hero and Prose. Killing margin-top on the first child is the canonical CSS pattern for this and gives every editorial page the same 32px hero→body transition. Verified: `headToProse: 32px` on both /about (`<p>` first) and /for-attorneys (`<h2>` first), matching exactly. The second h2 inside /for-attorneys still picks up its full `marginTop: 40px` for the inter-section spacing — first-child only.
 **Files changed:** src/lib/components/Prose.svelte
 **Testing:** Captured before/after vertical-rhythm metrics at 1440×900 desktop. /for-attorneys hero→Prose was 40px, now 32px (matches /about). Re-probed second h2's computed margin-top: 40px (unchanged — only the first child collapses). Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. /pricing card internal rhythm probed for regression: cadence→price 20, price→features 20, features→subscribe 28, subscribe→note 24 — all unchanged (Prose isn't used on /pricing).
 
 ---
 
 ## Pass 33 — Color & contrast — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage pro-banner pill, top of hero)
@@ -339,17 +372,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 34 — CTAs & interactive elements — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide (every `<Button variant="destructive">` instance — currently /settings "Clear all data" and /app/settings/data "Delete account")
 **What:** Added `--color-error-hover-actual: #991b1b` to the design-token layer (paired with the existing `--color-error-actual: #b91c1c`) and a corresponding `.btn--destructive:hover { background: var(--color-error-hover) }` rule in `Button.svelte`, so destructive buttons now darken on hover the same way primary buttons do.
-**Why:** Audited the four button variants. Primary darkens to `--color-accent-hover` on hover, secondary darkens its border to `var(--color-text)`, ghost grows a `bg-elevated` background, and destructive… did nothing color-wise (only the base `.btn:hover { transform: scale(1.02) }` applied). For the most consequential button class — these are *irreversible* actions like "Clear all data" and "Delete account" — the absence of color feedback weakens the affordance: the user wants a clear "the system noticed I'm hovering this dangerous thing" signal. Mirrored the existing pattern (primary has a paired `--color-accent / --color-accent-hover`) by adding the matching error-hover token. Picked Tailwind's red-800 (#991b1b) for the darker shade — it's a 15% luminance drop from the existing red-700 (#b91c1c) which matches the magnitude of the green's accent→accent-hover drop. Added the token both as `-actual` and as the public alias so light/dark theme switching works consistently if a dark theme lands later. The 1.02 scale-up on hover stays — the new color change reinforces it rather than replaces it.
+**Why:** Audited the four button variants. Primary darkens to `--color-accent-hover` on hover, secondary darkens its border to `var(--color-text)`, ghost grows a `bg-elevated` background, and destructive… did nothing color-wise (only the base `.btn:hover { transform: scale(1.02) }` applied). For the most consequential button class — these are _irreversible_ actions like "Clear all data" and "Delete account" — the absence of color feedback weakens the affordance: the user wants a clear "the system noticed I'm hovering this dangerous thing" signal. Mirrored the existing pattern (primary has a paired `--color-accent / --color-accent-hover`) by adding the matching error-hover token. Picked Tailwind's red-800 (#991b1b) for the darker shade — it's a 15% luminance drop from the existing red-700 (#b91c1c) which matches the magnitude of the green's accent→accent-hover drop. Added the token both as `-actual` and as the public alias so light/dark theme switching works consistently if a dark theme lands later. The 1.02 scale-up on hover stays — the new color change reinforces it rather than replaces it.
 **Files changed:** src/app.css, src/lib/ui/Button.svelte
 **Testing:** Loaded /settings. Probed `--color-error-hover` via `getComputedStyle(document.documentElement).getPropertyValue` — resolves to `#991b1b`. Default destructive bg renders `rgb(185, 28, 28)` (#b91c1c). Inspected the stylesheet's `.btn--destructive:hover` rule — selector resolved with the new background reference (`var(--color-error-hover)`). Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Did not regress primary/secondary/ghost hover behavior — the new rule is scoped to `.btn--destructive:hover` only.
 
 ---
 
 ## Pass 35 — Mobile responsiveness — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide TopNav LocaleToggle (renders on every non-`/app` page)
@@ -361,6 +396,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 36 — Motion & polish — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide ToastHost (renders inside the root layout, fires on every save/share/PDF/error event)
@@ -372,39 +408,43 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 37 — Overall composition — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /methodology/[group]/[topic] (every article page — 13 routes today)
 **What:** Added `max-width: 38rem` to the page-local `.head` rule in `src/routes/methodology/[group]/[topic]/+page.svelte`, matching the cap Pass 22 added to the shared `ArticleHeader` component.
-**Why:** Probed the methodology article pages and found the same composition mismatch Pass 22 fixed for the editorial Pro pages: hero (kicker + h1 + meta + lede) was 728px wide while Prose body underneath capped at 608px. The 120px-wider hero floats beyond where the body's reading column ends, creating visible right-side void above the fold and breaking visual flow. The fix wasn't picked up by Pass 22 because the article route uses a *page-local* `<header class="head">` (with its own kicker/h1/meta/lede pattern that ArticleHeader doesn't support — no `meta` slot on the shared component), not the shared ArticleHeader. Adding the same 38rem cap inline mirrors what `/methodology` (the index page) already does explicitly. Editorial-page composition is now uniform across the entire site: `/about`, `/for-attorneys`, `/for-scholars` (via Pass 22's ArticleHeader fix), `/methodology` (already had it), and now every methodology article. The article-page `.head h1` line-height is still inherited (gap noted in Pass 31's "future cycle" list); not addressed here since this pass is composition-focused — line-height belongs in a typography pass.
+**Why:** Probed the methodology article pages and found the same composition mismatch Pass 22 fixed for the editorial Pro pages: hero (kicker + h1 + meta + lede) was 728px wide while Prose body underneath capped at 608px. The 120px-wider hero floats beyond where the body's reading column ends, creating visible right-side void above the fold and breaking visual flow. The fix wasn't picked up by Pass 22 because the article route uses a _page-local_ `<header class="head">` (with its own kicker/h1/meta/lede pattern that ArticleHeader doesn't support — no `meta` slot on the shared component), not the shared ArticleHeader. Adding the same 38rem cap inline mirrors what `/methodology` (the index page) already does explicitly. Editorial-page composition is now uniform across the entire site: `/about`, `/for-attorneys`, `/for-scholars` (via Pass 22's ArticleHeader fix), `/methodology` (already had it), and now every methodology article. The article-page `.head h1` line-height is still inherited (gap noted in Pass 31's "future cycle" list); not addressed here since this pass is composition-focused — line-height belongs in a typography pass.
 **Files changed:** src/routes/methodology/[group]/[topic]/+page.svelte
 **Testing:** Captured /methodology/madhhab/general at 1440×900: head was 728px wide, now 608px — exactly matching the Prose body width. Hero column and body column now share the same left+right edges. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged.
 
 ---
 
 ## Pass 38 — Edge cases & error handling — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved
 **What:** Added a `catch` clause to the `/saved` page's `onMount` that surfaces a user-facing toast ("Couldn't load saved calculations. Your browser may have IndexedDB disabled (e.g. private browsing).") when `listCalculations()` rejects. Toast duration set to 6000ms (vs the default 3000ms) since it's an actionable diagnostic the user needs time to read.
-**Why:** Audited every async load path on the public surface for silent failures. /saved was the most exposed: its onMount called `listCalculations()` inside `try/finally` with no catch, so an IndexedDB failure (private browsing mode where IndexedDB is restricted, storage quota exceeded, browser permission revoked) would propagate as an unhandled promise rejection and the UI would silently render the same "No saved calculations yet" empty state — indistinguishable from a genuine empty list. A user in Safari Private Browsing who's saved 20 calculations elsewhere and just opened a private tab would see "No saved calculations yet" and reasonably conclude their data was lost. The fix turns a silent system failure into an actionable signal: now they see a toast saying their browser has storage disabled, can connect that to their private-mode usage, and either close the private tab or accept the limitation. The `EmptyState` UI underneath is left intact (rows stays [] on failure, so it's the right view for both genuine empty *and* failure cases). Other persistence-layer error sites already had error handling: ResultActionBar's onSave shows "Couldn't save. IndexedDB may be unavailable." (line 41), the rename/delete flows happen post-load so they only fire when persistence is known-working. Banner-style inline errors were considered but the toast pattern matches the rest of /saved's user-feedback surface (Save / Delete already use toasts).
+**Why:** Audited every async load path on the public surface for silent failures. /saved was the most exposed: its onMount called `listCalculations()` inside `try/finally` with no catch, so an IndexedDB failure (private browsing mode where IndexedDB is restricted, storage quota exceeded, browser permission revoked) would propagate as an unhandled promise rejection and the UI would silently render the same "No saved calculations yet" empty state — indistinguishable from a genuine empty list. A user in Safari Private Browsing who's saved 20 calculations elsewhere and just opened a private tab would see "No saved calculations yet" and reasonably conclude their data was lost. The fix turns a silent system failure into an actionable signal: now they see a toast saying their browser has storage disabled, can connect that to their private-mode usage, and either close the private tab or accept the limitation. The `EmptyState` UI underneath is left intact (rows stays [] on failure, so it's the right view for both genuine empty _and_ failure cases). Other persistence-layer error sites already had error handling: ResultActionBar's onSave shows "Couldn't save. IndexedDB may be unavailable." (line 41), the rename/delete flows happen post-load so they only fire when persistence is known-working. Banner-style inline errors were considered but the toast pattern matches the rest of /saved's user-feedback surface (Save / Delete already use toasts).
 **Files changed:** src/routes/saved/+page.svelte
 **Testing:** Verified `toast.show()` signature accepts a third `durationMs` parameter (default 3000) — matched. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Did not synthesize an actual IndexedDB failure to test the fall-through path; the same toast pattern is used elsewhere on the page (Delete success toast, line 54) and the `try/catch` shape is the canonical Promise-rejection handler for onMount.
 
 ---
 
 ## Pass 39 — User feedback & responsiveness — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /login (both the email magic-link form and the Google OAuth form)
 **What:** Wired `loading` props to both submit buttons on /login and added `emailSubmitting` / `googleSubmitting` `$state` flags driven by an `onsubmit` handler on each form. The handler sets the corresponding flag to `true` on first click; subsequent clicks (while either form is in flight) call `e.preventDefault()` to block double-submits. Mirrors the Pass-9 `subscribing` pattern from /pricing.
-**Why:** /login has two side-by-side conversion paths — "Send sign-in link" (Resend magic-link via Auth.js) and "Continue with Google" (OAuth redirect). Both submits trigger a 1-2s round-trip during which the page is still visible: the email path waits for Auth.js to send the email and 303-redirect, the Google path waits for the OAuth provider redirect. With no loading state, that gap is silent — the user sees an unchanged button and a still page, and reasonably reaches for a second click. Pass 9 fixed this on /pricing's Subscribe button (Stripe checkout has the same behavior); Pass 24 introduced the inline spinner that any `loading={true}` Button now renders. /login was the last public surface that hadn't picked up either fix. Two flags rather than one shared `submitting` boolean because the spinner needs to render on the *clicked* button only — the user clicked email, the email button shows the spinner, the Google button stays at rest. The mutual-exclusion guard (each handler checks both flags before setting its own) prevents a frustrated user from clicking Google after submitting the email form, which would lose the magic-link request mid-flight. The Pro app's auth-aware /api/stripe/checkout that Pass 23 flagged for a future feature pass is still unresolved — that's a separate redirect-callback wiring concern, not a feedback gap, and out of scope for this pass.
+**Why:** /login has two side-by-side conversion paths — "Send sign-in link" (Resend magic-link via Auth.js) and "Continue with Google" (OAuth redirect). Both submits trigger a 1-2s round-trip during which the page is still visible: the email path waits for Auth.js to send the email and 303-redirect, the Google path waits for the OAuth provider redirect. With no loading state, that gap is silent — the user sees an unchanged button and a still page, and reasonably reaches for a second click. Pass 9 fixed this on /pricing's Subscribe button (Stripe checkout has the same behavior); Pass 24 introduced the inline spinner that any `loading={true}` Button now renders. /login was the last public surface that hadn't picked up either fix. Two flags rather than one shared `submitting` boolean because the spinner needs to render on the _clicked_ button only — the user clicked email, the email button shows the spinner, the Google button stays at rest. The mutual-exclusion guard (each handler checks both flags before setting its own) prevents a frustrated user from clicking Google after submitting the email form, which would lose the magic-link request mid-flight. The Pro app's auth-aware /api/stripe/checkout that Pass 23 flagged for a future feature pass is still unresolved — that's a separate redirect-callback wiring concern, not a feedback gap, and out of scope for this pass.
 **Files changed:** src/routes/login/+page.svelte
 **Testing:** Loaded /login at 1440×900. Probed both submit buttons via `aria-busy` and `.btn-spinner` query — both null/false at rest. Form count: 2 (matches two submit handlers wired). Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Did not synthesize a slow Auth.js submit to test the spinner — same pattern is exercised on /pricing's waitlist submit which Pass 24 visually verified, and the Button.svelte spinner rendering logic is unchanged from that pass.
 
 ---
 
 ## Pass 40 — Performance & Core Web Vitals — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** / (homepage Pro section primary CTA)
@@ -416,6 +456,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 41 — SEO & metadata — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** / (homepage)
@@ -427,6 +468,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 42 — Accessibility — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate (questionnaire progress kicker)
@@ -438,6 +480,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 43 — Cross-browser & responsive — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide /+error.svelte (renders for any 404 / runtime error)
@@ -449,6 +492,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 44 — Quality of life — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved (rename flow)
@@ -460,6 +504,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 45 — Code hygiene — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** docs/build surface (no runtime page changed)
@@ -471,6 +516,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 46 — Typography & hierarchy — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /saved, /result (workflow-page h1s)
@@ -482,6 +528,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 47 — Spacing & layout rhythm — 2026-05-08
+
 **Type:** visual
 **Status:** skip
 **Page(s):** methodology articles, /calculate, /saved, homepage Pro section, homepage section headers
@@ -493,6 +540,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 48 — Color & contrast — 2026-05-08
+
 **Type:** visual
 **Status:** skip
 **Page(s):** /, /pricing, /calculate, /methodology, /disclaimer (cross-section probes)
@@ -504,6 +552,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 49 — CTAs & interactive elements — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /methodology (13-card article grid)
@@ -515,6 +564,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 50 — Mobile responsiveness — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide TopNav (renders on every non-/app page)
@@ -526,6 +576,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 51 — Motion & polish — 2026-05-08
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /result (PlainLanguageSummary disclosure)
@@ -537,6 +588,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 52 — Overall composition — 2026-05-08
+
 **Type:** visual
 **Status:** skip
 **Page(s):** /, /pricing, /methodology, /saved cross-section probes
@@ -548,17 +600,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 53 — Edge cases & error handling — 2026-05-08
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /result (when arrived via malformed `?case=` shared link)
 **What:** ResultStore.load now distinguishes "no case at all" from "URL had a `?case=` token we couldn't decode" via a new `linkError` boolean state. /result renders a `<Banner tone="warning">` above the empty state when `linkError` is true, telling the visitor the link was likely truncated and asking them to re-share.
-**Why:** The result page reads its case from `?case=<base64-url-encoded-payload>` (set by the share toolbar) or sessionStorage. When a friend shares a calculation link via WhatsApp, SMS, or Twitter and the URL gets truncated mid-token (which happens often with long base64 strings around character limits), `decodeCase()` returns null and the existing `readStoredCase` silently fell through to sessionStorage → null → renders the same "No calculation in progress" empty state a fresh visitor would see. The visitor reasonably concludes the page itself is broken or empty, not realizing the *link* was the problem. Refactored `readStoredCase` to return `{ case: InheritanceCase | null, linkError: boolean }` instead of just the case. The `linkError` is true *only* when a token was present in the URL and decode failed — sessionStorage-miss and no-URL-param cases both still set linkError=false (they're genuine "no calculation" scenarios). The Banner uses `tone="warning"` (cream bg + dark warning text, 7.83 contrast — confirmed in Pass 48), states what happened ("we couldn't read that shared link"), names the likely cause ("URL may have been truncated"), and offers two paths forward ("ask the sender to share again, or start a fresh calculation below"). The EmptyState's "Start a calculation" CTA still appears below the banner — both paths remain accessible. The What-If toggle already has its own "Original input is preserved" note unrelated to this; saved-cases load still uses sessionStorage so navigation from /saved → /result is unaffected.
+**Why:** The result page reads its case from `?case=<base64-url-encoded-payload>` (set by the share toolbar) or sessionStorage. When a friend shares a calculation link via WhatsApp, SMS, or Twitter and the URL gets truncated mid-token (which happens often with long base64 strings around character limits), `decodeCase()` returns null and the existing `readStoredCase` silently fell through to sessionStorage → null → renders the same "No calculation in progress" empty state a fresh visitor would see. The visitor reasonably concludes the page itself is broken or empty, not realizing the _link_ was the problem. Refactored `readStoredCase` to return `{ case: InheritanceCase | null, linkError: boolean }` instead of just the case. The `linkError` is true _only_ when a token was present in the URL and decode failed — sessionStorage-miss and no-URL-param cases both still set linkError=false (they're genuine "no calculation" scenarios). The Banner uses `tone="warning"` (cream bg + dark warning text, 7.83 contrast — confirmed in Pass 48), states what happened ("we couldn't read that shared link"), names the likely cause ("URL may have been truncated"), and offers two paths forward ("ask the sender to share again, or start a fresh calculation below"). The EmptyState's "Start a calculation" CTA still appears below the banner — both paths remain accessible. The What-If toggle already has its own "Original input is preserved" note unrelated to this; saved-cases load still uses sessionStorage so navigation from /saved → /result is unaffected.
 **Files changed:** src/lib/features/result/store.svelte.ts, src/routes/result/+page.svelte
 **Testing:** Loaded /result?case=GARBAGE: banner renders with the expected text "We couldn't read that shared link…", empty state still appears below with its CTA. Loaded /result with no token: no banner (hasBanner: false), clean empty state with CTA — the no-banner path is the right view for fresh visits. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged.
 
 ---
 
 ## Pass 54 — User feedback & responsiveness — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved (rename action)
@@ -570,6 +624,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 55 — Performance & Core Web Vitals — 2026-05-09
+
 **Type:** feature
 **Status:** skip
 **Page(s):** /pricing, /methodology cross-page Core Web Vitals probes; vite.config.ts PWA config review
@@ -581,6 +636,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 56 — SEO & metadata — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** robots.txt (site-wide crawl directive)
@@ -592,6 +648,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 57 — Accessibility — 2026-05-09
+
 **Type:** feature
 **Status:** skip
 **Page(s):** Walkthrough, Counter, IconButton, calculator bool-actions, Field error pattern (cross-component a11y review)
@@ -603,17 +660,19 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 58 — Cross-browser & responsive — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** site-wide layout (every page renders inside `+layout.svelte`'s `main` element)
 **What:** Added a `100dvh`-based `min-height` declaration after the existing `100vh` fallback on `main` in `+layout.svelte`, so iOS Safari's chrome-collapsed viewport quirk no longer leaves blank space below the fold when the URL bar is expanded.
-**Why:** On iOS Safari, `100vh` represents the viewport height *with browser chrome collapsed* (URL bar tucked away). When the user first lands on a page with the URL bar visible, `100vh` is 60-90px LARGER than the actually-visible viewport — so a `min-height: 100vh` element renders with extra blank space below the visible bottom edge until the user scrolls and the chrome collapses. The modern fix is `100dvh` (dynamic viewport height), which adjusts in real time as chrome shows and hides. Used the cascading fallback pattern: `min-height: calc(100vh - 60px)` first (older Safari, IE/Edge legacy fallback), then `min-height: calc(100dvh - 60px)` (modern browsers — Safari 15.4+, Chrome 108+, Firefox 101+, all 2022). Browsers that don't recognize `dvh` ignore the second declaration and use the `vh` fallback. The `- 60px` offset accounts for the sticky topnav. Same pattern Pass 13 (TopNav backdrop-filter) and Pass 28 (Button appearance) used: keep the legacy declaration, add the modern one. After this pass, the cross-browser sweep across the public surface is complete: TopNav backdrop-filter (Pass 13), Button appearance/user-select (Pass 28), Error page user-select (Pass 43), and now layout viewport units.
+**Why:** On iOS Safari, `100vh` represents the viewport height _with browser chrome collapsed_ (URL bar tucked away). When the user first lands on a page with the URL bar visible, `100vh` is 60-90px LARGER than the actually-visible viewport — so a `min-height: 100vh` element renders with extra blank space below the visible bottom edge until the user scrolls and the chrome collapses. The modern fix is `100dvh` (dynamic viewport height), which adjusts in real time as chrome shows and hides. Used the cascading fallback pattern: `min-height: calc(100vh - 60px)` first (older Safari, IE/Edge legacy fallback), then `min-height: calc(100dvh - 60px)` (modern browsers — Safari 15.4+, Chrome 108+, Firefox 101+, all 2022). Browsers that don't recognize `dvh` ignore the second declaration and use the `vh` fallback. The `- 60px` offset accounts for the sticky topnav. Same pattern Pass 13 (TopNav backdrop-filter) and Pass 28 (Button appearance) used: keep the legacy declaration, add the modern one. After this pass, the cross-browser sweep across the public surface is complete: TopNav backdrop-filter (Pass 13), Button appearance/user-select (Pass 28), Error page user-select (Pass 43), and now layout viewport units.
 **Files changed:** src/routes/+layout.svelte
 **Testing:** Probed `main` computed style at 1440×900 desktop (Chromium-based browser): `min-height: 840px` resolves correctly (900 viewport - 60 nav). Both declarations parse cleanly. Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Did not test on real iOS Safari with collapsed/expanded chrome — the cascading fallback pattern is the canonical solution for this quirk and the dvh unit's behavior is well-specified.
 
 ---
 
 ## Pass 59 — Quality of life — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /result share toolbar (and any future caller of `share()` from `$lib/share`)
@@ -625,28 +684,31 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 60 — Code hygiene — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /methodology/[group]/[topic] (every methodology article route — 13 today, more if more articles ship)
 **What:** Typed the methodology article route's `load` and `entries` functions via `import type { PageLoad, EntryGenerator } from "./$types"`, matching the convention used by every other load function in the codebase.
 **Why:** Ran `bunx tsc --noEmit` for a deeper hygiene check than `bun run check` (svelte-check is tolerant of implicit anys; tsc is strict). It surfaced one error: `src/routes/methodology/[group]/[topic]/+page.ts` declared `export function load({ params })` with no type annotation, leaving `params` as implicit `any`. Every other load function in the codebase (/app/cases, /app/cases/new, /app/cases/[id], /app/settings/branding, /app/settings/billing) imports `PageServerLoad` from `./$types`. The methodology article was the outlier — survived because svelte-check is lenient. Fixing brings the file in line with the convention, gives proper type safety on `params.group` and `params.topic` (instead of any-typed lookups), and eliminates one tsc-strict error if the project ever wants to flip on stricter checks. Also typed `entries` via `EntryGenerator` for the same reason. Type narrowing now flows: `findEntry(params.group, params.topic)` gets typed string args, the catch-404 path stays the same. No behavioral change — pure type-level cleanup.
 **Files changed:** src/routes/methodology/[group]/[topic]/+page.ts
-**Testing:** `bun run check` 0 errors, same 5 pre-existing /app/settings/branding warnings. `bunx tsc --noEmit` previously errored on this file's line 10; now passes silently. Console.* audit clean — 7 hits, all legitimate `console.error` on real error paths. Zero TODO/FIXME or `: any`/`as any` escape hatches in non-/app code.
+**Testing:** `bun run check` 0 errors, same 5 pre-existing /app/settings/branding warnings. `bunx tsc --noEmit` previously errored on this file's line 10; now passes silently. Console.\* audit clean — 7 hits, all legitimate `console.error` on real error paths. Zero TODO/FIXME or `: any`/`as any` escape hatches in non-/app code.
 
 ---
 
 ## Pass 61 — Typography & hierarchy — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /methodology (index page lede)
 **What:** Added `font-size: 1.0625rem` to `.lede` on `/methodology`, matching the lede size used by ArticleHeader (Pass 22-cap'd), the methodology article page, /+error, /result — every other lede on the site.
-**Why:** Audited lede font-sizes across all pages. ArticleHeader's `.lede` (used on /pricing, /for-attorneys, /for-scholars, /about, /login, /login/verify) uses 1.0625rem. Methodology *article* page's `.lede` uses 1.0625rem. /+error and /result page ledes use 1.0625rem. The Prose component's body text uses 1.0625rem. The /methodology *index* page's `.lede` had no font-size declared, so it inherited the body's 16px (1rem). The 1px difference (16 vs 17) is subtle but real — visitors moving from the methodology index to a methodology article see the lede shrink in reverse, which subverts the typographic hierarchy ("the article lede is more prominent than the index lede" reads as backwards). Pass 31 / Pass 46 enforced line-height consistency across h1s; this pass closes the parallel gap on lede font-size. The 1.55 line-height was already correct. The /settings page's `.lede` also lacks font-size — but settings is /app-adjacent (out of public scope) and wasn't touched.
+**Why:** Audited lede font-sizes across all pages. ArticleHeader's `.lede` (used on /pricing, /for-attorneys, /for-scholars, /about, /login, /login/verify) uses 1.0625rem. Methodology _article_ page's `.lede` uses 1.0625rem. /+error and /result page ledes use 1.0625rem. The Prose component's body text uses 1.0625rem. The /methodology _index_ page's `.lede` had no font-size declared, so it inherited the body's 16px (1rem). The 1px difference (16 vs 17) is subtle but real — visitors moving from the methodology index to a methodology article see the lede shrink in reverse, which subverts the typographic hierarchy ("the article lede is more prominent than the index lede" reads as backwards). Pass 31 / Pass 46 enforced line-height consistency across h1s; this pass closes the parallel gap on lede font-size. The 1.55 line-height was already correct. The /settings page's `.lede` also lacks font-size — but settings is /app-adjacent (out of public scope) and wasn't touched.
 **Files changed:** src/routes/methodology/+page.svelte
 **Testing:** Probed `.lede` at 1440×900 desktop: was 16px (inherited body), now 17px (matches ArticleHeader / Prose / methodology article / error page). Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged.
 
 ---
 
 ## Pass 62 — Spacing & layout rhythm — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** homepage section padding, /pricing waitlist card, /methodology article foot, /calculate header
@@ -658,6 +720,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 63 — Color & contrast — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** /pricing cadence toggle, ToastHost variants, Banner warning tone (cross-component contrast probes)
@@ -669,6 +732,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 64 — CTAs & interactive elements — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage methodology preview — 5 madhhab cards)
@@ -680,6 +744,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 65 — Mobile responsiveness — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /pricing cadence toggle (Monthly/Annual)
@@ -691,6 +756,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 66 — Motion & polish — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide motion audit (public surface only)
@@ -702,6 +768,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 67 — Overall composition — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** /for-attorneys, /for-scholars, /about, /methodology articles, homepage (cross-page composition probe)
@@ -713,6 +780,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 68 — Edge cases & error handling — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate (See-the-result transition to /result)
@@ -724,6 +792,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 69 — User feedback & responsiveness — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved (Open action — clicking a saved-calculation row to view its result)
@@ -735,6 +804,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 70 — Performance & Core Web Vitals — 2026-05-09
+
 **Type:** feature
 **Status:** skip
 **Page(s):** /calculate Core Web Vitals (extended cross-page coverage)
@@ -746,6 +816,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 71 — SEO & metadata — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /calculate
@@ -757,6 +828,7 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 72 — Accessibility — 2026-05-09
+
 **Type:** feature
 **Status:** skip
 **Page(s):** Field component, html lang/dir hydration, calculator summary chip semantics
@@ -768,22 +840,25 @@ Skip streak: **0** consecutive (exit at 7).
 ---
 
 ## Pass 73 — Cross-browser & responsive — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** Site-wide cross-browser sweep verification
 **What:** Re-verified the cross-browser sweep is complete; all unprefixed CSS properties that need vendor fallbacks already have them paired.
 **Why:** Grepped the codebase for `100vh`, `appearance: none`, `user-select: none`, `backdrop-filter:` outside of -webkit- prefixed declarations. Four hits found, all with their `-webkit-` companions on the line(s) above:
+
 - Button.svelte: Pass 28 paired `-webkit-appearance` / `-webkit-user-select`
 - TopNav.svelte: Pass 13 paired `-webkit-backdrop-filter`
 - +error.svelte: Pass 43 paired `-webkit-user-select` on `.error-status`
 - +layout.svelte: Pass 58 paired `min-height: 100dvh` after the `100vh` fallback
-The grep pulls the standard property line independently because the `-webkit-` line is a separate declaration. Sheet.svelte still has unguarded transitions but it's /app-only (out of scope per the audit log header). No further cross-browser fix to ship without speculating about future browser quirks that haven't materialized.
-**Files changed:** none
-**Testing:** Grepped 4 cross-browser-sensitive CSS properties across the public surface. All paired correctly.
+  The grep pulls the standard property line independently because the `-webkit-` line is a separate declaration. Sheet.svelte still has unguarded transitions but it's /app-only (out of scope per the audit log header). No further cross-browser fix to ship without speculating about future browser quirks that haven't materialized.
+  **Files changed:** none
+  **Testing:** Grepped 4 cross-browser-sensitive CSS properties across the public surface. All paired correctly.
 
 ---
 
 ## Pass 74 — Quality of life — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** site-wide locale (every page renders with i18n strings)
@@ -795,6 +870,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 75 — Code hygiene — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** repo structure (no runtime page changed)
@@ -806,6 +882,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 76 — Typography & hierarchy — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide typography weight + size audit
@@ -817,6 +894,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 77 — Spacing & layout rhythm — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide spacing audit (5th cycle)
@@ -828,17 +906,19 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 78 — Color & contrast — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide contrast audit (5th cycle)
 **What:** Re-verified contrast surface; nothing left to ship.
-**Why:** Pass 3 (secondary button border), Pass 33 (pro-banner border), Pass 34 (destructive hover token), Pass 48 (cross-page WCAG audit, all surfaces 5.97-18.88:1), Pass 63 (cadence/toast/banner verify). Every text and interactive surface passes WCAG AA Normal (4.5:1). Card and warning-banner borders read soft because they're container chrome — Pass 33 already strengthened the *interactive* pill borders specifically. Tightening container borders further would push the editorial palette away from its restrained brand direction.
+**Why:** Pass 3 (secondary button border), Pass 33 (pro-banner border), Pass 34 (destructive hover token), Pass 48 (cross-page WCAG audit, all surfaces 5.97-18.88:1), Pass 63 (cadence/toast/banner verify). Every text and interactive surface passes WCAG AA Normal (4.5:1). Card and warning-banner borders read soft because they're container chrome — Pass 33 already strengthened the _interactive_ pill borders specifically. Tightening container borders further would push the editorial palette away from its restrained brand direction.
 **Files changed:** none
 **Testing:** Re-read prior audit findings. Type-check unchanged.
 
 ---
 
 ## Pass 79 — CTAs & interactive elements — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** / (homepage bottom CTA section — iOS download link)
@@ -850,6 +930,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 80 — Mobile responsiveness — 2026-05-09
+
 **Type:** visual
 **Status:** shipped
 **Page(s):** /calculate (Counter widget — used on every "How many heirs?" question)
@@ -861,6 +942,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 81 — Motion & polish — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide motion audit (5th cycle)
@@ -872,6 +954,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 82 — Overall composition — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide composition audit (5th cycle)
@@ -883,6 +966,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 83 — Edge cases & error handling — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /settings (the public settings page that shows saved-count + export/clear actions)
@@ -894,6 +978,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 84 — User feedback & responsiveness — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /settings (Clear all data button — destructive irreversible action)
@@ -905,6 +990,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 85 — Performance & Core Web Vitals — 2026-05-09
+
 **Type:** feature
 **Status:** skip
 **Page(s):** site-wide performance audit (5th cycle)
@@ -916,17 +1002,19 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 86 — SEO & metadata — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /pricing
 **What:** Added explicit `og:title`, `og:description`, `og:type`, `og:url` meta tags to /pricing's `<svelte:head>` so social-card scrapers (Twitter, LinkedIn, WhatsApp, Slack, Discord) get tuned-for-share copy instead of falling back to the page's static title/description tags.
-**Why:** Audited per-page og overrides. Only the homepage and methodology articles currently set explicit og tags. /pricing — the most-shared marketing URL on the site, the conversion entry point — relied on social scrapers falling back to the page `<title>` and `<meta description>`. That fallback works but isn't guaranteed (some scrapers prioritize og:* and ignore the static tags entirely; others present og:* differently than `<title>`). Explicit og:* gives deterministic control over the share-card render. Tuned the og copy slightly differently from the SEO description: the SEO description leads with the SKU ("FairShare Pro for Islamic estate practitioners. ... $19/mo or $179/yr"), while og:title is a plain hook ("FairShare Pro for Practitioners") since og:site_name (added Pass 26 to app.html) handles the brand suffix automatically. Pass 26 already covers the og:image / og:image:* / twitter:card defaults at the app.html level, so /pricing inherits those without per-page declaration. Other pages that should also have explicit og tags (/for-attorneys, /for-scholars, /about, /methodology index, /calculate) follow the same shape and could land in subsequent passes — /pricing first because it carries the highest social-share value.
+**Why:** Audited per-page og overrides. Only the homepage and methodology articles currently set explicit og tags. /pricing — the most-shared marketing URL on the site, the conversion entry point — relied on social scrapers falling back to the page `<title>` and `<meta description>`. That fallback works but isn't guaranteed (some scrapers prioritize og:_ and ignore the static tags entirely; others present og:_ differently than `<title>`). Explicit og:_ gives deterministic control over the share-card render. Tuned the og copy slightly differently from the SEO description: the SEO description leads with the SKU ("FairShare Pro for Islamic estate practitioners. ... $19/mo or $179/yr"), while og:title is a plain hook ("FairShare Pro for Practitioners") since og:site_name (added Pass 26 to app.html) handles the brand suffix automatically. Pass 26 already covers the og:image / og:image:_ / twitter:card defaults at the app.html level, so /pricing inherits those without per-page declaration. Other pages that should also have explicit og tags (/for-attorneys, /for-scholars, /about, /methodology index, /calculate) follow the same shape and could land in subsequent passes — /pricing first because it carries the highest social-share value.
 **Files changed:** src/routes/pricing/+page.svelte
 **Testing:** Type-check 0 errors. 5 pre-existing /app/settings/branding warnings unchanged. Did not probe live with social-card scrapers (Twitter/LinkedIn validators require deployed URLs); the meta-tag shape matches the homepage's existing og: declarations verbatim.
 
 ---
 
 ## Pass 87 — Accessibility — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved (loading state)
@@ -938,6 +1026,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 88 — Cross-browser & responsive — 2026-05-09
+
 **Type:** visual
 **Status:** skip
 **Page(s):** site-wide cross-browser audit (5th cycle)
@@ -949,6 +1038,7 @@ The grep pulls the standard property line independently because the `-webkit-` l
 ---
 
 ## Pass 89 — Quality of life — 2026-05-09
+
 **Type:** feature
 **Status:** shipped
 **Page(s):** /saved (row date display)

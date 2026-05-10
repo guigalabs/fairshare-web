@@ -53,11 +53,10 @@
 
       <h2>Why FairShare and not a spreadsheet</h2>
       <p>
-        The Fara'id engine is built in TypeScript with BigInt-backed exact fractions, so every
-        share is computed precisely without floating-point drift. The named edge cases (Awl, Radd,
-        Hajb, Umariatan, Musharakah, Grandfather-with-siblings) are all detected automatically.
-        Every share is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12,
-        4:176).
+        The Fara'id engine is built in TypeScript with BigInt-backed exact fractions, so every share
+        is computed precisely without floating-point drift. The named edge cases (Awl, Radd, Hajb,
+        Umariatan, Musharakah, Grandfather-with-siblings) are all detected automatically. Every
+        share is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12, 4:176).
       </p>
 
       <h2>For diaspora clients</h2>

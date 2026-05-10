@@ -24,8 +24,7 @@
   // on the client runs at hydration) and zero out the fly params for users who
   // asked for less motion.
   const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const enter = (delay: number) =>
     reducedMotion
       ? { y: 0, duration: 0, easing: cubicOut, delay: 0 }
@@ -219,7 +218,9 @@
     <p>{t("landing.cta2.body")}</p>
     <div class="cta-buttons">
       <Button href="/calculate" size="lg">{t("landing.cta2.primary")}</Button>
-      <Button href="/methodology" variant="secondary" size="lg">{t("landing.cta2.secondary")}</Button>
+      <Button href="/methodology" variant="secondary" size="lg"
+        >{t("landing.cta2.secondary")}</Button
+      >
     </div>
     <div class="cta-extras">
       {#if APP_STORE_URL}

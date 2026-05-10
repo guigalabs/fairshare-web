@@ -34,8 +34,7 @@
   // so honoring the user's preference here matters more than on a single page
   // hero.
   const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const stepEnter = reducedMotion
     ? { y: 0, duration: 0, easing: cubicOut }
     : { y: 12, duration: 240, easing: cubicOut };
@@ -50,7 +49,14 @@
 
   function changeMadhhab(value: Madhhab) {
     madhhab = value;
-    if (browser) localStorage.setItem(MADHHAB_STORAGE_KEY, value);
+    if (browser) {
+      try {
+        localStorage.setItem(MADHHAB_STORAGE_KEY, value);
+      } catch {
+        // Safari Private Browsing pre-iOS-16 has a localStorage quota of 0.
+        // The selection still applies to this session; we just can't persist it.
+      }
+    }
     runner.reset(value);
     counterValue = 0;
   }
