@@ -14,6 +14,13 @@
   "footer.disclaimerLink": "إخلاء المسؤولية",
   "footer.privacy": "الخصوصية",
   "footer.terms": "الشروط",
+  "ui.dismiss": "إغلاق",
+  "ui.close": "إغلاق",
+  "ui.decrease": "إنقاص {label}",
+  "ui.increase": "زيادة {label}",
+  "ui.language": "اللغة",
+  "ui.primaryNav": "التنقل الرئيسي",
+  "ui.noShare": "لا نصيب",
 
   "scenarios.title": "جرّب سيناريو سريع",
   "scenarios.heir": "وارث",

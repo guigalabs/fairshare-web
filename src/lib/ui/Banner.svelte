@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import { t } from "$lib/i18n/index.svelte";
 
   let {
     tone = "info",
@@ -19,7 +20,7 @@
     {@render children()}
   </div>
   {#if dismissible}
-    <button type="button" class="banner-dismiss" onclick={onDismiss} aria-label="Dismiss">
+    <button type="button" class="banner-dismiss" onclick={onDismiss} aria-label={t("ui.dismiss")}>
       ×
     </button>
   {/if}

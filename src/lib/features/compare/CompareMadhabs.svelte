@@ -2,6 +2,7 @@
   import type { Gender, HeirEntry } from "$engine";
   import { formatCents, perHeirAmount, type Cents } from "$lib/money";
   import { runForAllMadhabs } from "./runForAllMadhabs";
+  import { t } from "$lib/i18n/index.svelte";
 
   let {
     subjectGender,
@@ -60,7 +61,7 @@
                   >
                 {/if}
               {:else}
-                <span class="blocked" aria-label="No share">·</span>
+                <span class="blocked" aria-label={t("ui.noShare")}>·</span>
               {/if}
             </td>
           {/each}

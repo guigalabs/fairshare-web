@@ -14,6 +14,13 @@
   "footer.disclaimerLink": "Disclaimer",
   "footer.privacy": "Privacy",
   "footer.terms": "Terms",
+  "ui.dismiss": "Dismiss",
+  "ui.close": "Close",
+  "ui.decrease": "Decrease {label}",
+  "ui.increase": "Increase {label}",
+  "ui.language": "Language",
+  "ui.primaryNav": "Primary",
+  "ui.noShare": "No share",
 
   "scenarios.title": "Try a quick scenario",
   "scenarios.heir": "heir",

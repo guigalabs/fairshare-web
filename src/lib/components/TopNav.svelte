@@ -39,7 +39,7 @@
       <span class="brand-name">{t("nav.brand")}</span>
     </a>
 
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" aria-label={t("ui.primaryNav")}>
       <a
         href="/calculate"
         class="nav-link"
@@ -88,7 +88,7 @@
   </div>
 
   {#if menuOpen}
-    <nav id="mobile-nav" class="mobile-nav" aria-label="Primary">
+    <nav id="mobile-nav" class="mobile-nav" aria-label={t("ui.primaryNav")}>
       <a
         href="/calculate"
         class="mobile-link"

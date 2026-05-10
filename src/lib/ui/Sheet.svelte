@@ -2,6 +2,7 @@
   import { fade, fly } from "svelte/transition";
   import { onMount } from "svelte";
   import type { Snippet } from "svelte";
+  import { t } from "$lib/i18n/index.svelte";
 
   let {
     open = $bindable(false),
@@ -46,7 +47,9 @@
   >
     <header class="sheet-header">
       <h2 class="sheet-title">{title}</h2>
-      <button type="button" class="sheet-close" onclick={close} aria-label="Close"> × </button>
+      <button type="button" class="sheet-close" onclick={close} aria-label={t("ui.close")}>
+        ×
+      </button>
     </header>
     <div class="sheet-body">
       {@render children()}
