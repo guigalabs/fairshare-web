@@ -103,6 +103,24 @@
         {t("landing.cta.secondary")}
       </Button>
     </div>
+    {#if APP_STORE_URL}
+      <a
+        class="app-store-badge"
+        href={APP_STORE_URL}
+        in:fly={enter(420)}
+        aria-label={t("landing.appStore.aria")}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
+          />
+        </svg>
+        <span class="app-store-text">
+          <span class="app-store-eyebrow">{t("landing.appStore.eyebrow")}</span>
+          <span class="app-store-label">{t("landing.appStore.label")}</span>
+        </span>
+      </a>
+    {/if}
     <p class="hero-meta" in:fly={enter(480)}>
       {t("landing.meta")}
     </p>
@@ -351,6 +369,43 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
+  }
+  .app-store-badge {
+    margin-top: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem;
+    background: #000;
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+  .app-store-badge:hover {
+    transform: translateY(-1px);
+  }
+  .app-store-badge:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .app-store-text {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 0.125rem;
+  }
+  .app-store-eyebrow {
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+  .app-store-label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .hero-meta {
     margin-top: 1.5rem;

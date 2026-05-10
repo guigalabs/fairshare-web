@@ -96,6 +96,9 @@
   "landing.cta.primary": "ابدأ الحساب",
   "landing.cta.secondary": "اقرأ المنهجية",
   "landing.meta": "مجاني · بدون حسابات · بدون تتبع · يعمل دون اتصال",
+  "landing.appStore.aria": "حمّل فيرشير من App Store",
+  "landing.appStore.eyebrow": "حمّل من",
+  "landing.appStore.label": "App Store",
 
   "landing.trust.schools": "مذاهب فقهية",
   "landing.trust.data": "بيانات مجمَّعة",

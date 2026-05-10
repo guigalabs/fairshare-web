@@ -96,6 +96,9 @@
   "landing.cta.primary": "Start a calculation",
   "landing.cta.secondary": "Read the methodology",
   "landing.meta": "Free · No accounts · No tracking · Works offline",
+  "landing.appStore.aria": "Download FairShare on the App Store",
+  "landing.appStore.eyebrow": "Download on the",
+  "landing.appStore.label": "App Store",
 
   "landing.trust.schools": "schools of thought",
   "landing.trust.data": "data collected",
