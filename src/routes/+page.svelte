@@ -2,7 +2,7 @@
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { env } from "$env/dynamic/public";
-  import { Button, Card, Banner, reducedMotion } from "$lib/ui";
+  import { Button, Card, Banner, Field, Sheet, TextInput, reducedMotion } from "$lib/ui";
   import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import QuickScenarios from "$lib/features/landing/QuickScenarios.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
@@ -14,9 +14,36 @@
 
   const appSchema = softwareApplicationSchema();
 
-  // When PUBLIC_APP_STORE_URL is unset, the iOS download link is hidden —
-  // better than landing the user on Apple's "App Not Found" page.
+  // Until the iOS app ships, the badge opens a waitlist modal instead of
+  // linking to the App Store. Once PUBLIC_APP_STORE_URL is set, click flows
+  // straight to Apple.
   const APP_STORE_URL = env.PUBLIC_APP_STORE_URL || null;
+
+  let iosSheetOpen = $state(false);
+  let iosEmail = $state("");
+  let iosStatus = $state<"idle" | "pending" | "ok" | "error">("idle");
+
+  function onIosClick(e: MouseEvent) {
+    if (APP_STORE_URL) return; // let the link navigate normally
+    e.preventDefault();
+    iosSheetOpen = true;
+  }
+
+  async function submitIosWaitlist(e: SubmitEvent) {
+    e.preventDefault();
+    if (iosStatus === "pending") return;
+    iosStatus = "pending";
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: iosEmail, source: "ios" }),
+      });
+      iosStatus = res.ok ? "ok" : "error";
+    } catch {
+      iosStatus = "error";
+    }
+  }
 
   const enter = (delay: number) =>
     reducedMotion
@@ -103,24 +130,23 @@
         {t("landing.cta.secondary")}
       </Button>
     </div>
-    {#if APP_STORE_URL}
-      <a
-        class="app-store-badge"
-        href={APP_STORE_URL}
-        in:fly={enter(420)}
-        aria-label={t("landing.appStore.aria")}
-      >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path
-            d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
-          />
-        </svg>
-        <span class="app-store-text">
-          <span class="app-store-eyebrow">{t("landing.appStore.eyebrow")}</span>
-          <span class="app-store-label">{t("landing.appStore.label")}</span>
-        </span>
-      </a>
-    {/if}
+    <a
+      class="app-store-badge"
+      href={APP_STORE_URL ?? "#"}
+      onclick={onIosClick}
+      in:fly={enter(420)}
+      aria-label={t("landing.appStore.aria")}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path
+          d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
+        />
+      </svg>
+      <span class="app-store-text">
+        <span class="app-store-eyebrow">{t("landing.appStore.eyebrow")}</span>
+        <span class="app-store-label">{t("landing.appStore.label")}</span>
+      </span>
+    </a>
     <p class="hero-meta" in:fly={enter(480)}>
       {t("landing.meta")}
     </p>
@@ -258,20 +284,47 @@
       >
     </div>
     <div class="cta-extras">
-      {#if APP_STORE_URL}
-        <a class="ios-link" href={APP_STORE_URL}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path
-              d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
-            />
-          </svg>
-          {t("landing.cta2.ios")}
-        </a>
-      {/if}
+      <a class="ios-link" href={APP_STORE_URL ?? "#"} onclick={onIosClick}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
+          />
+        </svg>
+        {t("landing.cta2.ios")}
+      </a>
       <InstallPwaButton />
     </div>
   </div>
 </section>
+
+<Sheet bind:open={iosSheetOpen} title={t("iosWaitlist.title")}>
+  {#snippet children()}
+    <p class="ios-sheet-lede">{t("iosWaitlist.lede")}</p>
+    {#if iosStatus === "ok"}
+      <p class="ios-sheet-thanks" role="status">{t("iosWaitlist.thanks")}</p>
+    {:else}
+      <form class="ios-sheet-form" onsubmit={submitIosWaitlist}>
+        <Field
+          label={t("iosWaitlist.emailLabel")}
+          error={iosStatus === "error" ? t("iosWaitlist.error") : undefined}
+        >
+          {#snippet children()}
+            <TextInput
+              type="email"
+              autocomplete="email"
+              required
+              bind:value={iosEmail}
+              placeholder="you@example.com"
+            />
+          {/snippet}
+        </Field>
+        <Button type="submit" loading={iosStatus === "pending"} fullWidth>
+          {t("iosWaitlist.submit")}
+        </Button>
+      </form>
+    {/if}
+  {/snippet}
+</Sheet>
 
 <style>
   .container {
@@ -411,6 +464,21 @@
     margin-top: 1.5rem;
     font-size: 0.8125rem;
     color: var(--color-text-muted);
+  }
+  .ios-sheet-lede {
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+  .ios-sheet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ios-sheet-thanks {
+    color: var(--color-accent);
+    font-weight: 500;
+    padding: 1rem 0;
   }
 
   /* Trust strip */
