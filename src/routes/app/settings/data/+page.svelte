@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { Button } from "$lib/ui";
+  import { t } from "$lib/i18n/index.svelte";
 
   let confirmDelete = $state(false);
   let deleting = $state(false);
@@ -13,56 +14,55 @@
     try {
       const res = await fetch("/api/account", { method: "DELETE" });
       if (!res.ok) {
-        error = `Failed to delete account (${res.status})`;
+        error = t("app.data.delete.error", { status: res.status });
         deleting = false;
         return;
       }
       // Sign out and land on the home page.
       await goto("/auth/signout");
     } catch {
-      error = "Could not reach the server.";
+      error = t("app.data.delete.network");
       deleting = false;
     }
   }
 </script>
 
 <svelte:head>
-  <title>Data & account · FairShare Pro</title>
+  <title>{t("app.data.title")} · FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
-  <h1>Data & account</h1>
+  <h1>{t("app.data.title")}</h1>
 </section>
 
 <div class="card">
-  <h2>Export</h2>
-  <p>
-    Download every case, client, and branding setting attached to your account in a single JSON
-    file.
-  </p>
+  <h2>{t("app.data.export.title")}</h2>
+  <p>{t("app.data.export.desc")}</p>
   <p class="actions">
-    <Button href="/api/export" download>Download JSON</Button>
+    <Button href="/api/export" download>{t("app.data.export.cta")}</Button>
   </p>
 </div>
 
 <div class="card danger">
-  <h2>Delete account</h2>
-  <p>
-    Permanently removes your account and every case, client, and setting. This action cannot be
-    undone.
-  </p>
+  <h2>{t("app.data.delete.title")}</h2>
+  <p>{t("app.data.delete.desc")}</p>
 
   {#if !confirmDelete}
-    <Button variant="destructive" onclick={() => (confirmDelete = true)}>Delete my account</Button>
+    <Button variant="destructive" onclick={() => (confirmDelete = true)}>
+      {t("app.data.delete.start")}
+    </Button>
   {:else}
     <p class="confirm">
-      <strong>Are you sure?</strong> This deletes everything immediately.
+      <strong>{t("app.data.delete.confirm")}</strong>
+      {t("app.data.delete.confirmBody")}
     </p>
     <div class="actions">
-      <Button variant="destructive" loading={deleting} onclick={deleteAccount}
-        >Yes, delete everything</Button
-      >
-      <Button variant="ghost" onclick={() => (confirmDelete = false)}>Cancel</Button>
+      <Button variant="destructive" loading={deleting} onclick={deleteAccount}>
+        {t("app.data.delete.confirmCta")}
+      </Button>
+      <Button variant="ghost" onclick={() => (confirmDelete = false)}>
+        {t("app.data.delete.cancel")}
+      </Button>
     </div>
   {/if}
   {#if error}<p class="error" role="alert">{error}</p>{/if}

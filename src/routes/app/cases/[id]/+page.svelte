@@ -102,10 +102,10 @@
 
 <section class="head">
   <div>
-    <p class="kicker">{c.madhhab}</p>
+    <p class="kicker">{t(`madhhab.${c.madhhab}.name`)}</p>
     <h1>{c.deceasedName}</h1>
     <p class="meta">
-      {#if c.dateOfDeath}DOD: {c.dateOfDeath}{/if}
+      {#if c.dateOfDeath}{t("app.cases.detail.dod", { date: c.dateOfDeath })}{/if}
       {#if c.jurisdiction}· {c.jurisdiction}{/if}
     </p>
   </div>
@@ -128,19 +128,21 @@
   <div class="card">
     <h2>{t("app.cases.detail.estate")}</h2>
     <dl class="kv">
-      <dt>Gross</dt>
+      <dt>{t("app.cases.detail.gross")}</dt>
       <dd>{c.currency} {formatCents(grossCents)}</dd>
-      <dt>Funeral</dt>
+      <dt>{t("app.cases.detail.funeral")}</dt>
       <dd>− {c.currency} {formatCents(funeralCents)}</dd>
-      <dt>Debts ({debtsList.length})</dt>
+      <dt>{t("app.cases.detail.debts", { count: debtsList.length })}</dt>
       <dd>− {c.currency} {formatCents(debtsTotal)}</dd>
-      <dt>Bequests ({bequestsList.length})</dt>
+      <dt>{t("app.cases.detail.bequests", { count: bequestsList.length })}</dt>
       <dd class:warn={!validBequests}>
         − {c.currency}
         {formatCents(bequestsTotal)}
-        {#if !validBequests}<span class="warn-label"> (exceeds 1/3 cap)</span>{/if}
+        {#if !validBequests}
+          <span class="warn-label"> {t("app.cases.detail.bequestsWarn")}</span>
+        {/if}
       </dd>
-      <dt class="net">Net</dt>
+      <dt class="net">{t("app.cases.detail.net")}</dt>
       <dd class="net">{c.currency} {formatCents(net)}</dd>
     </dl>
   </div>
@@ -158,14 +160,16 @@
   {:else}
     <table class="shares">
       <thead>
-        <tr
-          ><th>Heir</th><th>Share</th>{#if net > 0n}<th>Amount</th>{/if}</tr
-        >
+        <tr>
+          <th>{t("app.cases.detail.heir")}</th>
+          <th>{t("app.cases.detail.share")}</th>
+          {#if net > 0n}<th>{t("app.cases.detail.amount")}</th>{/if}
+        </tr>
       </thead>
       <tbody>
         {#each result.shares as s}
           <tr>
-            <td>{s.heirType}{s.count > 1 ? ` ×${s.count}` : ""}</td>
+            <td>{t(`heir.${s.heirType}`)}{s.count > 1 ? ` ×${s.count}` : ""}</td>
             <td>{s.fraction.numerator.toString()}/{s.fraction.denominator.toString()}</td>
             {#if net > 0n}
               <td>{c.currency} {formatCents(perHeirAmount(net, s.fraction))}</td>

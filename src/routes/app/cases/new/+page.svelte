@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-  <title>New case · FairShare Pro</title>
+  <title>{t("app.cases.new.title")} · FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
@@ -103,19 +103,19 @@
     <Field label={t("app.cases.new.subjectGender")}>
       {#snippet children()}
         <select bind:value={subjectGender} class="control">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="male">{t("calculate.male")}</option>
+          <option value="female">{t("calculate.female")}</option>
         </select>
       {/snippet}
     </Field>
     <Field label={t("app.cases.new.madhhab")}>
       {#snippet children()}
         <select bind:value={madhhab} class="control">
-          <option value="general">General</option>
-          <option value="hanafi">Hanafi</option>
-          <option value="maliki">Maliki</option>
-          <option value="shafii">Shafi'i</option>
-          <option value="hanbali">Hanbali</option>
+          <option value="general">{t("madhhab.general.name")}</option>
+          <option value="hanafi">{t("madhhab.hanafi.name")}</option>
+          <option value="maliki">{t("madhhab.maliki.name")}</option>
+          <option value="shafii">{t("madhhab.shafii.name")}</option>
+          <option value="hanbali">{t("madhhab.hanbali.name")}</option>
         </select>
       {/snippet}
     </Field>

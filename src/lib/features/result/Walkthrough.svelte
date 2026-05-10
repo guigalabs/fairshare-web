@@ -18,8 +18,7 @@
   <ol class="steps">
     {#each result.steps as step, i (i)}
       <li class="step">
-        <span class="rule">{step.ruleApplied}</span>
-        <p class="desc">{step.description}</p>
+        <span class="rule">{t(`walkthrough.step.${step.ruleApplied}`)}</span>
         {#if step.verseKey}
           <p class="verse">{t("walkthrough.surah", { verse: step.verseKey })}</p>
         {/if}
@@ -91,7 +90,8 @@
   }
   .step {
     position: relative;
-    padding: 0.875rem 0 0.875rem 2rem;
+    padding-block: 0.875rem;
+    padding-inline-start: 2rem;
     border-top: 1px solid var(--color-border);
     counter-increment: step;
   }

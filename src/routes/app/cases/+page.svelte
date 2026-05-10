@@ -12,16 +12,13 @@
 </script>
 
 <svelte:head>
-  <title>Cases · FairShare Pro</title>
+  <title>{t("app.cases.title")} · FairShare Pro</title>
 </svelte:head>
 
 {#if !data.isPro}
-  <EmptyState
-    title="Subscribe to FairShare Pro"
-    description="Server-side cases, branded PDFs, and madhab compare are Pro features. Choose a plan and pick up where you left off."
-  >
+  <EmptyState title={t("app.cases.upsell.title")} description={t("app.cases.upsell.desc")}>
     {#snippet action()}
-      <Button href="/pricing">See pricing</Button>
+      <Button href="/pricing">{t("app.billing.seePlans")}</Button>
     {/snippet}
   </EmptyState>
 {:else}
@@ -47,11 +44,11 @@
     </select>
     <select name="madhhab" aria-label={t("app.cases.filter.madhhab")}>
       <option value="">{t("app.cases.filter.allMadhabs")}</option>
-      <option value="general">General</option>
-      <option value="hanafi">Hanafi</option>
-      <option value="maliki">Maliki</option>
-      <option value="shafii">Shafi'i</option>
-      <option value="hanbali">Hanbali</option>
+      <option value="general">{t("madhhab.general.name")}</option>
+      <option value="hanafi">{t("madhhab.hanafi.name")}</option>
+      <option value="maliki">{t("madhhab.maliki.name")}</option>
+      <option value="shafii">{t("madhhab.shafii.name")}</option>
+      <option value="hanbali">{t("madhhab.hanbali.name")}</option>
     </select>
     <Button type="submit" variant="secondary">{t("app.cases.filter.apply")}</Button>
   </form>
@@ -69,8 +66,8 @@
           <a href="/app/cases/{c.id}" class="case-link">
             <span class="case-name">{c.deceasedName}</span>
             <span class="case-meta">
-              {c.madhhab}
-              {#if c.dateOfDeath}· DOD {c.dateOfDeath}{/if}
+              {t(`madhhab.${c.madhhab}.name`)}
+              {#if c.dateOfDeath}· {t("app.cases.dod")} {c.dateOfDeath}{/if}
               {#if c.jurisdiction}· {c.jurisdiction}{/if}
             </span>
           </a>
