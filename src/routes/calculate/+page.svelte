@@ -11,6 +11,7 @@
   import { copyFor, shapeFor, progressOf } from "$lib/features/questionnaire/labels";
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
+  import { t } from "$lib/i18n/index.svelte";
 
   // A `?madhhab=` URL param takes precedence over the stored value so a
   // colleague-shared link can pin the right school.
@@ -103,30 +104,29 @@
 </script>
 
 <svelte:head>
-  <title>Calculate · FairShare</title>
-  <meta
-    name="description"
-    content="Walk through a short questionnaire to compute Islamic inheritance shares for any family."
-  />
+  <title>{t("calculate.title")} · FairShare</title>
+  <meta name="description" content={t("calculate.metaDescription")} />
   <link rel="canonical" href="https://fairshare.guigalabs.com/calculate/" />
 </svelte:head>
 
 <section class="container">
   <header class="head">
-    <p class="kicker" aria-live="polite">Step {Math.min(progress, 99)}%</p>
-    <h1>Calculate</h1>
+    <p class="kicker" aria-live="polite">
+      {t("calculate.kicker", { progress: Math.min(progress, 99) })}
+    </p>
+    <h1>{t("calculate.title")}</h1>
     <div
       class="progress"
       role="progressbar"
       aria-valuemin="0"
       aria-valuemax="100"
       aria-valuenow={progress}
-      aria-label="Questionnaire progress"
+      aria-label={t("calculate.progressAriaLabel")}
     >
       <div class="progress-bar" style="--p: {progress}%"></div>
     </div>
     <div class="madhhab-row">
-      <span class="madhhab-label" id="madhhab-label">School:</span>
+      <span class="madhhab-label" id="madhhab-label">{t("calculate.school")}</span>
       <div class="madhhab-pills" role="group" aria-labelledby="madhhab-label">
         {#each MADHHABS as m (m)}
           <button
@@ -136,7 +136,7 @@
             aria-pressed={madhhab === m}
             onclick={() => changeMadhhab(m)}
           >
-            {m === "shafii" ? "Shafi'i" : m[0].toUpperCase() + m.slice(1)}
+            {t(`madhhab.${m}.name`)}
           </button>
         {/each}
       </div>
@@ -144,7 +144,7 @@
   </header>
 
   {#if heirs.length > 0}
-    <div class="summary" aria-label="Heirs collected so far">
+    <div class="summary" aria-label={t("calculate.heirsAriaLabel")}>
       {#each heirs as e (e.type)}
         <span class="chip">{labelFor(e.type, e.count)}</span>
       {/each}
@@ -162,9 +162,11 @@
 
           {#if shape === "bool"}
             <div class="bool-actions">
-              <Button onclick={answerYes} fullWidth>{copy.trueLabel ?? "Yes"}</Button>
+              <Button onclick={answerYes} fullWidth>
+                {copy.trueLabel ?? t("calculate.yes")}
+              </Button>
               <Button variant="secondary" onclick={answerNo} fullWidth>
-                {copy.falseLabel ?? "No"}
+                {copy.falseLabel ?? t("calculate.no")}
               </Button>
             </div>
           {:else if shape === "int"}
@@ -173,27 +175,29 @@
                 bind:value={counterValue}
                 min={0}
                 max={copy.countMax ?? 20}
-                label={copy.countLabel ?? "Count"}
+                label={copy.countLabel ?? t("calculate.count")}
                 description={copy.countDescription}
               />
-              <Button onclick={submitCount} fullWidth>Continue</Button>
+              <Button onclick={submitCount} fullWidth>{t("calculate.continue")}</Button>
             </div>
           {:else if shape === "gender"}
             <div class="bool-actions">
-              <Button onclick={() => pickGender(0)} fullWidth>Male</Button>
-              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>Female</Button>
+              <Button onclick={() => pickGender(0)} fullWidth>{t("calculate.male")}</Button>
+              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>
+                {t("calculate.female")}
+              </Button>
             </div>
           {:else}
             <Banner tone="scholar">
               {#snippet children()}
-                You're done. Review the heirs above and run the calculation.
+                {t("calculate.done")}
               {/snippet}
             </Banner>
             <div class="done-actions">
-              <Button onclick={calculate} size="lg" fullWidth>See the result</Button>
+              <Button onclick={calculate} size="lg" fullWidth>{t("calculate.seeResult")}</Button>
               <Button onclick={startOver} variant="ghost" fullWidth>
                 <RotateCcw size={16} aria-hidden="true" />
-                Start over
+                {t("calculate.startOver")}
               </Button>
             </div>
           {/if}
@@ -203,12 +207,12 @@
       <div class="nav">
         <Button variant="ghost" onclick={() => runner.back()} disabled={!runner.canGoBack}>
           <ChevronLeft size={16} aria-hidden="true" />
-          Back
+          {t("calculate.back")}
         </Button>
         {#if shape === "bool" || shape === "gender"}
-          <span class="nav-hint">Pick an option to continue</span>
+          <span class="nav-hint">{t("calculate.hint.bool")}</span>
         {:else if shape === "int"}
-          <span class="nav-hint">Tap continue when ready</span>
+          <span class="nav-hint">{t("calculate.hint.int")}</span>
         {/if}
         <span class="nav-spacer">
           <ChevronRight size={16} class="invisible" aria-hidden="true" />
