@@ -7,6 +7,7 @@
   import WhatIf from "$lib/features/result/WhatIf.svelte";
   import ResultActionBar from "$lib/features/result/ResultActionBar.svelte";
   import PlainLanguageSummary from "$lib/features/result/PlainLanguageSummary.svelte";
+  import PrintableResult from "$lib/features/result/PrintableResult.svelte";
   import { ResultStore } from "$lib/features/result/store.svelte";
   import { t } from "$lib/i18n/index.svelte";
 
@@ -105,6 +106,12 @@
         <Walkthrough result={safeResult} />
       </aside>
     </div>
+
+    <!-- Off-screen one-pager for PDF capture. Positioned absolutely off the
+         visible viewport but still rendered so html-to-image can read it. -->
+    <div class="pdf-fixture" aria-hidden="true">
+      <PrintableResult inputCase={safeC} result={safeResult} />
+    </div>
   {/if}
 </section>
 
@@ -182,5 +189,15 @@
     text-align: center;
     color: var(--color-text-muted);
     padding: 4rem 1rem;
+  }
+  .pdf-fixture {
+    /* Render off-screen so html-to-image can still capture it but the user
+       never sees it. position:fixed prevents the off-screen element from
+       inflating the page scroll area. */
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: -10000px;
+    width: 794px;
+    pointer-events: none;
   }
 </style>

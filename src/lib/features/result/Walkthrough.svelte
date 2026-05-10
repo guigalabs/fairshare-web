@@ -118,11 +118,6 @@
     color: var(--color-accent);
     font-weight: 600;
   }
-  .desc {
-    margin-top: 0.25rem;
-    color: var(--color-text);
-    line-height: 1.55;
-  }
   .verse {
     margin-top: 0.25rem;
     font-size: 0.8125rem;
