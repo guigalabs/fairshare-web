@@ -16,7 +16,6 @@
         <nav class="footer-links" aria-label="Footer">
           <a href="/calculate">Calculate</a>
           <a href="/methodology">Methodology</a>
-          <a href="/saved">Saved</a>
           <a href="/pricing" class="footer-pro">Pro</a>
           <a href="/about">About</a>
           <a href="/disclaimer">Disclaimer</a>

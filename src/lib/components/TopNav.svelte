@@ -8,7 +8,6 @@
   const path = $derived(page.url.pathname.replace(/\/$/, "") || "/");
   const isCalc = $derived(path === "/calculate" || path.startsWith("/calculate/"));
   const isMethodology = $derived(path.startsWith("/methodology"));
-  const isSaved = $derived(path === "/saved");
   const isPro = $derived(
     path === "/pricing" || path.startsWith("/for-attorneys") || path.startsWith("/for-scholars"),
   );
@@ -47,14 +46,6 @@
       >
         <BookOpen size={16} aria-hidden="true" />
         {t("nav.methodology")}
-      </a>
-      <a
-        href="/saved"
-        class="nav-link"
-        class:nav-link--active={isSaved}
-        aria-current={isSaved ? "page" : undefined}
-      >
-        {t("nav.saved")}
       </a>
       <a
         href="/pricing"
