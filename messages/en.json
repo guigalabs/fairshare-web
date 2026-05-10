@@ -213,6 +213,17 @@
   "result.subject.male": "Male",
   "result.subject.female": "Female",
 
+  "methodology.title": "Methodology",
+  "methodology.metaDescription": "The classical rules of Islamic inheritance (Fara'id) explained. Five madhabs, the core rules of fixed shares, blocking, residuary heirs, Awl, and Radd, plus the named special cases.",
+  "methodology.heading": "Islamic inheritance, in {count} short reads.",
+  "methodology.lede": "Each page covers one school, rule, or special case: the source verses, the worked examples, and where the schools diverge. Useful before you trust any calculator output.",
+  "methodology.minRead": "{count} min read",
+  "methodology.allMeta": "{count} articles · all free, no signup.",
+  "methodology.breadcrumbAria": "Breadcrumb",
+  "methodology.allArticles": "All articles",
+  "methodology.tryInCalculator": "Try in calculator",
+  "methodology.translationInProgress": "Arabic translation in progress. The article body below is shown in English; chrome and navigation are localised.",
+
   "tier.grandparents": "Grandparents",
   "tier.parents": "Parents",
   "tier.spouse": "Spouse",

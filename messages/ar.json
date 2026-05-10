@@ -213,6 +213,17 @@
   "result.subject.male": "ذكر",
   "result.subject.female": "أنثى",
 
+  "methodology.title": "المنهجية",
+  "methodology.metaDescription": "شرح أحكام الميراث الإسلامي (الفرائض) الكلاسيكية: خمسة مذاهب، والقواعد الأساسية في الفروض والحجب والعصبة والعَوْل والرَّد، والحالات الخاصة المسماة.",
+  "methodology.heading": "الميراث الإسلامي، في {count} مقالات مختصرة.",
+  "methodology.lede": "تتناول كل صفحة مذهبًا أو قاعدة أو حالة خاصة: الآيات المصدر، والأمثلة المحلولة، وموضع الخلاف بين المذاهب. مفيد قبل الثقة بأي مخرجات حاسبة.",
+  "methodology.minRead": "{count} دقيقة قراءة",
+  "methodology.allMeta": "{count} مقالة · مجانية بالكامل، بدون تسجيل.",
+  "methodology.breadcrumbAria": "مسار التنقّل",
+  "methodology.allArticles": "كل المقالات",
+  "methodology.tryInCalculator": "جرّب في الحاسبة",
+  "methodology.translationInProgress": "الترجمة العربية قيد الإعداد. يُعرض متن المقال أدناه بالإنجليزية، أمّا الواجهة وعناصر التنقّل فمعرّبة.",
+
   "tier.grandparents": "الأجداد",
   "tier.parents": "الأبوان",
   "tier.spouse": "الزوج/الزوجة",

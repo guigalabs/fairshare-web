@@ -4,39 +4,42 @@
   import ArrowLeft from "@lucide/svelte/icons/arrow-left";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
   import { BODIES } from "$lib/content/methodology-bodies";
-  import { groupTitle } from "$lib/content/methodology";
+  import { groupTitle, entryTitle, entryDescription } from "$lib/content/methodology";
+  import { i18n, t } from "$lib/i18n/index.svelte";
   import { serialiseJsonLd, articleSchema, breadcrumbSchema } from "$lib/seo/jsonld";
   import type { PageProps } from "./$types";
 
   let { data }: PageProps = $props();
   const entry = $derived(data.entry);
   const url = $derived(`https://fairshare.guigalabs.com/methodology/${entry.group}/${entry.slug}/`);
-  const body = $derived(BODIES[`${entry.group}/${entry.slug}`] ?? "");
+  const bodies = $derived(BODIES[`${entry.group}/${entry.slug}`] ?? { en: "", ar: "" });
+  const body = $derived(bodies[i18n.current] || bodies.en);
+  const showFallbackBanner = $derived(i18n.current === "ar" && !bodies.ar);
 
   const article = $derived(
     articleSchema({
       url,
-      title: entry.title,
-      description: entry.description,
+      title: entryTitle(entry),
+      description: entryDescription(entry),
       publishedISO: "2026-05-01T00:00:00.000Z",
     }),
   );
   const breadcrumb = $derived(
     breadcrumbSchema([
       { name: "FairShare", url: "https://fairshare.guigalabs.com/" },
-      { name: "Methodology", url: "https://fairshare.guigalabs.com/methodology/" },
+      { name: t("methodology.title"), url: "https://fairshare.guigalabs.com/methodology/" },
       { name: groupTitle(entry.group), url },
-      { name: entry.title, url },
+      { name: entryTitle(entry), url },
     ]),
   );
 </script>
 
 <svelte:head>
-  <title>{entry.title} · FairShare</title>
-  <meta name="description" content={entry.description} />
+  <title>{entryTitle(entry)} · FairShare</title>
+  <meta name="description" content={entryDescription(entry)} />
   <link rel="canonical" href={url} />
-  <meta property="og:title" content={entry.title} />
-  <meta property="og:description" content={entry.description} />
+  <meta property="og:title" content={entryTitle(entry)} />
+  <meta property="og:description" content={entryDescription(entry)} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={url} />
   {@html serialiseJsonLd(article)}
@@ -44,32 +47,40 @@
 </svelte:head>
 
 <article class="container">
-  <nav class="crumbs" aria-label="Breadcrumb">
-    <a href="/methodology">Methodology</a>
+  <nav class="crumbs" aria-label={t("methodology.breadcrumbAria")}>
+    <a href="/methodology">{t("methodology.title")}</a>
     <span aria-hidden="true">›</span>
     <span>{groupTitle(entry.group)}</span>
   </nav>
 
   <header class="head">
     <p class="kicker">{groupTitle(entry.group)}</p>
-    <h1>{entry.title}</h1>
-    <p class="meta">{entry.readingMinutes} min read</p>
-    <p class="lede">{entry.description}</p>
+    <h1>{entryTitle(entry)}</h1>
+    <p class="meta">{t("methodology.minRead", { count: entry.readingMinutes })}</p>
+    <p class="lede">{entryDescription(entry)}</p>
   </header>
+
+  {#if showFallbackBanner}
+    <p class="fallback-banner">{t("methodology.translationInProgress")}</p>
+  {/if}
 
   <Prose>
     {#snippet children()}
-      {@html body}
+      {#if i18n.current === "ar"}
+        {@html bodies.ar || bodies.en || ""}
+      {:else}
+        {@html bodies.en || ""}
+      {/if}
     {/snippet}
   </Prose>
 
   <footer class="foot">
     <Button href="/methodology" variant="secondary">
       <ArrowLeft size={16} aria-hidden="true" />
-      All articles
+      {t("methodology.allArticles")}
     </Button>
     <Button href="/calculate">
-      Try in calculator
+      {t("methodology.tryInCalculator")}
       <ArrowRight size={16} aria-hidden="true" />
     </Button>
   </footer>
@@ -123,6 +134,15 @@
     color: var(--color-text-secondary);
     line-height: 1.55;
     font-size: 1.0625rem;
+  }
+  .fallback-banner {
+    margin: 1rem 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--color-warning, #d97706) 30%, transparent);
+    background: color-mix(in srgb, var(--color-warning, #d97706) 8%, transparent);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
   }
   .foot {
     margin-top: 3rem;

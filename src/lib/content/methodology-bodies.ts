@@ -4,7 +4,9 @@
 // summary <p>, has H2/H3 headings, lists, internal links, and ends with a
 // short "Further reading" section.
 
-export const BODIES: Record<string, string> = {
+import type { Locale } from "$lib/i18n/index.svelte";
+
+const EN: Record<string, string> = {
   // ─── Schools of thought ─────────────────────────────────────────────
 
   "madhhab/general": `<p>The <strong>General</strong> ruleset in FairShare follows the rulings the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) agree on. Where they diverge in well-known cases, it follows the majority position. It's the right starting point for anyone who isn't deliberately following one school over the others.</p>
@@ -405,3 +407,12 @@ export const BODIES: Record<string, string> = {
       <li><a href="/methodology/rules/blocking">Blocking (Hajb) in general</a></li>
     </ul>`,
 };
+
+// Arabic translations land here as scholars review them. Until a key is
+// present, the topic page falls back to English and shows a banner explaining
+// the translation is in progress.
+const AR: Partial<Record<string, string>> = {};
+
+export const BODIES: Record<string, Partial<Record<Locale, string>>> = Object.fromEntries(
+  Object.keys(EN).map((k) => [k, { en: EN[k], ar: AR[k] }]),
+);
