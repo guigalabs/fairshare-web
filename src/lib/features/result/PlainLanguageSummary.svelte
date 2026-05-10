@@ -5,6 +5,7 @@
   import Info from "@lucide/svelte/icons/info";
   import type { CalculationResult, Gender } from "$engine";
   import { generatePlainLanguage, specialRuleNote } from "./plainLanguage";
+  import { reducedMotion } from "$lib/ui/motion";
 
   interface Props {
     result: CalculationResult;
@@ -17,11 +18,6 @@
   const sentences = $derived(generatePlainLanguage(result, subjectGender));
   const note = $derived(specialRuleNote(result));
 
-  // Svelte transitions are JS-driven and bypass the global CSS reduced-motion
-  // override. Honor the user's preference here — same factory pattern Pass 15
-  // (homepage hero), Pass 21 (calculate step), and Pass 36 (toasts) used.
-  const reducedMotion =
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const bodySlide = reducedMotion ? { duration: 0 } : { duration: 200 };
 
   // Bold percentages and fractions inside a sentence — keeps the math

@@ -2,7 +2,7 @@
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { env } from "$env/dynamic/public";
-  import { Button, Card, Banner } from "$lib/ui";
+  import { Button, Card, Banner, reducedMotion } from "$lib/ui";
   import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import QuickScenarios from "$lib/features/landing/QuickScenarios.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
@@ -14,17 +14,10 @@
 
   const appSchema = softwareApplicationSchema();
 
-  // Override at deploy time via Cloudflare Pages env (PUBLIC_APP_STORE_URL).
-  // When unset, the iOS download link is hidden — better than landing the
-  // user on Apple's "App Not Found" page.
+  // When PUBLIC_APP_STORE_URL is unset, the iOS download link is hidden —
+  // better than landing the user on Apple's "App Not Found" page.
   const APP_STORE_URL = env.PUBLIC_APP_STORE_URL || null;
 
-  // Svelte transitions are JS-driven, so the global CSS `prefers-reduced-motion`
-  // override doesn't apply to them. Read the preference at module load (which
-  // on the client runs at hydration) and zero out the fly params for users who
-  // asked for less motion.
-  const reducedMotion =
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const enter = (delay: number) =>
     reducedMotion
       ? { y: 0, duration: 0, easing: cubicOut, delay: 0 }

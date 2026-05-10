@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import { Button, Card, Banner, Counter, toast } from "$lib/ui";
+  import { Button, Card, Banner, Counter, toast, reducedMotion } from "$lib/ui";
   import ChevronLeft from "@lucide/svelte/icons/chevron-left";
   import ChevronRight from "@lucide/svelte/icons/chevron-right";
   import RotateCcw from "@lucide/svelte/icons/rotate-ccw";
@@ -12,10 +12,8 @@
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
 
-  // Persist the user's school of thought across sessions. Practitioners who
-  // specialize in one school shouldn't have to re-pick on every visit. Follows
-  // the same localStorage pattern as the i18n module. A `?madhhab=` URL param
-  // takes precedence so a colleague-shared link can pin the right school.
+  // A `?madhhab=` URL param takes precedence over the stored value so a
+  // colleague-shared link can pin the right school.
   const MADHHAB_STORAGE_KEY = "fairshare:madhhab";
   function readInitialMadhhab(): Madhhab {
     if (!browser) return "general";
@@ -29,12 +27,6 @@
   let madhhab = $state<Madhhab>(initialMadhhab);
   const runner = new QuestionnaireRunner(initialMadhhab);
 
-  // Svelte transitions are JS-driven and bypass the global CSS reduced-motion
-  // override. The step `fly` runs on every question advance (10-30× per case),
-  // so honoring the user's preference here matters more than on a single page
-  // hero.
-  const reducedMotion =
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const stepEnter = reducedMotion
     ? { y: 0, duration: 0, easing: cubicOut }
     : { y: 12, duration: 240, easing: cubicOut };
@@ -83,10 +75,9 @@
   }
 
   function calculate() {
-    // The result page reads from sessionStorage in this phase. Shareable URLs
-    // come in B6. Wrap the write — Safari Private Browsing pre-iOS-16 has a
-    // sessionStorage quota of 0, so setItem throws QuotaExceededError and the
-    // user would otherwise land on /result's empty state with no explanation.
+    // Safari Private Browsing pre-iOS-16 has a sessionStorage quota of 0, so
+    // setItem throws QuotaExceededError. Without the catch, the user would
+    // land on /result's empty state with no explanation.
     if (typeof sessionStorage !== "undefined") {
       const c = runner.buildCase();
       try {
