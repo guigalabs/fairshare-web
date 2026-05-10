@@ -29,7 +29,7 @@
 >
   <header class="head">
     <div class="brand">
-      <div class="brand-mark"></div>
+      <img src="/icons/brand-64.png" alt="" class="brand-mark" width="32" height="32" />
       <span class="brand-name">FairShare</span>
     </div>
     <div class="head-meta">
@@ -132,10 +132,11 @@
     gap: 10px;
   }
   .brand-mark {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 7px;
-    background: linear-gradient(135deg, #0a8754, #388f9e);
+    object-fit: cover;
+    display: block;
   }
   .brand-name {
     font-size: 18px;
