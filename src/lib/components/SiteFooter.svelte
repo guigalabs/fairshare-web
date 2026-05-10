@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import { t } from "$lib/i18n/index.svelte";
 
   const year = new Date().getFullYear();
 
@@ -12,21 +13,18 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-row">
-        <span class="footer-brand">FairShare</span>
-        <nav class="footer-links" aria-label="Footer">
-          <a href="/calculate">Calculate</a>
-          <a href="/methodology">Methodology</a>
-          <a href="/pricing" class="footer-pro">Pro</a>
-          <a href="/about">About</a>
-          <a href="/disclaimer">Disclaimer</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/terms">Terms</a>
+        <span class="footer-brand">{t("nav.brand")}</span>
+        <nav class="footer-links" aria-label={t("footer.aria")}>
+          <a href="/calculate">{t("nav.calculate")}</a>
+          <a href="/methodology">{t("nav.methodology")}</a>
+          <a href="/pricing" class="footer-pro">{t("nav.pro")}</a>
+          <a href="/about">{t("footer.about")}</a>
+          <a href="/disclaimer">{t("footer.disclaimerLink")}</a>
+          <a href="/privacy">{t("footer.privacy")}</a>
+          <a href="/terms">{t("footer.terms")}</a>
         </nav>
       </div>
-      <p class="footer-meta">
-        &copy; {year} Guiga Labs. Educational use only. Please consult a qualified scholar before acting
-        on any calculation.
-      </p>
+      <p class="footer-meta">{t("footer.copyrightFull", { year })}</p>
     </div>
   </footer>
 {/if}

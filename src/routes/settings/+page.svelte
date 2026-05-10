@@ -100,9 +100,11 @@
       {#snippet children()}
         <h2>{t("settings.data")}</h2>
         <p class="desc">
-          {savedCount === 1
-            ? t("settings.data.desc.one", { count: savedCount })
-            : t("settings.data.desc.other", { count: savedCount })}
+          {savedCount === 0
+            ? t("settings.data.desc.zero")
+            : savedCount === 1
+              ? t("settings.data.desc.one", { count: savedCount })
+              : t("settings.data.desc.other", { count: savedCount })}
         </p>
         <div class="data-actions">
           <Button variant="secondary" onclick={exportJson} size="sm">
