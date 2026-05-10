@@ -49,29 +49,13 @@
   type ProAudience = "practitioners" | "attorneys" | "scholars";
   let proAudience = $state<ProAudience>("practitioners");
 
-  const PRO_TABS: Record<ProAudience, { headingKey: string; ledeKey: string; prefix: string }> = {
-    practitioners: {
-      headingKey: "landing.pro.heading",
-      ledeKey: "landing.pro.lede",
-      prefix: "landing.pro",
-    },
-    attorneys: {
-      headingKey: "landing.pro.attorneys.heading",
-      ledeKey: "landing.pro.attorneys.lede",
-      prefix: "landing.pro.attorneys",
-    },
-    scholars: {
-      headingKey: "landing.pro.scholars.heading",
-      ledeKey: "landing.pro.scholars.lede",
-      prefix: "landing.pro.scholars",
-    },
+  const PRO_TAB_PREFIX: Record<ProAudience, string> = {
+    practitioners: "landing.pro",
+    attorneys: "landing.pro.attorneys",
+    scholars: "landing.pro.scholars",
   };
 
-  const proTab = $derived(PRO_TABS[proAudience]);
-
-  function toggleProAudience(target: Exclude<ProAudience, "practitioners">) {
-    proAudience = proAudience === target ? "practitioners" : target;
-  }
+  const proPrefix = $derived(PRO_TAB_PREFIX[proAudience]);
 </script>
 
 <svelte:head>
@@ -174,26 +158,26 @@
   <div class="pro-inner">
     <div class="pro-header">
       <p class="pro-kicker">{t("landing.pro.kicker")}</p>
-      <h2>{t(proTab.headingKey)}</h2>
-      <p class="pro-lede">{t(proTab.ledeKey)}</p>
+      <h2>{t(`${proPrefix}.heading`)}</h2>
+      <p class="pro-lede">{t(`${proPrefix}.lede`)}</p>
     </div>
 
     <ul class="pro-features">
       <li>
-        <strong>{t(`${proTab.prefix}.f1.title`)}</strong>
-        <span>{t(`${proTab.prefix}.f1.body`)}</span>
+        <strong>{t(`${proPrefix}.f1.title`)}</strong>
+        <span>{t(`${proPrefix}.f1.body`)}</span>
       </li>
       <li>
-        <strong>{t(`${proTab.prefix}.f2.title`)}</strong>
-        <span>{t(`${proTab.prefix}.f2.body`)}</span>
+        <strong>{t(`${proPrefix}.f2.title`)}</strong>
+        <span>{t(`${proPrefix}.f2.body`)}</span>
       </li>
       <li>
-        <strong>{t(`${proTab.prefix}.f3.title`)}</strong>
-        <span>{t(`${proTab.prefix}.f3.body`)}</span>
+        <strong>{t(`${proPrefix}.f3.title`)}</strong>
+        <span>{t(`${proPrefix}.f3.body`)}</span>
       </li>
       <li>
-        <strong>{t(`${proTab.prefix}.f4.title`)}</strong>
-        <span>{t(`${proTab.prefix}.f4.body`)}</span>
+        <strong>{t(`${proPrefix}.f4.title`)}</strong>
+        <span>{t(`${proPrefix}.f4.body`)}</span>
       </li>
     </ul>
 
@@ -211,7 +195,7 @@
         class="pro-tab"
         class:pro-tab--active={proAudience === "attorneys"}
         aria-pressed={proAudience === "attorneys"}
-        onclick={() => toggleProAudience("attorneys")}
+        onclick={() => (proAudience = proAudience === "attorneys" ? "practitioners" : "attorneys")}
       >
         {t("landing.pro.cta.attorneys")}
       </button>
@@ -220,7 +204,7 @@
         class="pro-tab"
         class:pro-tab--active={proAudience === "scholars"}
         aria-pressed={proAudience === "scholars"}
-        onclick={() => toggleProAudience("scholars")}
+        onclick={() => (proAudience = proAudience === "scholars" ? "practitioners" : "scholars")}
       >
         {t("landing.pro.cta.scholars")}
       </button>
