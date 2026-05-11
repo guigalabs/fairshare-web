@@ -758,9 +758,14 @@
     padding: 4rem 1rem 6rem;
   }
   .cta-inner {
-    max-width: 36rem;
+    max-width: 48rem;
     margin: 0 auto;
     text-align: center;
+  }
+  .cta-inner > h2,
+  .cta-inner > p {
+    max-width: 36rem;
+    margin-inline: auto;
   }
   .cta-inner h2 {
     font-size: clamp(1.625rem, 3vw, 2.125rem);
