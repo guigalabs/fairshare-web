@@ -103,7 +103,7 @@
   "iosWaitlist.lede": "تطبيق iOS لم يصدر بعد على App Store. اترك بريدك وسنُعلمك يوم الإطلاق.",
   "iosWaitlist.emailLabel": "البريد الإلكتروني",
   "iosWaitlist.submit": "أعلِمني",
-  "iosWaitlist.thanks": "أنت على القائمة. سنتواصل معك.",
+  "iosWaitlist.thanks": "أنت على القائمة! 🎉 سنخبرك لحظة إطلاق التطبيق.",
   "iosWaitlist.error": "حدث خطأ. يرجى المحاولة مرة أخرى.",
 
   "landing.trust.schools": "مذاهب فقهية",
@@ -342,7 +342,7 @@
   "pricing.waitlist.sub": "سنراسلك يوم إطلاق Pro للعملاء الأوائل.",
   "pricing.waitlist.emailLabel": "البريد الإلكتروني",
   "pricing.waitlist.submit": "أعلِمني",
-  "pricing.waitlist.thanks": "شكرًا. سنتواصل معك عند إطلاق Pro.",
+  "pricing.waitlist.thanks": "تم! 🎉 سنراسلك يوم إطلاق Pro.",
   "pricing.waitlist.error": "حدث خطأ. يرجى المحاولة مرة أخرى.",
   "pricing.tryFree": "جرّب الحاسبة المجانية",
   "pricing.readMethodology": "اقرأ المنهجية",

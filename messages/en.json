@@ -103,7 +103,7 @@
   "iosWaitlist.lede": "The iOS app isn't on the App Store yet. Drop your email and we'll let you know the day it goes live.",
   "iosWaitlist.emailLabel": "Email",
   "iosWaitlist.submit": "Notify me",
-  "iosWaitlist.thanks": "You're on the list. We'll be in touch.",
+  "iosWaitlist.thanks": "You're on the list! 🎉 We'll let you know the moment the app drops.",
   "iosWaitlist.error": "Something went wrong. Please try again.",
 
   "landing.trust.schools": "schools of thought",
@@ -342,7 +342,7 @@
   "pricing.waitlist.sub": "We'll email you the day Pro opens to early customers.",
   "pricing.waitlist.emailLabel": "Email",
   "pricing.waitlist.submit": "Notify me",
-  "pricing.waitlist.thanks": "Thanks. We'll be in touch when Pro launches.",
+  "pricing.waitlist.thanks": "You're in! 🎉 We'll email you the day Pro opens.",
   "pricing.waitlist.error": "Something went wrong. Please try again.",
   "pricing.tryFree": "Try the free calculator",
   "pricing.readMethodology": "Read the methodology",
