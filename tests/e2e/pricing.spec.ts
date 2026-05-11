@@ -49,7 +49,7 @@ test("/pricing waitlist submit posts to /api/waitlist with source=pro and shows 
   await dialog.getByRole("textbox", { name: /email/i }).fill("amina@example.com");
   await dialog.getByRole("button", { name: "Notify me" }).click();
 
-  await expect(dialog.getByRole("status")).toHaveText(/thanks/i);
+  await expect(dialog.getByRole("status")).toHaveText(/you're in/i);
   expect(captured).toEqual([{ email: "amina@example.com", source: "pro" }]);
 });
 
