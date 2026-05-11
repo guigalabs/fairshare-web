@@ -1,6 +1,7 @@
 <script lang="ts">
   import Sparkles from "@lucide/svelte/icons/sparkles";
   import Users from "@lucide/svelte/icons/users";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
   import { SCENARIOS, heirCountOf, representativeHeirTypesOf, type Scenario } from "./scenarios";
   import { iconFor } from "$lib/features/result/heirHelpers";
   import { encodeCase } from "$lib/share";
@@ -24,6 +25,37 @@
     const c = inheritanceCase(s.subjectGender, s.heirs, s.madhhab);
     return `/result?case=${encodeCase(c)}`;
   }
+
+  let open = $state(false);
+  let trigger: HTMLButtonElement | undefined;
+  let menu: HTMLDivElement | undefined;
+
+  function toggle() {
+    open = !open;
+  }
+
+  function onDocClick(e: MouseEvent) {
+    const target = e.target as Node;
+    if (trigger?.contains(target) || menu?.contains(target)) return;
+    open = false;
+  }
+
+  function onKey(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      open = false;
+      trigger?.focus();
+    }
+  }
+
+  $effect(() => {
+    if (!open) return;
+    document.addEventListener("click", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("click", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  });
 </script>
 
 <section class="quick-scenarios" aria-labelledby="quick-scenarios-title">
@@ -32,38 +64,53 @@
     <h2 id="quick-scenarios-title">{t("scenarios.title")}</h2>
   </div>
 
-  <div class="scroller">
-    {#each SCENARIOS as s (s.id)}
-      {@const tint = TINTS[s.tintCategory]}
-      {@const reps = representativeHeirTypesOf(s)}
-      {@const count = heirCountOf(s)}
-      <a class="card" href={urlFor(s.id)} style:--tint={tint}>
-        <span class="accent" aria-hidden="true"></span>
+  <div class="wrap">
+    <button
+      bind:this={trigger}
+      type="button"
+      class="trigger"
+      class:open
+      aria-haspopup="menu"
+      aria-expanded={open}
+      onclick={toggle}
+    >
+      <span>{t("scenarios.pick")}</span>
+      <ChevronDown size={16} aria-hidden="true" />
+    </button>
 
-        <div class="icons" aria-hidden="true">
-          {#each reps as type, i (i)}
-            {@const Icon = iconFor(type)}
-            <span class="icon-bubble">
-              <Icon size={12} />
+    {#if open}
+      <div bind:this={menu} class="menu" role="menu">
+        {#each SCENARIOS as s (s.id)}
+          {@const tint = TINTS[s.tintCategory]}
+          {@const reps = representativeHeirTypesOf(s)}
+          {@const count = heirCountOf(s)}
+          <a class="item" role="menuitem" href={urlFor(s.id)} style:--tint={tint}>
+            <div class="icons" aria-hidden="true">
+              {#each reps as type, i (i)}
+                {@const Icon = iconFor(type)}
+                <span class="icon-bubble">
+                  <Icon size={12} />
+                </span>
+              {/each}
+              {#if count > reps.length}
+                <span class="icon-bubble more">+{count - reps.length}</span>
+              {/if}
+            </div>
+
+            <div class="text">
+              <span class="name">{t(s.nameKey)}</span>
+              <span class="desc">{t(s.descKey)}</span>
+            </div>
+
+            <span class="pill">
+              <Users size={11} aria-hidden="true" />
+              {count}
+              {t(count === 1 ? "scenarios.heir" : "scenarios.heirs")}
             </span>
-          {/each}
-          {#if count > reps.length}
-            <span class="icon-bubble more">+{count - reps.length}</span>
-          {/if}
-        </div>
-
-        <div class="text">
-          <span class="name">{t(s.nameKey)}</span>
-          <span class="desc">{t(s.descKey)}</span>
-        </div>
-
-        <span class="pill">
-          <Users size={11} aria-hidden="true" />
-          {count}
-          {t(count === 1 ? "scenarios.heir" : "scenarios.heirs")}
-        </span>
-      </a>
-    {/each}
+          </a>
+        {/each}
+      </div>
+    {/if}
   </div>
 </section>
 
@@ -90,61 +137,77 @@
     margin: 0;
   }
 
-  .scroller {
-    display: flex;
-    gap: 0.875rem;
-    overflow-x: auto;
-    padding: 0.875rem 0.25rem 1rem;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-  }
-  .scroller::-webkit-scrollbar {
-    display: none;
-  }
-  .scroller {
-    scrollbar-width: none;
+  .wrap {
+    position: relative;
+    margin-top: 0.875rem;
+    max-width: 28rem;
   }
 
-  .card {
-    position: relative;
-    flex: 0 0 170px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    padding: 0.875rem;
+  .trigger {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 14px;
-    text-decoration: none;
+    border-radius: 12px;
     color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     transition:
-      transform 120ms ease,
-      box-shadow 120ms ease,
-      border-color 120ms ease;
-    scroll-snap-align: start;
+      border-color 120ms ease,
+      box-shadow 120ms ease;
   }
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    border-color: color-mix(in srgb, var(--tint) 30%, var(--color-border));
+  .trigger:hover {
+    border-color: var(--color-border-strong);
   }
-  .card:focus-visible {
-    outline: 2px solid var(--tint);
+  .trigger:focus-visible {
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
+  .trigger :global(svg:last-child) {
+    transition: transform 160ms ease;
+    color: var(--color-text-muted);
+  }
+  .trigger.open :global(svg:last-child) {
+    transform: rotate(180deg);
+  }
 
-  .accent {
+  .menu {
     position: absolute;
-    top: 0;
-    inset-inline: 0;
-    height: 2.5px;
-    border-radius: 14px 14px 0 0;
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--tint) 60%, transparent),
-      color-mix(in srgb, var(--tint) 15%, transparent)
-    );
+    top: calc(100% + 0.375rem);
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    padding: 0.375rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    max-height: min(70vh, 26rem);
+    overflow-y: auto;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+  .item:hover,
+  .item:focus-visible {
+    background: color-mix(in srgb, var(--tint) 7%, transparent);
+    outline: none;
   }
 
   .icons {
@@ -177,36 +240,33 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    min-height: 40px;
+    min-width: 0;
   }
   .name {
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.2;
-    color: var(--color-text);
   }
   .desc {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.35;
     color: var(--color-text-muted);
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .pill {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    align-self: flex-start;
     padding: 0.1875rem 0.5rem;
     background: color-mix(in srgb, var(--tint) 12%, transparent);
     color: var(--color-text);
     font-size: 0.6875rem;
     font-weight: 600;
     border-radius: 999px;
+    flex-shrink: 0;
   }
   .pill :global(svg) {
     color: var(--tint);

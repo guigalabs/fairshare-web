@@ -23,6 +23,7 @@
   "ui.noShare": "No share",
 
   "scenarios.title": "Try a quick scenario",
+  "scenarios.pick": "Pick a sample family",
   "scenarios.heir": "heir",
   "scenarios.heirs": "heirs",
   "scenarios.spouseChildren.name": "Spouse & Children",
