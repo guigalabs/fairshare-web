@@ -25,9 +25,9 @@ export async function authedApiContext(event: ApiRequestEvent): Promise<Authenti
   const userId = (session?.user as { id?: string } | undefined)?.id;
   const email = session?.user?.email;
   if (!userId || !email) throw error(401, "unauthenticated");
-  const databaseUrl = event.platform?.env?.DATABASE_URL;
-  if (!databaseUrl) throw error(500, "database_not_configured");
-  return { userId, email, db: makeDb(databaseUrl) };
+  const d1 = event.platform?.env?.DB;
+  if (!d1) throw error(500, "database_not_configured");
+  return { userId, email, db: makeDb(d1) };
 }
 
 export async function parseJsonBody<T>(request: Request, schema: z.ZodType<T>): Promise<T> {

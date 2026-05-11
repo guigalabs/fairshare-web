@@ -14,7 +14,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
     throw new Error("Cloudflare platform env missing — adapter-cloudflare must be active.");
   }
 
-  const db = makeDb(env.DATABASE_URL);
+  const db = makeDb(env.DB);
   const resend = new ResendClient(env.RESEND_API_KEY);
 
   return {

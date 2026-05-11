@@ -24,14 +24,14 @@ vi.mock("$lib/server/db/client", () => ({
 import type { RequestEvent } from "./$types";
 import { POST } from "./+server";
 
-function makeEvent(body: unknown, databaseUrl: string | null = "postgres://x"): RequestEvent {
+function makeEvent(body: unknown, dbBound = true): RequestEvent {
   return {
     request: new Request("https://x/api/waitlist", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: typeof body === "string" ? body : JSON.stringify(body),
     }),
-    platform: databaseUrl ? { env: { DATABASE_URL: databaseUrl } } : undefined,
+    platform: dbBound ? { env: { DB: {} as D1Database } } : undefined,
   } as RequestEvent;
 }
 
@@ -90,7 +90,7 @@ describe("POST /api/waitlist", () => {
   });
 
   it("returns 503 when the database isn't configured", async () => {
-    const res = await POST(makeEvent({ email: "x@y.com" }, null));
+    const res = await POST(makeEvent({ email: "x@y.com" }, false));
     expect(res.status).toBe(503);
   });
 });

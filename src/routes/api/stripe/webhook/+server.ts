@@ -35,7 +35,7 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 
   if (!parsed.id || !parsed.type) throw error(400, "invalid_event");
 
-  const db = makeDb(env.DATABASE_URL);
+  const db = makeDb(env.DB);
 
   // Apply BEFORE marking the event processed. applySubscriptionEvent is
   // idempotent (its `lastEventAt >= event.created` guard short-circuits
