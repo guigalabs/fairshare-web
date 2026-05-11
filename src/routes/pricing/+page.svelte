@@ -138,7 +138,7 @@
               autocomplete="email"
               required
               bind:value={email}
-              placeholder="you@firm.com"
+              placeholder="you@example.com"
             />
           {/snippet}
         </Field>

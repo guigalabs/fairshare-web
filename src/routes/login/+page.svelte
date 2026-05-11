@@ -47,7 +47,7 @@
           name="email"
           required
           autocomplete="email"
-          placeholder="you@firm.com"
+          placeholder="you@example.com"
         />
       {/snippet}
     </Field>
