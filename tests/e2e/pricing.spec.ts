@@ -20,18 +20,22 @@ test("/pricing has monthly and annual cadence toggle with both prices visible", 
   await expect(page.getByText("$179")).toBeVisible();
 });
 
-test("/pricing exposes a waitlist email form", async ({ page }) => {
+test("/pricing exposes a waitlist email form via the Subscribe modal", async ({ page }) => {
   await page.goto("/pricing");
-  const email = page.getByRole("textbox", { name: /email/i });
-  const submit = page.getByRole("button", { name: "Notify me" });
-  await expect(email).toBeVisible();
-  await expect(submit).toBeVisible();
+  await page.getByRole("button", { name: /subscribe to pro/i }).click();
+
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("textbox", { name: /email/i })).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Notify me" })).toBeVisible();
 });
 
-test("/pricing waitlist submit posts to /api/waitlist and shows thanks", async ({ page }) => {
-  const captured: { email?: string }[] = [];
+test("/pricing waitlist submit posts to /api/waitlist with source=pro and shows thanks", async ({
+  page,
+}) => {
+  const captured: { email?: string; source?: string }[] = [];
   await page.route("**/api/waitlist", async (route) => {
-    captured.push((await route.request().postDataJSON()) as { email?: string });
+    captured.push((await route.request().postDataJSON()) as { email?: string; source?: string });
     await route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -40,11 +44,13 @@ test("/pricing waitlist submit posts to /api/waitlist and shows thanks", async (
   });
 
   await page.goto("/pricing");
-  await page.getByRole("textbox", { name: /email/i }).fill("amina@firm.com");
-  await page.getByRole("button", { name: "Notify me" }).click();
+  await page.getByRole("button", { name: /subscribe to pro/i }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("textbox", { name: /email/i }).fill("amina@example.com");
+  await dialog.getByRole("button", { name: "Notify me" }).click();
 
-  await expect(page.getByRole("status")).toHaveText(/thanks/i);
-  expect(captured).toEqual([{ email: "amina@firm.com" }]);
+  await expect(dialog.getByRole("status")).toHaveText(/thanks/i);
+  expect(captured).toEqual([{ email: "amina@example.com", source: "pro" }]);
 });
 
 test("/pricing waitlist surfaces an inline error when /api/waitlist fails", async ({ page }) => {
@@ -52,13 +58,15 @@ test("/pricing waitlist surfaces an inline error when /api/waitlist fails", asyn
     route.fulfill({
       status: 503,
       contentType: "application/json",
-      body: JSON.stringify({ ok: false, error: "kv_not_configured" }),
+      body: JSON.stringify({ ok: false, error: "db_not_configured" }),
     }),
   );
 
   await page.goto("/pricing");
-  await page.getByRole("textbox", { name: /email/i }).fill("amina@firm.com");
-  await page.getByRole("button", { name: "Notify me" }).click();
+  await page.getByRole("button", { name: /subscribe to pro/i }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("textbox", { name: /email/i }).fill("amina@example.com");
+  await dialog.getByRole("button", { name: "Notify me" }).click();
 
-  await expect(page.getByRole("alert")).toHaveText(/something went wrong/i);
+  await expect(dialog.getByRole("alert")).toHaveText(/something went wrong/i);
 });
