@@ -17,6 +17,7 @@
   --color-warning-border: var(--color-warning-border-actual);
   --color-warning-text: var(--color-warning-text-actual);
   --color-error: var(--color-error-actual);
+  --color-error-hover: var(--color-error-hover-actual);
 
   --font-sans: "InterVariable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-arabic: "Noto Naskh Arabic", "Geeza Pro", serif;
@@ -46,6 +47,7 @@
   --color-warning-border-actual: #f0d9a0;
   --color-warning-text-actual: #6e4500;
   --color-error-actual: #b91c1c;
+  --color-error-hover-actual: #991b1b;
 }
 
 @layer base {

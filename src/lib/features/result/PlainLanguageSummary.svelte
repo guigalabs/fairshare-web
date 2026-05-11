@@ -5,6 +5,8 @@
   import Info from "@lucide/svelte/icons/info";
   import type { CalculationResult, Gender } from "$engine";
   import { generatePlainLanguage, specialRuleNote } from "./plainLanguage";
+  import { reducedMotion } from "$lib/ui/motion";
+  import { t } from "$lib/i18n/index.svelte";
 
   interface Props {
     result: CalculationResult;
@@ -16,6 +18,8 @@
   let expanded = $state(true);
   const sentences = $derived(generatePlainLanguage(result, subjectGender));
   const note = $derived(specialRuleNote(result));
+
+  const bodySlide = reducedMotion ? { duration: 0 } : { duration: 200 };
 
   // Bold percentages and fractions inside a sentence — keeps the math
   // visually anchored without overloading the prose around it.
@@ -35,14 +39,14 @@
     onclick={() => (expanded = !expanded)}
   >
     <Quote size={14} aria-hidden="true" />
-    <span id="plain-language-title">In plain words</span>
+    <span id="plain-language-title">{t("plain.title")}</span>
     <span class="chevron" class:open={expanded} aria-hidden="true">
       <ChevronDown size={14} />
     </span>
   </button>
 
   {#if expanded}
-    <div id="plain-language-body" class="body" transition:slide={{ duration: 200 }}>
+    <div id="plain-language-body" class="body" transition:slide={bodySlide}>
       <ul>
         {#each sentences as s (s.id)}
           <li>

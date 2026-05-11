@@ -7,7 +7,9 @@
   import WhatIf from "$lib/features/result/WhatIf.svelte";
   import ResultActionBar from "$lib/features/result/ResultActionBar.svelte";
   import PlainLanguageSummary from "$lib/features/result/PlainLanguageSummary.svelte";
+  import PrintableResult from "$lib/features/result/PrintableResult.svelte";
   import { ResultStore } from "$lib/features/result/store.svelte";
+  import { t } from "$lib/i18n/index.svelte";
 
   const store = new ResultStore();
 
@@ -20,32 +22,45 @@
 </script>
 
 <svelte:head>
-  <title>Result · FairShare</title>
+  <title>{t("result.title")} · FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 
 <section class="container">
   {#if !store.baseCase}
-    <EmptyState
-      title="No calculation in progress"
-      description="Start a new calculation to see a result here."
-    >
+    {#if store.linkError}
+      <Banner tone="warning">
+        {#snippet children()}
+          <strong>{t("result.linkError.title")}</strong>
+          {t("result.linkError.desc")}
+        {/snippet}
+      </Banner>
+    {/if}
+    <EmptyState title={t("result.empty.title")} description={t("result.empty.desc")}>
       {#snippet action()}
-        <Button href="/calculate" size="lg">Start a calculation</Button>
+        <Button href="/calculate" size="lg">{t("result.empty.cta")}</Button>
       {/snippet}
     </EmptyState>
   {:else if !result || !c}
-    <p class="loading">Calculating…</p>
+    <p class="loading">{t("result.calculating")}</p>
   {:else}
     {@const safeC = c}
     {@const safeResult = result}
     <header class="head">
-      <p class="kicker">Result</p>
-      <h1>{safeC.subjectGender === "male" ? "Male" : "Female"} subject · {safeC.madhhab}</h1>
+      <p class="kicker">{t("result.kicker")}</p>
+      <h1>
+        {t("result.heirsHeading", {
+          gender:
+            safeC.subjectGender === "male" ? t("result.subject.male") : t("result.subject.female"),
+          madhhab: t(`madhhab.${safeC.madhhab}.name`),
+        })}
+      </h1>
       <p class="subject-meta">
-        {safeC.heirs.length} heir{safeC.heirs.length === 1 ? "" : "s"}
+        {safeC.heirs.length === 1
+          ? t("result.heirsCount.one", { count: safeC.heirs.length })
+          : t("result.heirsCount.other", { count: safeC.heirs.length })}
         {#if store.whatIfActive}
-          <span class="whatif-flag">· What-If active</span>
+          <span class="whatif-flag">{t("result.whatif.flag")}</span>
         {/if}
       </p>
     </header>
@@ -56,7 +71,8 @@
 
     <Banner tone="scholar">
       {#snippet children()}
-        <strong>Educational use only.</strong> Confirm with a qualified scholar before acting on any distribution.
+        <strong>{t("result.educational")}</strong>
+        {t("result.educational.rest")}
       {/snippet}
     </Banner>
 
@@ -64,21 +80,21 @@
       <div class="left">
         <Card>
           {#snippet children()}
-            <h2 class="section-title">Shares</h2>
+            <h2 class="section-title">{t("result.shares")}</h2>
             <div class="shares">
               {#each safeResult.shares as s (s.heirType)}
                 <ShareRow share={s} />
               {/each}
             </div>
             {#if safeResult.shares.length === 0}
-              <p class="empty">No shares could be assigned for this configuration.</p>
+              <p class="empty">{t("result.shares.empty")}</p>
             {/if}
           {/snippet}
         </Card>
 
         <Card>
           {#snippet children()}
-            <h2 class="section-title">Family tree</h2>
+            <h2 class="section-title">{t("result.tree")}</h2>
             <FamilyTree result={safeResult} subjectGender={safeC.subjectGender} />
           {/snippet}
         </Card>
@@ -89,6 +105,12 @@
         <PlainLanguageSummary result={safeResult} subjectGender={safeC.subjectGender} />
         <Walkthrough result={safeResult} />
       </aside>
+    </div>
+
+    <!-- Off-screen one-pager for PDF capture. Positioned absolutely off the
+         visible viewport but still rendered so html-to-image can read it. -->
+    <div class="pdf-fixture" aria-hidden="true">
+      <PrintableResult inputCase={safeC} result={safeResult} />
     </div>
   {/if}
 </section>
@@ -114,6 +136,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    line-height: 1.15;
     text-transform: capitalize;
   }
   .subject-meta {
@@ -166,5 +189,15 @@
     text-align: center;
     color: var(--color-text-muted);
     padding: 4rem 1rem;
+  }
+  .pdf-fixture {
+    /* Render off-screen so html-to-image can still capture it but the user
+       never sees it. position:fixed prevents the off-screen element from
+       inflating the page scroll area. */
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: -10000px;
+    width: 794px;
+    pointer-events: none;
   }
 </style>

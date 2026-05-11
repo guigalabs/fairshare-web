@@ -1,11 +1,14 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
   import { toast } from "./toast.svelte";
+  import { reducedMotion } from "./motion";
+
+  const toastFly = reducedMotion ? { y: 0, duration: 0 } : { y: 16, duration: 200 };
 </script>
 
 <div class="toast-host" aria-live="polite" aria-atomic="true">
   {#each toast.entries as t (t.id)}
-    <div class="toast toast--{t.tone}" role="status" transition:fly={{ y: 16, duration: 200 }}>
+    <div class="toast toast--{t.tone}" role="status" transition:fly={toastFly}>
       {t.message}
     </div>
   {/each}

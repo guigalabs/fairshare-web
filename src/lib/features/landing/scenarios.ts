@@ -6,8 +6,10 @@ import type { HeirCategory } from "$lib/features/result/heirHelpers";
 
 export interface Scenario {
   id: string;
-  name: string;
-  description: string;
+  /** i18n key for the card title. Resolved via t() at render time. */
+  nameKey: string;
+  /** i18n key for the card description. Resolved via t() at render time. */
+  descKey: string;
   subjectGender: Gender;
   madhhab: Madhhab;
   heirs: HeirEntry[];
@@ -18,8 +20,8 @@ export interface Scenario {
 export const SCENARIOS: Scenario[] = [
   {
     id: "spouse_children",
-    name: "Spouse & Children",
-    description: "Wife, 2 sons, 1 daughter",
+    nameKey: "scenarios.spouseChildren.name",
+    descKey: "scenarios.spouseChildren.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [
@@ -31,8 +33,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "nuclear_family",
-    name: "Nuclear Family",
-    description: "Wife, son, daughter, both parents",
+    nameKey: "scenarios.nuclearFamily.name",
+    descKey: "scenarios.nuclearFamily.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [
@@ -46,8 +48,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "parents_only",
-    name: "Parents Only",
-    description: "Wife, father, mother",
+    nameKey: "scenarios.parentsOnly.name",
+    descKey: "scenarios.parentsOnly.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [
@@ -59,8 +61,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "daughters_only",
-    name: "Daughters Only",
-    description: "Wife, 3 daughters, both parents",
+    nameKey: "scenarios.daughtersOnly.name",
+    descKey: "scenarios.daughtersOnly.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [
@@ -73,8 +75,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "siblings",
-    name: "Siblings",
-    description: "Wife, mother, 2 brothers, 1 sister",
+    nameKey: "scenarios.siblings.name",
+    descKey: "scenarios.siblings.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [
@@ -87,8 +89,8 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "extended",
-    name: "Extended Family",
-    description: "Wife, grandfather, mother, grandchildren",
+    nameKey: "scenarios.extended.name",
+    descKey: "scenarios.extended.desc",
     subjectGender: "male",
     madhhab: "general",
     heirs: [

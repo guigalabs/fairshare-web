@@ -6,14 +6,22 @@
   import Trash2 from "@lucide/svelte/icons/trash-2";
   import FileDown from "@lucide/svelte/icons/file-down";
   import { exportAll, listCalculations } from "$lib/persistence";
+  import { t } from "$lib/i18n/index.svelte";
 
   let savedCount = $state(0);
+  let clearing = $state(false);
 
   async function refresh() {
     savedCount = (await listCalculations()).length;
   }
 
-  onMount(refresh);
+  onMount(async () => {
+    try {
+      await refresh();
+    } catch {
+      toast.show(t("settings.toast.readError"), "error", 6000);
+    }
+  });
 
   async function exportJson() {
     try {
@@ -29,78 +37,83 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      toast.show("Data exported", "success");
+      toast.show(t("settings.toast.exportSuccess"), "success");
     } catch (err) {
       console.error(err);
-      toast.show("Export failed", "error");
+      toast.show(t("settings.toast.exportError"), "error");
     }
   }
 
   async function clearAll() {
-    if (
-      !confirm(
-        "Delete ALL saved calculations and reset preferences on this device? This cannot be undone.",
-      )
-    ) {
-      return;
+    if (clearing) return;
+    if (!confirm(t("settings.confirmClear"))) return;
+    clearing = true;
+    try {
+      // Wipe IndexedDB + localStorage scoped to FairShare.
+      indexedDB.deleteDatabase("fairshareDB");
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith("fairshare:"))
+        .forEach((k) => localStorage.removeItem(k));
+      sessionStorage.removeItem("fairshare:case");
+      await refresh();
+      toast.show(t("settings.toast.clearSuccess"), "success");
+    } catch (err) {
+      console.error(err);
+      toast.show(t("settings.toast.clearError"), "error");
+    } finally {
+      clearing = false;
     }
-    // Wipe IndexedDB + localStorage scoped to FairShare.
-    indexedDB.deleteDatabase("fairshareDB");
-    Object.keys(localStorage)
-      .filter((k) => k.startsWith("fairshare:"))
-      .forEach((k) => localStorage.removeItem(k));
-    sessionStorage.removeItem("fairshare:case");
-    await refresh();
-    toast.show("All local data cleared", "success");
   }
 </script>
 
 <svelte:head>
-  <title>Settings · FairShare</title>
+  <title>{t("settings.title")} · FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 
 <section class="container">
   <header class="head">
-    <p class="kicker">Settings</p>
-    <h1>Settings</h1>
-    <p class="lede">All preferences are stored on this device only.</p>
+    <p class="kicker">{t("settings.title")}</p>
+    <h1>{t("settings.title")}</h1>
+    <p class="lede">{t("settings.lede")}</p>
   </header>
 
   <div class="grid">
     <Card>
       {#snippet children()}
-        <h2>Language</h2>
-        <div class="row"><span>Interface</span><LocaleToggle /></div>
+        <h2>{t("settings.language")}</h2>
+        <div class="row">
+          <span>{t("settings.language.interface")}</span><LocaleToggle />
+        </div>
       {/snippet}
     </Card>
 
     <Card>
       {#snippet children()}
-        <h2>Install as app</h2>
-        <p class="desc">
-          Adds FairShare to your home screen for offline use. The calculator works fully offline
-          once installed.
-        </p>
+        <h2>{t("settings.install")}</h2>
+        <p class="desc">{t("settings.install.desc")}</p>
         <div class="install"><InstallPwaButton /></div>
       {/snippet}
     </Card>
 
     <Card>
       {#snippet children()}
-        <h2>Your data</h2>
+        <h2>{t("settings.data")}</h2>
         <p class="desc">
-          {savedCount} saved calculation{savedCount === 1 ? "" : "s"} on this device. Everything is local.
-          Nothing is uploaded.
+          {savedCount === 0
+            ? t("settings.data.desc.zero")
+            : savedCount === 1
+              ? t("settings.data.desc.one", { count: savedCount })
+              : t("settings.data.desc.other", { count: savedCount })}
         </p>
         <div class="data-actions">
           <Button variant="secondary" onclick={exportJson} size="sm">
             <FileDown size={16} aria-hidden="true" />
-            Export all (JSON)
+            {t("settings.data.export")}
           </Button>
-          <Button variant="destructive" onclick={clearAll} size="sm">
+          <Button variant="destructive" onclick={clearAll} size="sm" loading={clearing}>
             <Trash2 size={16} aria-hidden="true" />
-            Clear all data
+            {t("settings.data.clear")}
           </Button>
         </div>
       {/snippet}

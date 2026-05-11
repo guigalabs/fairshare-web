@@ -22,7 +22,6 @@ declare global {
     // interface PageState {}
     interface Platform {
       env: {
-        WAITLIST_KV: KVNamespace;
         DATABASE_URL: string;
         AUTH_SECRET: string;
         RESEND_API_KEY: string;

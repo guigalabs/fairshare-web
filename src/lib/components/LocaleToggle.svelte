@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { i18n, LOCALES } from "$lib/i18n/index.svelte";
+  import { i18n, LOCALES, t } from "$lib/i18n/index.svelte";
   import Languages from "@lucide/svelte/icons/languages";
 </script>
 
-<div class="seg" role="radiogroup" aria-label="Language">
+<div class="seg" role="radiogroup" aria-label={t("ui.language")}>
   <Languages size={14} aria-hidden="true" class="seg-icon" />
   {#each LOCALES as loc (loc)}
     <label class="seg-option" class:seg-option--active={i18n.current === loc}>
@@ -37,7 +37,7 @@
   .seg-option {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.5rem;
+    padding: 0.4375rem 0.5rem;
     border-radius: var(--radius-pill);
     font-size: 0.75rem;
     font-weight: 600;

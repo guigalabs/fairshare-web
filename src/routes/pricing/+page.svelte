@@ -1,6 +1,6 @@
 <script lang="ts">
   import ArticleHeader from "$lib/components/ArticleHeader.svelte";
-  import { Button, Card, Field, TextInput } from "$lib/ui";
+  import { Button, Card, Field, Sheet, TextInput } from "$lib/ui";
   import Check from "@lucide/svelte/icons/check";
   import { t } from "$lib/i18n/index.svelte";
 
@@ -11,8 +11,14 @@
   ] as const satisfies ReadonlyArray<{ value: Cadence; labelKey: string }>;
 
   let cadence: Cadence = $state("monthly");
+
+  let waitlistOpen = $state(false);
   let email = $state("");
   let status: "idle" | "pending" | "ok" | "error" = $state("idle");
+
+  function openWaitlist(): void {
+    waitlistOpen = true;
+  }
 
   async function submitWaitlist(e: SubmitEvent): Promise<void> {
     e.preventDefault();
@@ -22,7 +28,7 @@
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, source: "pro" }),
       });
       status = res.ok ? "ok" : "error";
     } catch {
@@ -47,6 +53,13 @@
     content="FairShare Pro for Islamic estate practitioners. Case folders, named heirs, estate amounts, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
   />
   <link rel="canonical" href="https://fairshare.guigalabs.com/pricing/" />
+  <meta property="og:title" content="FairShare Pro for Practitioners" />
+  <meta
+    property="og:description"
+    content="A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fairshare.guigalabs.com/pricing/" />
 </svelte:head>
 
 <section class="container">
@@ -94,19 +107,23 @@
           {/each}
         </ul>
 
-        <form method="POST" action="/api/stripe/checkout" class="subscribe">
-          <input type="hidden" name="cadence" value={cadence} />
-          <Button type="submit" fullWidth>{t("pricing.subscribe")}</Button>
-        </form>
-        <p class="comingSoon">{t("pricing.checkoutNote")}</p>
+        <div class="subscribe">
+          <Button fullWidth onclick={openWaitlist}>{t("pricing.subscribe")}</Button>
+        </div>
+        <p class="comingSoon">{t("pricing.comingSoon")}</p>
       </div>
     {/snippet}
   </Card>
 
-  <section class="waitlist">
-    <h2>{t("pricing.waitlist.title")}</h2>
-    <p class="waitlist-sub">{t("pricing.waitlist.sub")}</p>
+  <div class="cta">
+    <Button href="/calculate" variant="secondary">{t("pricing.tryFree")}</Button>
+    <Button href="/methodology" variant="secondary">{t("pricing.readMethodology")}</Button>
+  </div>
+</section>
 
+<Sheet bind:open={waitlistOpen} title={t("pricing.waitlist.title")}>
+  {#snippet children()}
+    <p class="waitlist-lede">{t("pricing.waitlist.sub")}</p>
     {#if status === "ok"}
       <p class="waitlist-thanks" role="status">{t("pricing.waitlist.thanks")}</p>
     {:else}
@@ -118,23 +135,20 @@
           {#snippet children()}
             <TextInput
               type="email"
-              required
               autocomplete="email"
+              required
               bind:value={email}
-              placeholder="you@firm.com"
+              placeholder="you@example.com"
             />
           {/snippet}
         </Field>
-        <Button type="submit" loading={status === "pending"}>{t("pricing.waitlist.submit")}</Button>
+        <Button type="submit" loading={status === "pending"} fullWidth>
+          {t("pricing.waitlist.submit")}
+        </Button>
       </form>
     {/if}
-  </section>
-
-  <div class="cta">
-    <Button href="/calculate" variant="secondary">{t("pricing.tryFree")}</Button>
-    <Button href="/methodology" variant="ghost">{t("pricing.readMethodology")}</Button>
-  </div>
-</section>
+  {/snippet}
+</Sheet>
 
 <style>
   .container {
@@ -159,7 +173,7 @@
     background: var(--color-bg-elevated);
   }
   .cadence-btn {
-    padding: 0.4rem 1rem;
+    padding: 0.5625rem 1rem;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-secondary);
@@ -240,42 +254,20 @@
     color: var(--color-text-muted);
   }
 
-  .waitlist {
-    margin-top: 2.5rem;
-    padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-elevated);
-  }
-  .waitlist h2 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-  }
-  .waitlist-sub {
-    margin-top: 0.375rem;
-    font-size: 0.875rem;
+  .waitlist-lede {
+    margin-bottom: 1rem;
     color: var(--color-text-secondary);
+    line-height: 1.55;
   }
   .waitlist-form {
-    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-  }
-  @media (min-width: 600px) {
-    .waitlist-form {
-      flex-direction: row;
-      align-items: flex-end;
-    }
-    .waitlist-form :global(.field) {
-      flex: 1;
-    }
+    gap: 0.75rem;
   }
   .waitlist-thanks {
-    margin-top: 1rem;
-    color: var(--color-text);
-    font-size: 0.9375rem;
+    color: var(--color-accent);
+    font-weight: 500;
+    padding: 1rem 0;
   }
 
   .cta {

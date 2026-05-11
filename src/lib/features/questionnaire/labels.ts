@@ -1,7 +1,5 @@
 import type { QuestionStep } from "$engine";
-
-// Labels and help text per step. EN only for now; B7 will route these
-// through Paraglide for AR.
+import { t } from "$lib/i18n/index.svelte";
 
 export interface StepCopy {
   prompt: string;
@@ -15,135 +13,140 @@ export interface StepCopy {
   countMax?: number;
 }
 
-const COPY: Record<QuestionStep, StepCopy> = {
+interface StepKeys {
+  prompt: string;
+  help?: string;
+  trueKey?: string;
+  falseKey?: string;
+  countLabelKey?: string;
+  countMax?: number;
+}
+
+const KEYS: Record<QuestionStep, StepKeys> = {
   subjectType: {
-    prompt: "Who is this calculation for?",
-    help: "Use 'Myself' to walk through your own family. Use 'Someone else' if you're computing on behalf of a relative.",
-    trueLabel: "Myself",
-    falseLabel: "Someone else",
+    prompt: "step.subjectType.prompt",
+    help: "step.subjectType.help",
+    trueKey: "step.subjectType.true",
+    falseKey: "step.subjectType.false",
   },
   subjectGender: {
-    prompt: "What is the deceased's gender?",
-    help: "Inheritance rules differ between male and female subjects, especially around spouses.",
+    prompt: "step.subjectGender.prompt",
+    help: "step.subjectGender.help",
   },
   hasSpouse: {
-    prompt: "Was there a surviving spouse?",
-    help: "A husband or wife who outlived the deceased.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasSpouse.prompt",
+    help: "step.hasSpouse.help",
   },
   wifeCount: {
-    prompt: "How many wives outlived the deceased?",
-    countLabel: "Wives",
+    prompt: "step.wifeCount.prompt",
+    countLabelKey: "step.wifeCount.label",
     countMax: 4,
   },
   hasChildren: {
-    prompt: "Were there any direct children?",
-    help: "Sons or daughters of the deceased.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasChildren.prompt",
+    help: "step.hasChildren.help",
   },
   sonCount: {
-    prompt: "How many sons?",
-    countLabel: "Sons",
+    prompt: "step.sonCount.prompt",
+    countLabelKey: "step.sonCount.label",
   },
   daughterCount: {
-    prompt: "How many daughters?",
-    countLabel: "Daughters",
+    prompt: "step.daughterCount.prompt",
+    countLabelKey: "step.daughterCount.label",
   },
   hasGrandchildrenThroughSons: {
-    prompt: "Were there grandchildren through a deceased son?",
-    help: "Children of a son who died before the deceased.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasGrandchildrenThroughSons.prompt",
+    help: "step.hasGrandchildrenThroughSons.help",
   },
   sonsSonCount: {
-    prompt: "How many grandsons (through a son)?",
-    countLabel: "Son's sons",
+    prompt: "step.sonsSonCount.prompt",
+    countLabelKey: "step.sonsSonCount.label",
   },
   sonsDaughterCount: {
-    prompt: "How many granddaughters (through a son)?",
-    countLabel: "Son's daughters",
+    prompt: "step.sonsDaughterCount.prompt",
+    countLabelKey: "step.sonsDaughterCount.label",
   },
-  fatherAlive: {
-    prompt: "Is the deceased's father alive?",
-    trueLabel: "Yes",
-    falseLabel: "No",
-  },
-  motherAlive: {
-    prompt: "Is the deceased's mother alive?",
-    trueLabel: "Yes",
-    falseLabel: "No",
-  },
+  fatherAlive: { prompt: "step.fatherAlive.prompt" },
+  motherAlive: { prompt: "step.motherAlive.prompt" },
   paternalGrandfatherAlive: {
-    prompt: "Is the paternal grandfather alive?",
-    help: "Only relevant when the father is deceased.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.paternalGrandfatherAlive.prompt",
+    help: "step.paternalGrandfatherAlive.help",
   },
   hasGrandmothers: {
-    prompt: "Are any grandmothers alive?",
-    help: "Maternal or paternal. Only those whose intermediate parent has died inherit.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasGrandmothers.prompt",
+    help: "step.hasGrandmothers.help",
   },
   hasFullSiblings: {
-    prompt: "Were there full siblings?",
-    help: "Brothers or sisters who share both parents with the deceased.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasFullSiblings.prompt",
+    help: "step.hasFullSiblings.help",
   },
   fullBrotherCount: {
-    prompt: "How many full brothers?",
-    countLabel: "Full brothers",
+    prompt: "step.fullBrotherCount.prompt",
+    countLabelKey: "step.fullBrotherCount.label",
   },
   fullSisterCount: {
-    prompt: "How many full sisters?",
-    countLabel: "Full sisters",
+    prompt: "step.fullSisterCount.prompt",
+    countLabelKey: "step.fullSisterCount.label",
   },
   hasPaternalHalfSiblings: {
-    prompt: "Were there paternal half-siblings?",
-    help: "Same father, different mother.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasPaternalHalfSiblings.prompt",
+    help: "step.hasPaternalHalfSiblings.help",
   },
   paternalHalfBrotherCount: {
-    prompt: "How many paternal half-brothers?",
-    countLabel: "Paternal half-brothers",
+    prompt: "step.paternalHalfBrotherCount.prompt",
+    countLabelKey: "step.paternalHalfBrotherCount.label",
   },
   paternalHalfSisterCount: {
-    prompt: "How many paternal half-sisters?",
-    countLabel: "Paternal half-sisters",
+    prompt: "step.paternalHalfSisterCount.prompt",
+    countLabelKey: "step.paternalHalfSisterCount.label",
   },
   hasMaternalHalfSiblings: {
-    prompt: "Were there maternal half-siblings?",
-    help: "Same mother, different father.",
-    trueLabel: "Yes",
-    falseLabel: "No",
+    prompt: "step.hasMaternalHalfSiblings.prompt",
+    help: "step.hasMaternalHalfSiblings.help",
   },
   maternalHalfBrotherCount: {
-    prompt: "How many maternal half-brothers?",
-    countLabel: "Maternal half-brothers",
+    prompt: "step.maternalHalfBrotherCount.prompt",
+    countLabelKey: "step.maternalHalfBrotherCount.label",
   },
   maternalHalfSisterCount: {
-    prompt: "How many maternal half-sisters?",
-    countLabel: "Maternal half-sisters",
+    prompt: "step.maternalHalfSisterCount.prompt",
+    countLabelKey: "step.maternalHalfSisterCount.label",
   },
-  done: {
-    prompt: "Ready to calculate.",
-  },
+  done: { prompt: "step.done.prompt" },
 };
 
+const BOOL_STEPS = new Set<QuestionStep>([
+  "subjectType",
+  "hasSpouse",
+  "hasChildren",
+  "hasGrandchildrenThroughSons",
+  "fatherAlive",
+  "motherAlive",
+  "paternalGrandfatherAlive",
+  "hasGrandmothers",
+  "hasFullSiblings",
+  "hasPaternalHalfSiblings",
+  "hasMaternalHalfSiblings",
+]);
+
 export function copyFor(step: QuestionStep): StepCopy {
-  return COPY[step];
+  const k = KEYS[step];
+  const out: StepCopy = { prompt: t(k.prompt) };
+  if (k.help) out.help = t(k.help);
+  if (k.countLabelKey) out.countLabel = t(k.countLabelKey);
+  if (k.countMax !== undefined) out.countMax = k.countMax;
+  if (BOOL_STEPS.has(step)) {
+    out.trueLabel = t(k.trueKey ?? "calculate.yes");
+    out.falseLabel = t(k.falseKey ?? "calculate.no");
+  }
+  return out;
 }
 
 /** Heuristic: which UI shape does this step want? */
 export function shapeFor(step: QuestionStep): "bool" | "int" | "gender" | "done" {
   if (step === "done") return "done";
   if (step === "subjectGender") return "gender";
-  const c = copyFor(step);
-  if (c.countLabel !== undefined) return "int";
+  if (KEYS[step].countLabelKey !== undefined) return "int";
   return "bool";
 }
 

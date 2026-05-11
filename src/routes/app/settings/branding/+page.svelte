@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Button, Field, TextInput } from "$lib/ui";
+  import { t } from "$lib/i18n/index.svelte";
   import type { PageData } from "./$types";
 
   let { data }: { data: PageData } = $props();
@@ -32,7 +33,7 @@
         }),
       });
       if (!res.ok) {
-        error = `Save failed (${res.status})`;
+        error = t("app.branding.error", { status: res.status });
         return;
       }
       savedAt = new Date();
@@ -43,44 +44,42 @@
 </script>
 
 <svelte:head>
-  <title>Firm branding · FairShare Pro</title>
+  <title>{t("app.branding.title")} · FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
-  <h1>Firm branding</h1>
-  <p class="lede">
-    These fields appear on every branded PDF you download. Logo upload is coming soon.
-  </p>
+  <h1>{t("app.branding.title")}</h1>
+  <p class="lede">{t("app.branding.lede")}</p>
 </section>
 
 <form onsubmit={save} class="form">
-  <Field label="Letterhead text" description="Shows above the document title on every PDF.">
+  <Field label={t("app.branding.letterhead.label")} description={t("app.branding.letterhead.desc")}>
     {#snippet children()}
       <TextInput bind:value={letterheadText} placeholder="Hassan & Partners, LLP" maxlength={200} />
     {/snippet}
   </Field>
 
-  <Field label="Primary color" description="Used for section headings on the PDF.">
+  <Field label={t("app.branding.color.label")} description={t("app.branding.color.desc")}>
     {#snippet children()}
       <input type="color" bind:value={primaryColor} class="color" />
     {/snippet}
   </Field>
 
-  <Field label="Custom disclaimer (English)">
+  <Field label={t("app.branding.disclaimerEn.label")}>
     {#snippet children()}
       <textarea rows="3" class="textarea" bind:value={customDisclaimerEn} maxlength={2000}
       ></textarea>
     {/snippet}
   </Field>
 
-  <Field label="Custom disclaimer (Arabic)">
+  <Field label={t("app.branding.disclaimerAr.label")}>
     {#snippet children()}
       <textarea rows="3" class="textarea" dir="rtl" bind:value={customDisclaimerAr} maxlength={2000}
       ></textarea>
     {/snippet}
   </Field>
 
-  <Field label="Signature block" description="One name per line; appears at the bottom of the PDF.">
+  <Field label={t("app.branding.signature.label")} description={t("app.branding.signature.desc")}>
     {#snippet children()}
       <textarea
         rows="4"
@@ -93,10 +92,14 @@
   </Field>
 
   {#if error}<p class="error" role="alert">{error}</p>{/if}
-  {#if savedAt}<p class="ok" role="status">Saved at {savedAt.toLocaleTimeString()}.</p>{/if}
+  {#if savedAt}
+    <p class="ok" role="status">
+      {t("app.branding.saved", { time: savedAt.toLocaleTimeString() })}
+    </p>
+  {/if}
 
   <div class="actions">
-    <Button type="submit" loading={saving}>Save branding</Button>
+    <Button type="submit" loading={saving}>{t("app.branding.submit")}</Button>
   </div>
 </form>
 

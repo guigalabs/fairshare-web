@@ -5,6 +5,7 @@
 import type { CalculationResult, Gender, HeirShare, HeirType } from "$engine";
 import { labelFor } from "$lib/features/questionnaire/heirLabels";
 import { colorFor } from "./heirHelpers";
+import { t } from "$lib/i18n/index.svelte";
 
 export interface SummarySentence {
   id: string;
@@ -37,34 +38,30 @@ function fractionString(numerator: bigint, denominator: bigint): string {
 const CHILD_TYPES: ReadonlySet<HeirType> = new Set(["son", "daughter", "sonsSon", "sonsDaughter"]);
 const DIRECT_CHILD_TYPES: ReadonlySet<HeirType> = new Set(["son", "daughter"]);
 
-function reasonFor(share: HeirShare, all: readonly HeirShare[]): string {
+function reasonKey(share: HeirShare, all: readonly HeirShare[]): string {
   const hasChildren = all.some((s) => CHILD_TYPES.has(s.heirType));
   const hasDirectChildren = all.some((s) => DIRECT_CHILD_TYPES.has(s.heirType));
 
   switch (share.heirType) {
     case "wife":
     case "husband":
-      return hasChildren
-        ? "fixed share when there are children"
-        : "fixed share with no children present";
+      return hasChildren ? "plain.reason.spouseWithChildren" : "plain.reason.spouseNoChildren";
     case "son":
-      return "residuary heir, takes what remains";
-    case "daughter": {
-      const hasSon = all.some((s) => s.heirType === "son");
-      return hasSon
-        ? "shares the remainder with brothers at 2:1 ratio"
-        : "fixed share as sole female descendant";
-    }
+      return "plain.reason.son";
+    case "daughter":
+      return all.some((s) => s.heirType === "son")
+        ? "plain.reason.daughterWithSon"
+        : "plain.reason.daughterAlone";
     case "father":
       return hasDirectChildren
-        ? "fixed share when children are present"
-        : "residuary heir when no children present";
+        ? "plain.reason.fatherWithChildren"
+        : "plain.reason.fatherNoChildren";
     case "mother":
       return hasDirectChildren
-        ? "fixed share when children are present"
-        : "fixed share with no children or siblings";
+        ? "plain.reason.motherWithChildren"
+        : "plain.reason.motherNoChildren";
     default:
-      return "as prescribed by Islamic law";
+      return "plain.reason.default";
   }
 }
 
@@ -84,12 +81,12 @@ export function generatePlainLanguage(
     const name = labelFor(share.heirType, 1);
     const pct = formatPercentage(share.fraction.numerator, share.fraction.denominator);
     const frac = fractionString(share.fraction.numerator, share.fraction.denominator);
-    const reason = reasonFor(share, result.shares);
+    const reason = t(reasonKey(share, result.shares));
 
     const text =
       share.count > 1
-        ? `The ${share.count} ${name.toLowerCase()}s share ${pct} (${frac}); ${reason}.`
-        : `The ${name} receives ${pct} (${frac}); ${reason}.`;
+        ? t("plain.share.multiple", { count: share.count, name, pct, frac, reason })
+        : t("plain.share.single", { name, pct, frac, reason });
 
     sentences.push({
       id: share.heirType,
@@ -100,10 +97,10 @@ export function generatePlainLanguage(
 
   for (const blocked of result.blockedHeirs) {
     const name = labelFor(blocked.heirType, 1);
-    const blockerName = labelFor(blocked.blockedBy, 1);
+    const blocker = labelFor(blocked.blockedBy, 1);
     sentences.push({
       id: `blocked_${blocked.heirType}`,
-      text: `The ${name} receives nothing, blocked by the ${blockerName}.`,
+      text: t("plain.blocked", { name, blocker }),
       color: "var(--color-text-muted)",
     });
   }
@@ -112,11 +109,7 @@ export function generatePlainLanguage(
 }
 
 export function specialRuleNote(result: CalculationResult): string | null {
-  if (result.appliedAwl) {
-    return "Shares were proportionally reduced (Awl) because the total exceeded the estate.";
-  }
-  if (result.appliedRadd) {
-    return "Leftover estate was redistributed (Radd) among eligible heirs.";
-  }
+  if (result.appliedAwl) return t("plain.note.awl");
+  if (result.appliedRadd) return t("plain.note.radd");
   return null;
 }

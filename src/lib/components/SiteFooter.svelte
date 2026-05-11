@@ -1,18 +1,11 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { env } from "$env/dynamic/public";
-  import Coffee from "@lucide/svelte/icons/coffee";
+  import { t } from "$lib/i18n/index.svelte";
 
   const year = new Date().getFullYear();
 
-  // SvelteKit routes PUBLIC_* vars through $env/{static,dynamic}/public,
-  // not through Vite's import.meta.env (whose envPrefix only matches
-  // VITE_*). Using dynamic/public so an override in Cloudflare Pages env
-  // settings takes effect without a rebuild.
-  const BMC_URL = env.PUBLIC_BMC_URL || "https://www.buymeacoffee.com/guigalabs";
-
-  // Don't render on the Pro app: the donation prompt belongs only on the
-  // free consumer surface (the iOS-mirror calculator and its companion pages).
+  // Don't render on the Pro app: the marketing footer belongs only on the
+  // public consumer surface.
   const isProApp = $derived(page.url.pathname.startsWith("/app"));
 </script>
 
@@ -20,31 +13,18 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-row">
-        <span class="footer-brand">FairShare</span>
-        <nav class="footer-links" aria-label="Footer">
-          <a href="/calculate">Calculate</a>
-          <a href="/methodology">Methodology</a>
-          <a href="/saved">Saved</a>
-          <a href="/pricing" class="footer-pro">Pro</a>
-          <a href="/about">About</a>
-          <a href="/disclaimer">Disclaimer</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/terms">Terms</a>
+        <span class="footer-brand">{t("nav.brand")}</span>
+        <nav class="footer-links" aria-label={t("footer.aria")}>
+          <a href="/calculate">{t("nav.calculate")}</a>
+          <a href="/methodology">{t("nav.methodology")}</a>
+          <a href="/pricing" class="footer-pro">{t("nav.pro")}</a>
+          <a href="/about">{t("footer.about")}</a>
+          <a href="/disclaimer">{t("footer.disclaimerLink")}</a>
+          <a href="/privacy">{t("footer.privacy")}</a>
+          <a href="/terms">{t("footer.terms")}</a>
         </nav>
       </div>
-      <div class="footer-tip">
-        <a class="bmc" href={BMC_URL} target="_blank" rel="noopener noreferrer">
-          <Coffee size={14} aria-hidden="true" />
-          <span>Buy me a coffee</span>
-        </a>
-        <span class="footer-tip-note"
-          >FairShare is free. Tips fund engine work and Quranic review.</span
-        >
-      </div>
-      <p class="footer-meta">
-        &copy; {year} Guiga Labs. Educational use only. Please consult a qualified scholar before acting
-        on any calculation.
-      </p>
+      <p class="footer-meta">{t("footer.copyrightFull", { year })}</p>
     </div>
   </footer>
 {/if}
@@ -86,6 +66,7 @@
     color: var(--color-text-muted);
     text-decoration: none;
     font-size: 0.9375rem;
+    padding-block: 0.5rem;
   }
   .footer-links a:hover {
     color: var(--color-text);
@@ -93,38 +74,6 @@
   .footer-links a.footer-pro {
     color: var(--color-accent);
     font-weight: 500;
-  }
-  .footer-tip {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1rem;
-  }
-  .bmc {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.375rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-bg-elevated);
-    color: var(--color-text);
-    text-decoration: none;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    transition:
-      border-color 0.15s,
-      transform 0.15s;
-  }
-  .bmc:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-1px);
-  }
-  .footer-tip-note {
-    font-size: 0.8125rem;
-    color: var(--color-text-muted);
-    line-height: 1.4;
   }
   .footer-meta {
     margin-top: 1.5rem;

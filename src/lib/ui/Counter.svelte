@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t } from "$lib/i18n/index.svelte";
+
   let {
     value = $bindable(0),
     min = 0,
@@ -34,7 +36,7 @@
       onclick={dec}
       disabled={value <= min}
       class="ctl"
-      aria-label="Decrease {label}"
+      aria-label={t("ui.decrease", { label })}
     >
       &minus;
     </button>
@@ -44,7 +46,7 @@
       onclick={inc}
       disabled={value >= max}
       class="ctl"
-      aria-label="Increase {label}"
+      aria-label={t("ui.increase", { label })}
     >
       &plus;
     </button>
@@ -79,8 +81,8 @@
     gap: 0.5rem;
   }
   .ctl {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: var(--radius-pill);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);

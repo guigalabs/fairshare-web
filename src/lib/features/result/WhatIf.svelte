@@ -1,5 +1,6 @@
 <script lang="ts">
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
+  import { t } from "$lib/i18n/index.svelte";
   import type { ResultStore } from "./store.svelte";
 
   let { store }: { store: ResultStore } = $props();
@@ -7,8 +8,8 @@
 
 <section class="whatif">
   <header>
-    <h3>What if?</h3>
-    <p>Toggle a heir off to see how the distribution would change. Original input is preserved.</p>
+    <h3>{t("whatif.title")}</h3>
+    <p>{t("whatif.lede")}</p>
   </header>
   <ul class="toggles">
     {#each store.allHeirs as e (e.type)}
@@ -26,7 +27,7 @@
   </ul>
   {#if store.whatIfActive}
     <button type="button" class="reset" onclick={() => store.clearWhatIf()}>
-      Reset to original
+      {t("whatif.reset")}
     </button>
   {/if}
 </section>

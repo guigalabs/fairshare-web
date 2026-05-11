@@ -4,9 +4,12 @@
     METHODOLOGY,
     entriesByGroup,
     groupTitle,
+    entryTitle,
+    entryDescription,
     type MethodologyGroup,
   } from "$lib/content/methodology";
   import { serialiseJsonLd, breadcrumbSchema } from "$lib/seo/jsonld";
+  import { t } from "$lib/i18n/index.svelte";
 
   const GROUPS: MethodologyGroup[] = ["madhhab", "rules", "special-cases"];
   const breadcrumb = breadcrumbSchema([
@@ -16,23 +19,17 @@
 </script>
 
 <svelte:head>
-  <title>Methodology · FairShare</title>
-  <meta
-    name="description"
-    content="The classical rules of Islamic inheritance (Fara'id) explained. Five madhabs, the core rules of fixed shares, blocking, residuary heirs, Awl, and Radd, plus the named special cases."
-  />
+  <title>{t("methodology.title")} · FairShare</title>
+  <meta name="description" content={t("methodology.metaDescription")} />
   <link rel="canonical" href="https://fairshare.guigalabs.com/methodology/" />
   {@html serialiseJsonLd(breadcrumb)}
 </svelte:head>
 
 <section class="container">
   <header class="head">
-    <p class="kicker">Methodology</p>
-    <h1>Islamic inheritance, in 13 short reads.</h1>
-    <p class="lede">
-      Each page covers one school, rule, or special case: the source verses, the worked examples,
-      and where the schools diverge. Useful before you trust any calculator output.
-    </p>
+    <p class="kicker">{t("methodology.title")}</p>
+    <h1>{t("methodology.heading", { count: METHODOLOGY.length })}</h1>
+    <p class="lede">{t("methodology.lede")}</p>
   </header>
 
   {#each GROUPS as group (group)}
@@ -44,9 +41,11 @@
             <a href="/methodology/{e.group}/{e.slug}" class="card-link">
               <Card>
                 {#snippet children()}
-                  <h3 class="entry-title">{e.title}</h3>
-                  <p class="entry-desc">{e.description}</p>
-                  <p class="entry-meta">{e.readingMinutes} min read</p>
+                  <h3 class="entry-title">{entryTitle(e)}</h3>
+                  <p class="entry-desc">{entryDescription(e)}</p>
+                  <p class="entry-meta">
+                    {t("methodology.minRead", { count: e.readingMinutes })}
+                  </p>
                 {/snippet}
               </Card>
             </a>
@@ -56,7 +55,7 @@
     </section>
   {/each}
 
-  <p class="all-meta">{METHODOLOGY.length} articles · all free, no signup.</p>
+  <p class="all-meta">{t("methodology.allMeta", { count: METHODOLOGY.length })}</p>
 </section>
 
 <style>
@@ -79,6 +78,7 @@
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -86,6 +86,7 @@
     margin-top: 1rem;
     color: var(--color-text-secondary);
     line-height: 1.55;
+    font-size: 1.0625rem;
   }
   .group {
     margin-top: 2.5rem;
@@ -120,10 +121,15 @@
     color: inherit;
     display: block;
     height: 100%;
+    border-radius: var(--radius-lg);
     transition: transform 0.15s;
   }
   .card-link:hover {
     transform: translateY(-2px);
+  }
+  .card-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
   .entry-title {
     font-size: 1.0625rem;

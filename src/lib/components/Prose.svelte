@@ -17,6 +17,9 @@
   .prose :global(> * + *) {
     margin-top: 1.25rem;
   }
+  .prose :global(> *:first-child) {
+    margin-top: 0;
+  }
   .prose :global(h2) {
     margin-top: 2.5rem;
     font-size: 1.5rem;
@@ -48,7 +51,7 @@
     list-style: decimal;
   }
   .prose :global(li + li) {
-    margin-top: 0.375rem;
+    margin-top: 0.75rem;
   }
   .prose :global(a) {
     color: var(--color-accent);

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import { Button, Card, Banner } from "$lib/ui";
+  import { env } from "$env/dynamic/public";
+  import { Button, Card, Banner, Field, Sheet, TextInput, reducedMotion } from "$lib/ui";
   import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import QuickScenarios from "$lib/features/landing/QuickScenarios.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
@@ -9,19 +10,54 @@
   import ShieldCheck from "@lucide/svelte/icons/shield-check";
   import WifiOff from "@lucide/svelte/icons/wifi-off";
   import { t } from "$lib/i18n/index.svelte";
+  import { serialiseJsonLd, softwareApplicationSchema } from "$lib/seo/jsonld";
 
-  const APP_STORE_URL = "https://apps.apple.com/app/id000000000"; // TODO: real App Store ID
+  const appSchema = softwareApplicationSchema();
 
-  const enter = (delay: number) => ({ y: 16, duration: 500, easing: cubicOut, delay });
+  // Until the iOS app ships, the badge opens a waitlist modal instead of
+  // linking to the App Store. Once PUBLIC_APP_STORE_URL is set, click flows
+  // straight to Apple.
+  const APP_STORE_URL = env.PUBLIC_APP_STORE_URL || null;
 
-  // School / feature lookup tables. Translatable labels reach into t() inline
-  // so the template's reactive read picks them up on locale change.
+  let iosSheetOpen = $state(false);
+  let iosEmail = $state("");
+  let iosStatus = $state<"idle" | "pending" | "ok" | "error">("idle");
+
+  function onIosClick(e: MouseEvent) {
+    if (APP_STORE_URL) return; // let the link navigate normally
+    e.preventDefault();
+    iosSheetOpen = true;
+  }
+
+  async function submitIosWaitlist(e: SubmitEvent) {
+    e.preventDefault();
+    if (iosStatus === "pending") return;
+    iosStatus = "pending";
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: iosEmail, source: "ios" }),
+      });
+      iosStatus = res.ok ? "ok" : "error";
+    } catch {
+      iosStatus = "error";
+    }
+  }
+
+  const enter = (delay: number) =>
+    reducedMotion
+      ? { y: 0, duration: 0, easing: cubicOut, delay: 0 }
+      : { y: 16, duration: 500, easing: cubicOut, delay };
+
+  // School / feature lookup tables. Translatable labels resolve via t() at
+  // render time so locale switches re-render without rebuilding the table.
   const MADHHABS = [
-    { name: "General", description: "Majority Sunni opinion", slug: "general" },
-    { name: "Hanafi", description: "Largest Sunni school", slug: "hanafi" },
-    { name: "Maliki", description: "North & West Africa", slug: "maliki" },
-    { name: "Shafi'i", description: "Egypt, Levant, Southeast Asia", slug: "shafii" },
-    { name: "Hanbali", description: "Arabian peninsula", slug: "hanbali" },
+    { nameKey: "madhhab.general.name", descKey: "madhhab.general.desc", slug: "general" },
+    { nameKey: "madhhab.hanafi.name", descKey: "madhhab.hanafi.desc", slug: "hanafi" },
+    { nameKey: "madhhab.maliki.name", descKey: "madhhab.maliki.desc", slug: "maliki" },
+    { nameKey: "madhhab.shafii.name", descKey: "madhhab.shafii.desc", slug: "shafii" },
+    { nameKey: "madhhab.hanbali.name", descKey: "madhhab.hanbali.desc", slug: "hanbali" },
   ];
 
   const FEATURES = [
@@ -36,6 +72,17 @@
     { stat: "EN/AR", labelKey: "landing.trust.bilingual" },
     { stat: "100%", labelKey: "landing.trust.offline" },
   ];
+
+  type ProAudience = "practitioners" | "attorneys" | "scholars";
+  let proAudience = $state<ProAudience>("practitioners");
+
+  const PRO_TAB_PREFIX: Record<ProAudience, string> = {
+    practitioners: "landing.pro",
+    attorneys: "landing.pro.attorneys",
+    scholars: "landing.pro.scholars",
+  };
+
+  const proPrefix = $derived(PRO_TAB_PREFIX[proAudience]);
 </script>
 
 <svelte:head>
@@ -53,6 +100,7 @@
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://fairshare.guigalabs.com" />
+  {@html serialiseJsonLd(appSchema)}
 </svelte:head>
 
 <!-- Hero -->
@@ -74,7 +122,7 @@
       {t("landing.subtitle")}
     </p>
     <div class="hero-ctas" in:fly={enter(360)}>
-      <Button href="/calculate" size="lg">
+      <Button href="/calculate" size="lg" data-sveltekit-preload-code="eager">
         {t("landing.cta.primary")}
         <ArrowRight size={18} aria-hidden="true" />
       </Button>
@@ -82,6 +130,23 @@
         {t("landing.cta.secondary")}
       </Button>
     </div>
+    <a
+      class="app-store-badge"
+      href={APP_STORE_URL ?? "#"}
+      onclick={onIosClick}
+      in:fly={enter(420)}
+      aria-label={t("landing.appStore.aria")}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path
+          d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
+        />
+      </svg>
+      <span class="app-store-text">
+        <span class="app-store-eyebrow">{t("landing.appStore.eyebrow")}</span>
+        <span class="app-store-label">{t("landing.appStore.label")}</span>
+      </span>
+    </a>
     <p class="hero-meta" in:fly={enter(480)}>
       {t("landing.meta")}
     </p>
@@ -137,26 +202,26 @@
   <div class="pro-inner">
     <div class="pro-header">
       <p class="pro-kicker">{t("landing.pro.kicker")}</p>
-      <h2>{t("landing.pro.heading")}</h2>
-      <p class="pro-lede">{t("landing.pro.lede")}</p>
+      <h2>{t(`${proPrefix}.heading`)}</h2>
+      <p class="pro-lede">{t(`${proPrefix}.lede`)}</p>
     </div>
 
     <ul class="pro-features">
       <li>
-        <strong>{t("landing.pro.f1.title")}</strong>
-        <span>{t("landing.pro.f1.body")}</span>
+        <strong>{t(`${proPrefix}.f1.title`)}</strong>
+        <span>{t(`${proPrefix}.f1.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f2.title")}</strong>
-        <span>{t("landing.pro.f2.body")}</span>
+        <strong>{t(`${proPrefix}.f2.title`)}</strong>
+        <span>{t(`${proPrefix}.f2.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f3.title")}</strong>
-        <span>{t("landing.pro.f3.body")}</span>
+        <strong>{t(`${proPrefix}.f3.title`)}</strong>
+        <span>{t(`${proPrefix}.f3.body`)}</span>
       </li>
       <li>
-        <strong>{t("landing.pro.f4.title")}</strong>
-        <span>{t("landing.pro.f4.body")}</span>
+        <strong>{t(`${proPrefix}.f4.title`)}</strong>
+        <span>{t(`${proPrefix}.f4.body`)}</span>
       </li>
     </ul>
 
@@ -165,13 +230,28 @@
       <span class="pro-or">{t("landing.pro.orAnnual")}</span>
     </div>
 
-    <div class="pro-ctas">
-      <Button href="/pricing" size="lg">{t("landing.pro.cta.primary")}</Button>
-      <Button href="/for-attorneys" variant="ghost" size="lg"
-        >{t("landing.pro.cta.attorneys")}</Button
+    <div class="pro-ctas" role="group" aria-label={t("landing.pro.tabsAria")}>
+      <Button href="/pricing" size="lg" data-sveltekit-preload-code="viewport">
+        {t("landing.pro.cta.primary")}
+      </Button>
+      <button
+        type="button"
+        class="pro-tab"
+        class:pro-tab--active={proAudience === "attorneys"}
+        aria-pressed={proAudience === "attorneys"}
+        onclick={() => (proAudience = proAudience === "attorneys" ? "practitioners" : "attorneys")}
       >
-      <Button href="/for-scholars" variant="ghost" size="lg">{t("landing.pro.cta.scholars")}</Button
+        {t("landing.pro.cta.attorneys")}
+      </button>
+      <button
+        type="button"
+        class="pro-tab"
+        class:pro-tab--active={proAudience === "scholars"}
+        aria-pressed={proAudience === "scholars"}
+        onclick={() => (proAudience = proAudience === "scholars" ? "practitioners" : "scholars")}
       >
+        {t("landing.pro.cta.scholars")}
+      </button>
     </div>
   </div>
 </section>
@@ -185,8 +265,8 @@
   <div class="madhhab-grid">
     {#each MADHHABS as m (m.slug)}
       <a class="madhhab-card" href="/methodology/madhhab/{m.slug}">
-        <span class="madhhab-name">{m.name}</span>
-        <span class="madhhab-desc">{m.description}</span>
+        <span class="madhhab-name">{t(m.nameKey)}</span>
+        <span class="madhhab-desc">{t(m.descKey)}</span>
       </a>
     {/each}
   </div>
@@ -199,21 +279,60 @@
     <p>{t("landing.cta2.body")}</p>
     <div class="cta-buttons">
       <Button href="/calculate" size="lg">{t("landing.cta2.primary")}</Button>
-      <Button href="/methodology" variant="ghost" size="lg">{t("landing.cta2.secondary")}</Button>
+      <Button href="/methodology" variant="secondary" size="lg"
+        >{t("landing.cta2.secondary")}</Button
+      >
     </div>
     <div class="cta-extras">
-      <a class="ios-link" href={APP_STORE_URL}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <a
+        class="app-store-badge"
+        href={APP_STORE_URL ?? "#"}
+        onclick={onIosClick}
+        aria-label={t("landing.appStore.aria")}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path
             d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.29-1.33-1.94-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.91 0-2.27-1.02-3.74-.99-1.92.03-3.69 1.12-4.68 2.84-2 3.46-.51 8.58 1.43 11.4.95 1.38 2.07 2.92 3.55 2.87 1.43-.06 1.97-.92 3.69-.92 1.72 0 2.21.92 3.72.89 1.54-.03 2.5-1.39 3.43-2.78 1.08-1.59 1.53-3.14 1.55-3.22-.03-.01-2.97-1.14-3-4.6zM14.31 4.4c.79-.96 1.32-2.29 1.18-3.62-1.13.05-2.51.76-3.32 1.71-.73.85-1.36 2.21-1.19 3.51 1.27.1 2.55-.65 3.33-1.6z"
           />
         </svg>
-        {t("landing.cta2.ios")}
+        <span class="app-store-text">
+          <span class="app-store-eyebrow">{t("landing.appStore.eyebrow")}</span>
+          <span class="app-store-label">{t("landing.appStore.label")}</span>
+        </span>
       </a>
       <InstallPwaButton />
     </div>
   </div>
 </section>
+
+<Sheet bind:open={iosSheetOpen} title={t("iosWaitlist.title")}>
+  {#snippet children()}
+    <p class="ios-sheet-lede">{t("iosWaitlist.lede")}</p>
+    {#if iosStatus === "ok"}
+      <p class="ios-sheet-thanks" role="status">{t("iosWaitlist.thanks")}</p>
+    {:else}
+      <form class="ios-sheet-form" onsubmit={submitIosWaitlist}>
+        <Field
+          label={t("iosWaitlist.emailLabel")}
+          error={iosStatus === "error" ? t("iosWaitlist.error") : undefined}
+        >
+          {#snippet children()}
+            <TextInput
+              type="email"
+              autocomplete="email"
+              required
+              bind:value={iosEmail}
+              placeholder="you@example.com"
+            />
+          {/snippet}
+        </Field>
+        <Button type="submit" loading={iosStatus === "pending"} fullWidth>
+          {t("iosWaitlist.submit")}
+        </Button>
+      </form>
+    {/if}
+  {/snippet}
+</Sheet>
 
 <style>
   .container {
@@ -257,7 +376,7 @@
     gap: 0.5rem 0.75rem;
     margin-bottom: 1.5rem;
     padding: 0.5rem 0.875rem;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-pill);
     background: var(--color-bg-elevated);
     color: var(--color-text-secondary);
@@ -292,7 +411,7 @@
   .hero-title {
     margin-top: 1rem;
     font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.025em;
     line-height: 1.05;
     color: var(--color-text);
@@ -312,10 +431,64 @@
     justify-content: center;
     gap: 0.75rem;
   }
+  .hero .app-store-badge {
+    margin-top: 1.25rem;
+  }
+  .app-store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem;
+    background: #000;
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+  .app-store-badge:hover {
+    transform: translateY(-1px);
+  }
+  .app-store-badge:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .app-store-text {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 0.125rem;
+  }
+  .app-store-eyebrow {
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+  .app-store-label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
   .hero-meta {
     margin-top: 1.5rem;
     font-size: 0.8125rem;
     color: var(--color-text-muted);
+  }
+  .ios-sheet-lede {
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+  .ios-sheet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ios-sheet-thanks {
+    color: var(--color-accent);
+    font-weight: 500;
+    padding: 1rem 0;
   }
 
   /* Trust strip */
@@ -352,6 +525,7 @@
   /* Features */
   .features {
     padding-top: 4rem;
+    padding-bottom: 4rem;
   }
   .features-grid {
     display: grid;
@@ -420,6 +594,7 @@
   .pro-header h2 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-text);
@@ -487,12 +662,44 @@
   .pro-ctas {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.75rem;
+  }
+  .pro-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .pro-tab:hover {
+    color: var(--color-text);
+    background: var(--color-bg-elevated);
+  }
+  .pro-tab:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .pro-tab--active {
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
   }
 
   /* Methodology */
   .methodology {
     padding-top: 4rem;
+    padding-bottom: 4rem;
   }
   .section-header {
     max-width: 38rem;
@@ -500,6 +707,7 @@
   }
   .section-header h2 {
     font-size: clamp(1.625rem, 3vw, 2.125rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-text);
@@ -537,6 +745,10 @@
     border-color: var(--color-accent);
     transform: translateY(-1px);
   }
+  .madhhab-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
   .madhhab-name {
     font-weight: 600;
   }
@@ -556,6 +768,7 @@
   }
   .cta-inner h2 {
     font-size: clamp(1.625rem, 3vw, 2.125rem);
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-text);
@@ -579,19 +792,5 @@
     gap: 0.75rem;
     justify-content: center;
     align-items: center;
-  }
-  .ios-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-pill);
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .ios-link:hover {
-    color: var(--color-text);
   }
 </style>

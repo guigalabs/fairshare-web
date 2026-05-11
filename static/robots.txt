@@ -7,4 +7,9 @@ Disallow: /result
 Disallow: /saved
 Disallow: /settings
 
+# Pro app surface (auth-walled, no public content) and JSON API routes
+# (POST-only — GET-crawling them is wasted budget).
+Disallow: /app/
+Disallow: /api/
+
 Sitemap: https://fairshare.guigalabs.com/sitemap.xml

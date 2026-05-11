@@ -12,3 +12,4 @@ export { default as ToastHost } from "./ToastHost.svelte";
 export { default as EmptyState } from "./EmptyState.svelte";
 
 export { toast, type ToastEntry, type ToastTone } from "./toast.svelte";
+export { reducedMotion } from "./motion";

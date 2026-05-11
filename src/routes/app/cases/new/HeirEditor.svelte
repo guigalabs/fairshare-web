@@ -1,6 +1,7 @@
 <script lang="ts">
   import { HEIR_TYPES, type HeirEntry as EngineHeirEntry, type HeirType } from "$engine";
   import { Button, TextInput } from "$lib/ui";
+  import { t } from "$lib/i18n/index.svelte";
   import Trash2 from "@lucide/svelte/icons/trash-2";
   import Plus from "@lucide/svelte/icons/plus";
 
@@ -50,29 +51,29 @@
 <div class="heirs">
   {#each value as row, idx (idx)}
     <fieldset class="row">
-      <legend class="row-legend">Heir {idx + 1}</legend>
+      <legend class="row-legend">{t("app.heir.legend", { idx: idx + 1 })}</legend>
       <div class="row-main">
         <select
-          aria-label="Heir type"
+          aria-label={t("app.heir.type")}
           value={row.type}
           onchange={(e) => setType(idx, (e.target as HTMLSelectElement).value as HeirType)}
         >
-          {#each HEIR_TYPES as t (t)}
-            <option value={t}>{t}</option>
+          {#each HEIR_TYPES as ht (ht)}
+            <option value={ht}>{t(`heir.${ht}`)}</option>
           {/each}
         </select>
         <input
           type="number"
           min="0"
           max="50"
-          aria-label="Count"
+          aria-label={t("app.heir.count")}
           value={row.count}
           oninput={(e) => setCount(idx, Number((e.target as HTMLInputElement).value))}
         />
         <button
           type="button"
           class="icon-btn"
-          aria-label="Remove heir"
+          aria-label={t("app.heir.remove")}
           onclick={() => removeRow(idx)}
         >
           <Trash2 size={16} aria-hidden="true" />
@@ -81,19 +82,24 @@
 
       {#if row.count > 0}
         <details class="persons">
-          <summary>Names ({row.persons?.length ?? 0}/{row.count})</summary>
+          <summary>
+            {t("app.heir.namesSummary", {
+              filled: row.persons?.length ?? 0,
+              total: row.count,
+            })}
+          </summary>
           <div class="person-list">
             {#each row.persons ?? [] as p, pIdx (pIdx)}
               <div class="person-row">
                 <TextInput
-                  placeholder="Full name"
+                  placeholder={t("app.heir.fullName")}
                   value={p.name}
                   oninput={(e) => setPersonName(idx, pIdx, (e.target as HTMLInputElement).value)}
                 />
                 <button
                   type="button"
                   class="icon-btn"
-                  aria-label="Remove name"
+                  aria-label={t("app.heir.removeName")}
                   onclick={() => removePerson(idx, pIdx)}
                 >
                   <Trash2 size={14} aria-hidden="true" />
@@ -102,7 +108,8 @@
             {/each}
             {#if (row.persons?.length ?? 0) < row.count}
               <Button type="button" variant="ghost" size="sm" onclick={() => addPerson(idx)}>
-                <Plus size={14} aria-hidden="true" /> Add name
+                <Plus size={14} aria-hidden="true" />
+                {t("app.heir.addName")}
               </Button>
             {/if}
           </div>
@@ -112,7 +119,8 @@
   {/each}
 
   <Button type="button" variant="secondary" onclick={addRow}>
-    <Plus size={16} aria-hidden="true" /> Add heir
+    <Plus size={16} aria-hidden="true" />
+    {t("app.heir.addHeir")}
   </Button>
 </div>
 

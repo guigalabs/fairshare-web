@@ -2,25 +2,9 @@ name = "fairshare-web"
 compatibility_date = "2025-04-01"
 pages_build_output_dir = ".svelte-kit/cloudflare"
 
-# Waitlist signups captured from /pricing.
-#
-# The KV binding is intentionally NOT declared here yet: the Cloudflare
-# Pages deploy validates the `id` field against the live API and rejects
-# placeholder strings, which would block every deploy until a real
-# namespace exists.
-#
-# To enable the waitlist, run:
-#   bunx wrangler kv namespace create WAITLIST_KV
-#   bunx wrangler kv namespace create WAITLIST_KV --preview
-# then uncomment and paste the IDs:
-#
-# [[kv_namespaces]]
-# binding = "WAITLIST_KV"
-# id = "<paste-real-prod-id>"
-# preview_id = "<paste-real-preview-id>"
-#
-# Until then, /api/waitlist returns 503 ("kv_not_configured") gracefully —
-# the rest of the site still deploys.
+# Waitlist signups (Pro + iOS) write to the `waitlist` table in the same
+# Neon database that backs auth + cases. No extra binding needed — the
+# DATABASE_URL Pages secret already covers it.
 
 # Stripe Managed Payments handles billing — Stripe is the merchant of
 # record, so global VAT / sales-tax / fraud / disputes are absorbed by

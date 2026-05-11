@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { fly } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import { Button, Card, Banner, Counter } from "$lib/ui";
+  import { Button, Card, Banner, Counter, toast, reducedMotion } from "$lib/ui";
   import ChevronLeft from "@lucide/svelte/icons/chevron-left";
   import ChevronRight from "@lucide/svelte/icons/chevron-right";
   import RotateCcw from "@lucide/svelte/icons/rotate-ccw";
@@ -10,11 +11,28 @@
   import { copyFor, shapeFor, progressOf } from "$lib/features/questionnaire/labels";
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
+  import { t } from "$lib/i18n/index.svelte";
 
-  const runner = new QuestionnaireRunner();
+  // A `?madhhab=` URL param takes precedence over the stored value so a
+  // colleague-shared link can pin the right school.
+  const MADHHAB_STORAGE_KEY = "fairshare:madhhab";
+  function readInitialMadhhab(): Madhhab {
+    if (!browser) return "general";
+    const fromUrl = new URLSearchParams(window.location.search).get("madhhab");
+    if (fromUrl && MADHHABS.includes(fromUrl as Madhhab)) return fromUrl as Madhhab;
+    const stored = localStorage.getItem(MADHHAB_STORAGE_KEY);
+    return MADHHABS.includes(stored as Madhhab) ? (stored as Madhhab) : "general";
+  }
+
+  const initialMadhhab = readInitialMadhhab();
+  let madhhab = $state<Madhhab>(initialMadhhab);
+  const runner = new QuestionnaireRunner(initialMadhhab);
+
+  const stepEnter = reducedMotion
+    ? { y: 0, duration: 0, easing: cubicOut }
+    : { y: 12, duration: 240, easing: cubicOut };
 
   let counterValue = $state(0);
-  let madhhab = $state<Madhhab>("general");
 
   const step = $derived(runner.step);
   const copy = $derived(copyFor(step));
@@ -24,8 +42,15 @@
 
   function changeMadhhab(value: Madhhab) {
     madhhab = value;
-    runner.reset(value);
-    counterValue = 0;
+    if (browser) {
+      try {
+        localStorage.setItem(MADHHAB_STORAGE_KEY, value);
+      } catch {
+        // Safari Private Browsing pre-iOS-16 has a localStorage quota of 0.
+        // The selection still applies to this session; we just can't persist it.
+      }
+    }
+    runner.setMadhhab(value);
   }
 
   function answerYes() {
@@ -50,56 +75,67 @@
   }
 
   function calculate() {
-    // The result page reads from sessionStorage in this phase. Shareable URLs
-    // come in B6.
+    // Safari Private Browsing pre-iOS-16 has a sessionStorage quota of 0, so
+    // setItem throws QuotaExceededError. Without the catch, the user would
+    // land on /result's empty state with no explanation.
     if (typeof sessionStorage !== "undefined") {
       const c = runner.buildCase();
-      sessionStorage.setItem(
-        "fairshare:case",
-        JSON.stringify({
-          subjectGender: c.subjectGender,
-          heirs: c.heirs,
-          madhhab: c.madhhab,
-        }),
-      );
+      try {
+        sessionStorage.setItem(
+          "fairshare:case",
+          JSON.stringify({
+            subjectGender: c.subjectGender,
+            heirs: c.heirs,
+            madhhab: c.madhhab,
+          }),
+        );
+      } catch {
+        toast.show(
+          "Couldn't save your inputs. Your browser may have storage disabled (e.g. private browsing).",
+          "error",
+          6000,
+        );
+        return;
+      }
     }
     goto("/result");
   }
 </script>
 
 <svelte:head>
-  <title>Calculate · FairShare</title>
-  <meta
-    name="description"
-    content="Walk through a short questionnaire to compute Islamic inheritance shares for any family."
-  />
+  <title>{t("calculate.title")} · FairShare</title>
+  <meta name="description" content={t("calculate.metaDescription")} />
+  <link rel="canonical" href="https://fairshare.guigalabs.com/calculate/" />
 </svelte:head>
 
 <section class="container">
   <header class="head">
-    <p class="kicker">Step {Math.min(progress, 99)}%</p>
-    <h1>Calculate</h1>
+    <p class="kicker" aria-live="polite">
+      {t("calculate.kicker", { progress: Math.min(progress, 99) })}
+    </p>
+    <h1>{t("calculate.title")}</h1>
     <div
       class="progress"
       role="progressbar"
       aria-valuemin="0"
       aria-valuemax="100"
       aria-valuenow={progress}
-      aria-label="Questionnaire progress"
+      aria-label={t("calculate.progressAriaLabel")}
     >
       <div class="progress-bar" style="--p: {progress}%"></div>
     </div>
     <div class="madhhab-row">
-      <span class="madhhab-label">School:</span>
-      <div class="madhhab-pills">
+      <span class="madhhab-label" id="madhhab-label">{t("calculate.school")}</span>
+      <div class="madhhab-pills" role="group" aria-labelledby="madhhab-label">
         {#each MADHHABS as m (m)}
           <button
             type="button"
             class="madhhab-pill"
             class:madhhab-pill--active={madhhab === m}
+            aria-pressed={madhhab === m}
             onclick={() => changeMadhhab(m)}
           >
-            {m === "shafii" ? "Shafi'i" : m[0].toUpperCase() + m.slice(1)}
+            {t(`madhhab.${m}.name`)}
           </button>
         {/each}
       </div>
@@ -107,7 +143,7 @@
   </header>
 
   {#if heirs.length > 0}
-    <div class="summary" aria-label="Heirs collected so far">
+    <div class="summary" aria-label={t("calculate.heirsAriaLabel")}>
       {#each heirs as e (e.type)}
         <span class="chip">{labelFor(e.type, e.count)}</span>
       {/each}
@@ -115,7 +151,7 @@
   {/if}
 
   {#key step}
-    <div class="step" in:fly={{ y: 12, duration: 240, easing: cubicOut }}>
+    <div class="step" in:fly={stepEnter}>
       <Card>
         {#snippet children()}
           <h2 class="prompt">{copy.prompt}</h2>
@@ -125,9 +161,11 @@
 
           {#if shape === "bool"}
             <div class="bool-actions">
-              <Button onclick={answerYes} fullWidth>{copy.trueLabel ?? "Yes"}</Button>
+              <Button onclick={answerYes} fullWidth>
+                {copy.trueLabel ?? t("calculate.yes")}
+              </Button>
               <Button variant="secondary" onclick={answerNo} fullWidth>
-                {copy.falseLabel ?? "No"}
+                {copy.falseLabel ?? t("calculate.no")}
               </Button>
             </div>
           {:else if shape === "int"}
@@ -136,27 +174,29 @@
                 bind:value={counterValue}
                 min={0}
                 max={copy.countMax ?? 20}
-                label={copy.countLabel ?? "Count"}
+                label={copy.countLabel ?? t("calculate.count")}
                 description={copy.countDescription}
               />
-              <Button onclick={submitCount} fullWidth>Continue</Button>
+              <Button onclick={submitCount} fullWidth>{t("calculate.continue")}</Button>
             </div>
           {:else if shape === "gender"}
             <div class="bool-actions">
-              <Button onclick={() => pickGender(0)} fullWidth>Male</Button>
-              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>Female</Button>
+              <Button onclick={() => pickGender(0)} fullWidth>{t("calculate.male")}</Button>
+              <Button variant="secondary" onclick={() => pickGender(1)} fullWidth>
+                {t("calculate.female")}
+              </Button>
             </div>
           {:else}
             <Banner tone="scholar">
               {#snippet children()}
-                You're done. Review the heirs above and run the calculation.
+                {t("calculate.done")}
               {/snippet}
             </Banner>
             <div class="done-actions">
-              <Button onclick={calculate} size="lg" fullWidth>See the result</Button>
+              <Button onclick={calculate} size="lg" fullWidth>{t("calculate.seeResult")}</Button>
               <Button onclick={startOver} variant="ghost" fullWidth>
                 <RotateCcw size={16} aria-hidden="true" />
-                Start over
+                {t("calculate.startOver")}
               </Button>
             </div>
           {/if}
@@ -166,12 +206,12 @@
       <div class="nav">
         <Button variant="ghost" onclick={() => runner.back()} disabled={!runner.canGoBack}>
           <ChevronLeft size={16} aria-hidden="true" />
-          Back
+          {t("calculate.back")}
         </Button>
         {#if shape === "bool" || shape === "gender"}
-          <span class="nav-hint">Pick an option to continue</span>
+          <span class="nav-hint">{t("calculate.hint.bool")}</span>
         {:else if shape === "int"}
-          <span class="nav-hint">Tap continue when ready</span>
+          <span class="nav-hint">{t("calculate.hint.int")}</span>
         {/if}
         <span class="nav-spacer">
           <ChevronRight size={16} class="invisible" aria-hidden="true" />
@@ -202,6 +242,7 @@
     font-size: 1.875rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    line-height: 1.15;
   }
   .progress {
     margin-top: 1rem;
@@ -233,7 +274,7 @@
     gap: 0.25rem;
   }
   .madhhab-pill {
-    padding: 0.25rem 0.625rem;
+    padding: 0.4375rem 0.6875rem;
     border-radius: var(--radius-pill);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);

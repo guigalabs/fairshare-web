@@ -3,63 +3,62 @@
 
 import type { HeirShare, HeirType } from "$engine";
 
+export type TierCategory =
+  | "grandparents"
+  | "parents"
+  | "spouse"
+  | "children"
+  | "grandchildren"
+  | "siblings"
+  | "extended";
+
 export interface HeirTier {
-  label: string;
-  category:
-    | "grandparents"
-    | "parents"
-    | "spouse"
-    | "children"
-    | "grandchildren"
-    | "siblings"
-    | "extended";
+  /** Translation key to resolve via t() at render time. */
+  labelKey: string;
+  category: TierCategory;
   heirs: HeirShare[];
 }
 
-const ANCESTOR_DEFS: Array<{ label: string; category: HeirTier["category"]; types: HeirType[] }> = [
+const ANCESTOR_DEFS: Array<{ category: TierCategory; types: HeirType[] }> = [
   {
-    label: "Grandparents",
     category: "grandparents",
     types: ["paternalGrandfather", "paternalGrandmother", "maternalGrandmother"],
   },
-  { label: "Parents", category: "parents", types: ["father", "mother"] },
+  { category: "parents", types: ["father", "mother"] },
 ];
 
-const DESCENDANT_DEFS: Array<{ label: string; category: HeirTier["category"]; types: HeirType[] }> =
-  [
-    { label: "Spouse", category: "spouse", types: ["husband", "wife"] },
-    { label: "Children", category: "children", types: ["son", "daughter"] },
-    { label: "Grandchildren", category: "grandchildren", types: ["sonsSon", "sonsDaughter"] },
-    {
-      label: "Siblings",
-      category: "siblings",
-      types: [
-        "fullBrother",
-        "fullSister",
-        "paternalHalfBrother",
-        "paternalHalfSister",
-        "maternalHalfBrother",
-        "maternalHalfSister",
-      ],
-    },
-    {
-      label: "Extended",
-      category: "extended",
-      types: [
-        "fullBrothersSon",
-        "paternalHalfBrothersSon",
-        "fullPaternalUncle",
-        "paternalHalfUncle",
-        "fullPaternalUnclesSon",
-        "paternalHalfUnclesSon",
-      ],
-    },
-  ];
+const DESCENDANT_DEFS: Array<{ category: TierCategory; types: HeirType[] }> = [
+  { category: "spouse", types: ["husband", "wife"] },
+  { category: "children", types: ["son", "daughter"] },
+  { category: "grandchildren", types: ["sonsSon", "sonsDaughter"] },
+  {
+    category: "siblings",
+    types: [
+      "fullBrother",
+      "fullSister",
+      "paternalHalfBrother",
+      "paternalHalfSister",
+      "maternalHalfBrother",
+      "maternalHalfSister",
+    ],
+  },
+  {
+    category: "extended",
+    types: [
+      "fullBrothersSon",
+      "paternalHalfBrothersSon",
+      "fullPaternalUncle",
+      "paternalHalfUncle",
+      "fullPaternalUnclesSon",
+      "paternalHalfUnclesSon",
+    ],
+  },
+];
 
 function group(shares: readonly HeirShare[], defs: typeof ANCESTOR_DEFS): HeirTier[] {
   return defs
     .map((def) => ({
-      label: def.label,
+      labelKey: `tier.${def.category}`,
       category: def.category,
       heirs: shares.filter((s) => def.types.includes(s.heirType)),
     }))
