@@ -8,6 +8,12 @@ import { makeDb } from "./db/client";
 import * as schema from "./db/schema";
 import { buildMagicLinkEmail } from "./email";
 
+// Module-level cache. The SvelteKitAuth callback fires on every request, so
+// hoisting the ResendClient out avoids reconstructing its HTTP plumbing each
+// time. Cloudflare Workers reuse module state across requests within an
+// isolate, so this is safe and the standard pattern.
+let resendCache: ResendClient | undefined;
+
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   const env = event.platform?.env;
   if (!env) {
@@ -15,7 +21,8 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   }
 
   const db = makeDb(env.DB);
-  const resend = new ResendClient(env.RESEND_API_KEY);
+  resendCache ??= new ResendClient(env.RESEND_API_KEY);
+  const resend = resendCache;
 
   return {
     adapter: DrizzleAdapter(db, {

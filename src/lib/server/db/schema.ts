@@ -1,9 +1,13 @@
 import { integer, primaryKey, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 
+const genId = () => crypto.randomUUID();
+const now = () => new Date();
+
 // Dates and timestamps:
-//   ISO date strings (YYYY-MM-DD) for `date` columns.
-//   Unix epoch (ms) via `integer({ mode: "timestamp_ms" })` for full timestamps;
+//   Full timestamps: `integer({ mode: "timestamp_ms" })` — Unix epoch (ms),
 //   drizzle marshals to/from JS Date.
+//   Date-only fields (e.g. dateOfDeath): plain `text` storing YYYY-MM-DD strings,
+//   matching what the app passes to input[type=date].
 // Money:
 //   stored as decimal-safe TEXT (e.g. "487000.00"). The app already parses
 //   via parseCents() / formatCents() — same shape as the previous Postgres
@@ -15,7 +19,7 @@ import { integer, primaryKey, sqliteTable, text, unique } from "drizzle-orm/sqli
 export const users = sqliteTable("user", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(genId),
   name: text("name"),
   email: text("email").unique().notNull(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
@@ -63,7 +67,7 @@ export const verificationTokens = sqliteTable(
 export const clients = sqliteTable("client", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -73,38 +77,36 @@ export const clients = sqliteTable("client", {
   notes: text("notes"),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
   deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const caseFolders = sqliteTable("case_folder", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
 });
 
 export const cases = sqliteTable("case", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   clientId: text("client_id").references(() => clients.id, { onDelete: "set null" }),
   folderId: text("folder_id").references(() => caseFolders.id, { onDelete: "set null" }),
   deceasedName: text("deceased_name").notNull(),
-  // YYYY-MM-DD strings — SQLite has no native date type, and the app already
-  // formats these for input[type=date].
   dateOfDeath: text("date_of_death"),
   placeOfDeath: text("place_of_death"),
   jurisdiction: text("jurisdiction"),
@@ -125,17 +127,17 @@ export const cases = sqliteTable("case", {
   resultSnapshot: text("result_snapshot", { mode: "json" }),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
   deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const subscriptions = sqliteTable("subscription", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .unique()
@@ -154,10 +156,10 @@ export const subscriptions = sqliteTable("subscription", {
   lastEventAt: integer("last_event_at"),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
 });
 
 /**
@@ -170,7 +172,7 @@ export const processedWebhookEvents = sqliteTable("processed_webhook_event", {
   type: text("type").notNull(),
   processedAt: integer("processed_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
 });
 
 export const waitlist = sqliteTable(
@@ -178,7 +180,7 @@ export const waitlist = sqliteTable(
   {
     id: text("id")
       .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
+      .$defaultFn(genId),
     email: text("email").notNull(),
     /** "pro" or "ios". */
     source: text("source").notNull(),
@@ -186,7 +188,7 @@ export const waitlist = sqliteTable(
     referrer: text("referrer"),
     createdAt: integer("created_at", { mode: "timestamp_ms" })
       .notNull()
-      .$defaultFn(() => new Date()),
+      .$defaultFn(now),
   },
   // One row per (email, source) pair — a user can sign up for both Pro and
   // iOS independently, but not duplicate themselves on the same list.
@@ -205,5 +207,5 @@ export const firmBranding = sqliteTable("firm_branding", {
   signatureBlock: text("signature_block"),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .notNull()
-    .$defaultFn(() => new Date()),
+    .$defaultFn(now),
 });
