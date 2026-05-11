@@ -7,6 +7,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
@@ -151,6 +152,24 @@ export const processedWebhookEvents = pgTable("processed_webhook_event", {
   type: text("type").notNull(),
   processedAt: timestamp("processed_at", { mode: "date" }).notNull().defaultNow(),
 });
+
+export const waitlist = pgTable(
+  "waitlist",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: text("email").notNull(),
+    /** "pro" or "ios". */
+    source: text("source").notNull(),
+    /** Optional referrer URL captured from document.referrer at submit. */
+    referrer: text("referrer"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  // One row per (email, source) pair — a user can sign up for both Pro and
+  // iOS independently, but not duplicate themselves on the same list.
+  (t) => [unique("waitlist_email_source_uniq").on(t.email, t.source)],
+);
 
 export const firmBranding = pgTable("firm_branding", {
   userId: text("user_id")

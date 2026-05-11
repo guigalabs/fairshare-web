@@ -1,53 +1,82 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+// Mock the drizzle client before importing the handler. The handler only
+// chains insert().values().onConflictDoNothing(), so the mock captures the
+// values passed in and asserts on them. Returns this from each link.
+interface Captured {
+  email: string;
+  source: string;
+  referrer: string | null;
+}
+const captured: Captured[] = [];
+
+vi.mock("$lib/server/db/client", () => ({
+  makeDb: () => ({
+    insert: () => ({
+      values: (row: Captured) => {
+        captured.push(row);
+        return { onConflictDoNothing: () => Promise.resolve() };
+      },
+    }),
+  }),
+}));
+
 import type { RequestEvent } from "./$types";
 import { POST } from "./+server";
 
-interface KVStore extends KVNamespace {
-  store: Map<string, string>;
-}
-
-function makeKv(): KVStore {
-  const store = new Map<string, string>();
-  return {
-    store,
-    get: async (key) => store.get(key) ?? null,
-    put: async (key, value) => {
-      store.set(key, value);
-    },
-    delete: async (key) => {
-      store.delete(key);
-    },
-  };
-}
-
-function makeEvent(body: unknown, kv: KVStore | null = makeKv()): RequestEvent {
+function makeEvent(body: unknown, databaseUrl: string | null = "postgres://x"): RequestEvent {
   return {
     request: new Request("https://x/api/waitlist", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: typeof body === "string" ? body : JSON.stringify(body),
     }),
-    platform: kv ? { env: { WAITLIST_KV: kv } } : undefined,
+    platform: databaseUrl ? { env: { DATABASE_URL: databaseUrl } } : undefined,
   } as RequestEvent;
 }
 
+afterEach(() => {
+  captured.length = 0;
+});
+
 describe("POST /api/waitlist", () => {
   it("stores a valid email and returns ok", async () => {
-    const kv = makeKv();
-    const res = await POST(makeEvent({ email: "amina@firm.com" }, kv));
+    const res = await POST(makeEvent({ email: "amina@example.com" }));
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });
-    expect(kv.store.has("waitlist:amina@firm.com")).toBe(true);
-    const stored = JSON.parse(kv.store.get("waitlist:amina@firm.com") ?? "{}");
-    expect(stored.email).toBe("amina@firm.com");
-    expect(typeof stored.createdAt).toBe("string");
+    expect(captured).toHaveLength(1);
+    expect(captured[0].email).toBe("amina@example.com");
+    expect(captured[0].source).toBe("pro");
+  });
+
+  it("accepts an ios source", async () => {
+    await POST(makeEvent({ email: "x@y.com", source: "ios" }));
+    expect(captured[0].source).toBe("ios");
+  });
+
+  it("falls back to pro for unknown sources", async () => {
+    await POST(makeEvent({ email: "x@y.com", source: "made-up" }));
+    expect(captured[0].source).toBe("pro");
+  });
+
+  it("captures referrer when provided and truncates long values", async () => {
+    await POST(makeEvent({ email: "x@y.com", referrer: "https://example.com/blog" }));
+    expect(captured[0].referrer).toBe("https://example.com/blog");
+
+    const long = "https://x/" + "a".repeat(2000);
+    await POST(makeEvent({ email: "x2@y.com", referrer: long }));
+    expect(captured[1].referrer?.length).toBe(500);
+  });
+
+  it("normalizes email to lowercase", async () => {
+    await POST(makeEvent({ email: "Mixed@Case.COM" }));
+    expect(captured[0].email).toBe("mixed@case.com");
   });
 
   it("rejects malformed email with 400", async () => {
-    const kv = makeKv();
-    const res = await POST(makeEvent({ email: "not-an-email" }, kv));
+    const res = await POST(makeEvent({ email: "not-an-email" }));
     expect(res.status).toBe(400);
-    expect(kv.store.size).toBe(0);
+    expect(captured).toHaveLength(0);
   });
 
   it("rejects missing email with 400", async () => {
@@ -60,14 +89,8 @@ describe("POST /api/waitlist", () => {
     expect(res.status).toBe(400);
   });
 
-  it("returns 503 when KV is not bound", async () => {
+  it("returns 503 when the database isn't configured", async () => {
     const res = await POST(makeEvent({ email: "x@y.com" }, null));
     expect(res.status).toBe(503);
-  });
-
-  it("normalizes email to lowercase before storing", async () => {
-    const kv = makeKv();
-    await POST(makeEvent({ email: "Mixed@Case.COM" }, kv));
-    expect(kv.store.has("waitlist:mixed@case.com")).toBe(true);
   });
 });

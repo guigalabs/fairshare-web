@@ -29,6 +29,13 @@
       "when": 1777922531260,
       "tag": "0003_shallow_veda",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778508103814,
+      "tag": "0004_furry_james_howlett",
+      "breakpoints": true
     }
   ]
 }
