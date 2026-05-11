@@ -17,9 +17,7 @@ const now = () => new Date();
 //   query inside.
 
 export const users = sqliteTable("user", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(genId),
+  id: text("id").primaryKey().$defaultFn(genId),
   name: text("name"),
   email: text("email").unique().notNull(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
@@ -65,9 +63,7 @@ export const verificationTokens = sqliteTable(
 );
 
 export const clients = sqliteTable("client", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(genId),
+  id: text("id").primaryKey().$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -75,32 +71,22 @@ export const clients = sqliteTable("client", {
   primaryContactName: text("primary_contact_name"),
   primaryContactEmail: text("primary_contact_email"),
   notes: text("notes"),
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
   deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const caseFolders = sqliteTable("case_folder", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(genId),
+  id: text("id").primaryKey().$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
 });
 
 export const cases = sqliteTable("case", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(genId),
+  id: text("id").primaryKey().$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -125,19 +111,13 @@ export const cases = sqliteTable("case", {
   specialFlags: text("special_flags", { mode: "json" }).notNull().default({}),
   advisoryNotes: text("advisory_notes"),
   resultSnapshot: text("result_snapshot", { mode: "json" }),
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
   deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const subscriptions = sqliteTable("subscription", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(genId),
+  id: text("id").primaryKey().$defaultFn(genId),
   userId: text("user_id")
     .notNull()
     .unique()
@@ -154,12 +134,8 @@ export const subscriptions = sqliteTable("subscription", {
    * revert the subscription to an older state.
    */
   lastEventAt: integer("last_event_at"),
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
 });
 
 /**
@@ -170,25 +146,19 @@ export const subscriptions = sqliteTable("subscription", {
 export const processedWebhookEvents = sqliteTable("processed_webhook_event", {
   id: text("id").primaryKey(),
   type: text("type").notNull(),
-  processedAt: integer("processed_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  processedAt: integer("processed_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
 });
 
 export const waitlist = sqliteTable(
   "waitlist",
   {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(genId),
+    id: text("id").primaryKey().$defaultFn(genId),
     email: text("email").notNull(),
     /** "pro" or "ios". */
     source: text("source").notNull(),
     /** Optional referrer URL captured from document.referrer at submit. */
     referrer: text("referrer"),
-    createdAt: integer("created_at", { mode: "timestamp_ms" })
-      .notNull()
-      .$defaultFn(now),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
   },
   // One row per (email, source) pair — a user can sign up for both Pro and
   // iOS independently, but not duplicate themselves on the same list.
@@ -205,7 +175,5 @@ export const firmBranding = sqliteTable("firm_branding", {
   customDisclaimerAr: text("custom_disclaimer_ar"),
   primaryColor: text("primary_color"),
   signatureBlock: text("signature_block"),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .notNull()
-    .$defaultFn(now),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
 });
