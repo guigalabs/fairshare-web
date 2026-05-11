@@ -1,40 +1,12 @@
 {
   "version": "7",
-  "dialect": "postgresql",
+  "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1777882750269,
-      "tag": "0000_cooing_mandrill",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1777884407288,
-      "tag": "0001_smiling_chimera",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1777899505512,
-      "tag": "0002_public_the_phantom",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1777922531260,
-      "tag": "0003_shallow_veda",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1778508103814,
-      "tag": "0004_furry_james_howlett",
+      "version": "6",
+      "when": 1778523209541,
+      "tag": "0000_bent_changeling",
       "breakpoints": true
     }
   ]

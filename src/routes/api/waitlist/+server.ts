@@ -30,13 +30,13 @@ export const POST: RequestHandler = async ({ request, platform }) => {
 
   const email = raw.toLowerCase();
 
-  const databaseUrl = platform?.env?.DATABASE_URL;
-  if (!databaseUrl) return json({ ok: false, error: "db_not_configured" }, { status: 503 });
+  const d1 = platform?.env?.DB;
+  if (!d1) return json({ ok: false, error: "db_not_configured" }, { status: 503 });
 
   // ON CONFLICT DO NOTHING — repeat signups are idempotent. We still return
   // ok:true so the UI shows the "Thanks" state regardless of whether this is
   // a first-time signup or a re-submit.
-  const db = makeDb(databaseUrl);
+  const db = makeDb(d1);
   await db
     .insert(waitlist)
     .values({ email, source, referrer })

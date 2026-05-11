@@ -8,11 +8,11 @@ export const prerender = false;
 export const load: LayoutServerLoad = async (event) => {
   const session = await requireSession(event);
   let isPro = false;
-  const databaseUrl = event.platform?.env?.DATABASE_URL;
-  if (databaseUrl) {
+  const d1 = event.platform?.env?.DB;
+  if (d1) {
     const userId = (session.user as { id?: string }).id;
     if (userId) {
-      const sub = await getSubscription(makeDb(databaseUrl), userId);
+      const sub = await getSubscription(makeDb(d1), userId);
       isPro = hasProEntitlement(sub);
     }
   }

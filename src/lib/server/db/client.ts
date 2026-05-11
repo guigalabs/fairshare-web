@@ -1,14 +1,13 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/d1";
 import * as schema from "./schema";
 
 export type DB = ReturnType<typeof drizzle<typeof schema>>;
 
 /**
- * Build a Drizzle client bound to the Neon HTTP driver. Pass
- * `platform.env.DATABASE_URL` from a SvelteKit `+server.ts` or
- * `+page.server.ts` so the connection follows the request scope.
+ * Build a Drizzle client bound to a Cloudflare D1 database. Pass
+ * `platform.env.DB` from a SvelteKit `+server.ts` or `+page.server.ts` so the
+ * connection follows the request scope.
  */
-export function makeDb(databaseUrl: string): DB {
-  return drizzle(neon(databaseUrl), { schema });
+export function makeDb(d1: D1Database): DB {
+  return drizzle(d1, { schema });
 }

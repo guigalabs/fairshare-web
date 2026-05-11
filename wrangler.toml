@@ -2,9 +2,22 @@ name = "fairshare-web"
 compatibility_date = "2025-04-01"
 pages_build_output_dir = ".svelte-kit/cloudflare"
 
-# Waitlist signups (Pro + iOS) write to the `waitlist` table in the same
-# Neon database that backs auth + cases. No extra binding needed — the
-# DATABASE_URL Pages secret already covers it.
+# Cloudflare D1 (SQLite) backs auth + cases + Stripe state + waitlist.
+#
+# First-time setup:
+#   bunx wrangler d1 create fairshare-db
+#   # then paste the printed database_id below
+#   bunx wrangler d1 migrations apply fairshare-db --local   # local dev
+#   bunx wrangler d1 migrations apply fairshare-db --remote  # production
+#
+# Migrations live in /drizzle and are SQLite-flavored. Re-generate with
+# `bun run db:generate` after changing src/lib/server/db/schema.ts.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fairshare-db"
+database_id = "627faf56-aaf5-405c-b0a3-686875d4e173"
+migrations_dir = "drizzle"
 
 # Stripe Managed Payments handles billing — Stripe is the merchant of
 # record, so global VAT / sales-tax / fraud / disputes are absorbed by
