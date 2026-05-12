@@ -1,12 +1,15 @@
 // Lightweight i18n. Single bundle of EN + AR loaded statically — no
-// dynamic import gymnastics for two locales. Persists choice to localStorage
-// and applies dir="rtl" / lang="ar" to <html>.
+// dynamic import gymnastics for two locales.
 //
-// Full URL-based locale routing (/[locale]/...) lands with B9 when the
-// methodology pages bring SEO-distinct content per locale. For the
-// calculator UI, a simple in-app toggle is enough.
+// Locale is URL-driven: "/x" is English (canonical), "/ar/x" is Arabic.
+// The reroute hook in src/hooks.ts strips the "/ar" prefix before the
+// router runs so route files stay single-tree. +layout.ts reads the
+// pathname and returns `lang` on page.data, and i18n.current is a
+// reactive getter over page.data so SSR sees the right locale on the
+// very first render (no hydration flash) and client navigations pick
+// up the new locale the instant the URL changes.
 
-import { browser } from "$app/environment";
+import { page } from "$app/state";
 import en from "../../../messages/en.json";
 import ar from "../../../messages/ar.json";
 
@@ -16,44 +19,14 @@ export const LOCALES: readonly Locale[] = ["en", "ar"] as const;
 
 const MESSAGES: Record<Locale, Record<string, string>> = { en, ar };
 
-const STORAGE_KEY = "fairshare:locale";
-
-function readStored(): Locale {
-  if (!browser) return "en";
-  const v = localStorage.getItem(STORAGE_KEY);
-  if (v === "ar" || v === "en") return v;
-  // No saved choice — respect the browser's language preference on first visit.
-  // navigator.language returns tags like "ar", "ar-EG", "ar-SA", etc.
-  if (typeof navigator !== "undefined" && navigator.language?.toLowerCase().startsWith("ar")) {
-    return "ar";
-  }
-  return "en";
-}
-
-function applyToDocument(locale: Locale): void {
-  if (!browser) return;
-  const root = document.documentElement;
-  root.setAttribute("lang", locale);
-  root.setAttribute("dir", locale === "ar" ? "rtl" : "ltr");
+function readLang(): Locale {
+  const v = page.data?.lang;
+  return v === "ar" ? "ar" : "en";
 }
 
 class I18n {
-  current: Locale = $state(readStored());
-
-  constructor() {
-    if (browser) {
-      applyToDocument(this.current);
-      $effect.root(() => {
-        $effect(() => {
-          applyToDocument(this.current);
-          localStorage.setItem(STORAGE_KEY, this.current);
-        });
-      });
-    }
-  }
-
-  set(locale: Locale): void {
-    this.current = locale;
+  get current(): Locale {
+    return readLang();
   }
 
   /**

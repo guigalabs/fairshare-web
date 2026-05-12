@@ -6,8 +6,11 @@
   import X from "@lucide/svelte/icons/x";
   import LocaleToggle from "$lib/components/LocaleToggle.svelte";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc, stripLocale } from "$lib/i18n/url";
 
-  const path = $derived(page.url.pathname.replace(/\/$/, "") || "/");
+  // Strip the locale prefix before pattern-matching so /ar/calculate counts
+  // as "calculate" for the active-link highlight.
+  const path = $derived(stripLocale(page.url.pathname).replace(/\/$/, "") || "/");
   const isCalc = $derived(path === "/calculate" || path.startsWith("/calculate/"));
   const isMethodology = $derived(path.startsWith("/methodology"));
   const isPro = $derived(
@@ -26,7 +29,7 @@
 
 <header class="topnav">
   <div class="topnav-inner">
-    <a href="/" class="brand" aria-label={t("nav.brand")}>
+    <a href={loc("/")} class="brand" aria-label={t("nav.brand")}>
       <img
         src="/icons/brand-64.png"
         alt=""
@@ -41,7 +44,7 @@
 
     <nav class="nav-links" aria-label={t("ui.primaryNav")}>
       <a
-        href="/calculate"
+        href={loc("/calculate")}
         class="nav-link"
         class:nav-link--active={isCalc}
         aria-current={isCalc ? "page" : undefined}
@@ -50,7 +53,7 @@
         {t("nav.calculate")}
       </a>
       <a
-        href="/methodology"
+        href={loc("/methodology")}
         class="nav-link"
         class:nav-link--active={isMethodology}
         aria-current={isMethodology ? "page" : undefined}
@@ -59,7 +62,7 @@
         {t("nav.methodology")}
       </a>
       <a
-        href="/pricing"
+        href={loc("/pricing")}
         class="nav-link nav-link--pro"
         class:nav-link--active={isPro}
         aria-current={isPro ? "page" : undefined}
@@ -90,7 +93,7 @@
   {#if menuOpen}
     <nav id="mobile-nav" class="mobile-nav" aria-label={t("ui.primaryNav")}>
       <a
-        href="/calculate"
+        href={loc("/calculate")}
         class="mobile-link"
         class:mobile-link--active={isCalc}
         aria-current={isCalc ? "page" : undefined}
@@ -99,7 +102,7 @@
         {t("nav.calculate")}
       </a>
       <a
-        href="/methodology"
+        href={loc("/methodology")}
         class="mobile-link"
         class:mobile-link--active={isMethodology}
         aria-current={isMethodology ? "page" : undefined}
@@ -108,7 +111,7 @@
         {t("nav.methodology")}
       </a>
       <a
-        href="/pricing"
+        href={loc("/pricing")}
         class="mobile-link mobile-link--pro"
         class:mobile-link--active={isPro}
         aria-current={isPro ? "page" : undefined}

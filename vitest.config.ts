@@ -9,6 +9,7 @@ export default defineConfig({
       $engine: path.resolve(import.meta.dirname, "src/lib/engine"),
       $lib: path.resolve(import.meta.dirname, "src/lib"),
       "$app/environment": path.resolve(import.meta.dirname, "src/lib/test/app-environment-stub.ts"),
+      "$app/state": path.resolve(import.meta.dirname, "src/lib/test/app-state-stub.ts"),
     },
   },
   test: {

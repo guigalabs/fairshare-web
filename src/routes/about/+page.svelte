@@ -3,6 +3,8 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Button } from "$lib/ui";
   import { i18n, t } from "$lib/i18n/index.svelte";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
   import { serialiseJsonLd, personSchema } from "$lib/seo/jsonld";
 
   const maintainerSchema = personSchema({
@@ -55,7 +57,7 @@
 <p>طوّر فيرشير <strong>محمد قيقة</strong>، مهندس برمجيات مقيم في كاليفورنيا. المشروع مفتوح للمساهمات والملاحظات. للحصول على المواد الإعلامية، انظر <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.</p>
 
 <h2>تحفّظ مهم</h2>
-<p>فيرشير أداة تعليمية لا مرجع شرعي ولا قانوني. تتضمّن قسمة التركات الفعلية وقائع (ديون، وصايا، قانون محلي) لا تستطيع أي حاسبة الإحاطة بها. يرجى استشارة مفتٍ مؤهّل ومحامٍ مرخّص قبل تطبيق أي قسمة فعلية. للمزيد، انظر <a href="/disclaimer">إخلاء المسؤولية الكامل</a>.</p>`,
+<p>فيرشير أداة تعليمية لا مرجع شرعي ولا قانوني. تتضمّن قسمة التركات الفعلية وقائع (ديون، وصايا، قانون محلي) لا تستطيع أي حاسبة الإحاطة بها. يرجى استشارة مفتٍ مؤهّل ومحامٍ مرخّص قبل تطبيق أي قسمة فعلية. للمزيد، انظر <a href="/ar/disclaimer">إخلاء المسؤولية الكامل</a>.</p>`,
       cta: { primary: "جرّب الحاسبة", secondary: "اقرأ المنهجية" },
     },
   } as const;
@@ -66,7 +68,7 @@
 <svelte:head>
   <title>{content.pageTitle} · FairShare</title>
   <meta name="description" content={content.metaDescription} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/about/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
   {@html serialiseJsonLd(maintainerSchema)}
 </svelte:head>
 
@@ -84,8 +86,8 @@
   </Prose>
 
   <div class="cta">
-    <Button href="/calculate">{content.cta.primary}</Button>
-    <Button href="/methodology" variant="secondary">{content.cta.secondary}</Button>
+    <Button href={loc("/calculate")}>{content.cta.primary}</Button>
+    <Button href={loc("/methodology")} variant="secondary">{content.cta.secondary}</Button>
   </div>
 </section>
 

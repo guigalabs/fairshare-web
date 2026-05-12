@@ -10,6 +10,8 @@
   } from "$lib/content/methodology";
   import { serialiseJsonLd, breadcrumbSchema, faqSchema } from "$lib/seo/jsonld";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
 
   const GROUPS: MethodologyGroup[] = ["madhhab", "rules", "special-cases"];
   const breadcrumb = breadcrumbSchema([
@@ -51,9 +53,9 @@
 </script>
 
 <svelte:head>
-  <title>Islamic Inheritance Methodology (Fara'id) · FairShare</title>
+  <title>{t("methodology.pageTitle")}</title>
   <meta name="description" content={t("methodology.metaDescription")} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/methodology/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
   {@html serialiseJsonLd(breadcrumb)}
   {@html serialiseJsonLd(faqs)}
 </svelte:head>
@@ -71,7 +73,7 @@
       <ul class="grid">
         {#each entriesByGroup(group) as e (e.slug)}
           <li>
-            <a href="/methodology/{e.group}/{e.slug}" class="card-link">
+            <a href={loc(`/methodology/${e.group}/${e.slug}`)} class="card-link">
               <Card>
                 {#snippet children()}
                   <h3 class="entry-title">{entryTitle(e)}</h3>

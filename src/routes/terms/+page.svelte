@@ -1,6 +1,8 @@
 <script lang="ts">
   import Prose from "$lib/components/Prose.svelte";
   import { i18n } from "$lib/i18n/index.svelte";
+  import { pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
 
   const LAST_UPDATED = "2026-05-01";
 
@@ -53,7 +55,7 @@
 
 <h2>لا يوجد ضمان</h2>
 <p>تُقدَّم فيرشير "كما هي"، دون أي ضمان من أي نوع، صريحًا أو ضمنيًا. ومع أن محرّك الميراث مختبَر على السيناريوهات الكلاسيكية المعتمدة، فإننا لا نضمن أن يُنتج القسمة الصحيحة لكل تشكيلة عائلية متصوّرة أو لكل اجتهاد داخل المذاهب التي ندعمها.</p>
-<p>راجع <a href="/disclaimer">إخلاء المسؤولية</a> للاطلاع على البيان الكامل بشأن النطاق التعليمي والتوصية باستشارة عالم مؤهّل قبل العمل بأي حساب.</p>
+<p>راجع <a href="/ar/disclaimer">إخلاء المسؤولية</a> للاطلاع على البيان الكامل بشأن النطاق التعليمي والتوصية باستشارة عالم مؤهّل قبل العمل بأي حساب.</p>
 
 <h2>تحديد المسؤولية</h2>
 <p>إلى أقصى حدّ يسمح به القانون، لا تتحمّل غيغا لابز أي خسارة مباشرة أو غير مباشرة أو عرضية أو تبعية ناتجة عن استخدام فيرشير أو الاعتماد على مخرجاته.</p>
@@ -75,7 +77,7 @@
 <svelte:head>
   <title>{content.title} · FairShare</title>
   <meta name="description" content={content.metaDescription} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/terms/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
 </svelte:head>
 
 <section class="container">

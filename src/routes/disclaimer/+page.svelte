@@ -2,6 +2,8 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Banner } from "$lib/ui";
   import { i18n } from "$lib/i18n/index.svelte";
+  import { pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
 
   const CONTENT = {
     en: {
@@ -70,7 +72,7 @@
 <svelte:head>
   <title>{content.kicker} · FairShare</title>
   <meta name="description" content={content.metaDescription} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/disclaimer/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
 </svelte:head>
 
 <section class="container">

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { page } from "$app/state";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc, stripLocale } from "$lib/i18n/url";
 
   const year = new Date().getFullYear();
 
   // Don't render on the Pro app: the marketing footer belongs only on the
-  // public consumer surface.
-  const isProApp = $derived(page.url.pathname.startsWith("/app"));
+  // public consumer surface. stripLocale so /ar/app/... still hides it.
+  const isProApp = $derived(stripLocale(page.url.pathname).startsWith("/app"));
 </script>
 
 {#if !isProApp}
@@ -15,13 +16,13 @@
       <div class="footer-row">
         <span class="footer-brand">{t("nav.brand")}</span>
         <nav class="footer-links" aria-label={t("footer.aria")}>
-          <a href="/calculate">{t("nav.calculate")}</a>
-          <a href="/methodology">{t("nav.methodology")}</a>
-          <a href="/pricing" class="footer-pro">{t("nav.pro")}</a>
-          <a href="/about">{t("footer.about")}</a>
-          <a href="/disclaimer">{t("footer.disclaimerLink")}</a>
-          <a href="/privacy">{t("footer.privacy")}</a>
-          <a href="/terms">{t("footer.terms")}</a>
+          <a href={loc("/calculate")}>{t("nav.calculate")}</a>
+          <a href={loc("/methodology")}>{t("nav.methodology")}</a>
+          <a href={loc("/pricing")} class="footer-pro">{t("nav.pro")}</a>
+          <a href={loc("/about")}>{t("footer.about")}</a>
+          <a href={loc("/disclaimer")}>{t("footer.disclaimerLink")}</a>
+          <a href={loc("/privacy")}>{t("footer.privacy")}</a>
+          <a href={loc("/terms")}>{t("footer.terms")}</a>
         </nav>
       </div>
       <p class="footer-meta">{t("footer.copyrightFull", { year })}</p>

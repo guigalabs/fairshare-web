@@ -2,6 +2,7 @@
   import ArticleHeader from "$lib/components/ArticleHeader.svelte";
   import { Button } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc } from "$lib/i18n/url";
 </script>
 
 <svelte:head>
@@ -18,7 +19,7 @@
   />
 
   <div class="cta">
-    <Button href="/login" variant="ghost">{t("login.verify.back")}</Button>
+    <Button href={loc("/login")} variant="ghost">{t("login.verify.back")}</Button>
   </div>
 </section>
 

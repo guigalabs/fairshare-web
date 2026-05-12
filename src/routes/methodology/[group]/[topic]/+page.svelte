@@ -6,12 +6,17 @@
   import { BODIES } from "$lib/content/methodology-bodies";
   import { groupTitle, entryTitle, entryDescription } from "$lib/content/methodology";
   import { i18n, t } from "$lib/i18n/index.svelte";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
   import { serialiseJsonLd, articleSchema, breadcrumbSchema } from "$lib/seo/jsonld";
   import type { PageProps } from "./$types";
 
   let { data }: PageProps = $props();
   const entry = $derived(data.entry);
-  const url = $derived(`https://fairshare.guigalabs.com/methodology/${entry.group}/${entry.slug}/`);
+  // Canonical follows the actual route (EN at /methodology/..., AR at
+  // /ar/methodology/...). Both have self-referential canonicals so Google
+  // indexes each language separately.
+  const url = $derived(pageUrl(page.url.pathname));
   const bodies = $derived(BODIES[`${entry.group}/${entry.slug}`] ?? { en: "", ar: "" });
   const body = $derived(bodies[i18n.current] || bodies.en);
   const showFallbackBanner = $derived(i18n.current === "ar" && !bodies.ar);
@@ -39,8 +44,8 @@
   );
   const breadcrumb = $derived(
     breadcrumbSchema([
-      { name: "FairShare", url: "https://fairshare.guigalabs.com/" },
-      { name: t("methodology.title"), url: "https://fairshare.guigalabs.com/methodology/" },
+      { name: "FairShare", url: pageUrl(loc("/")) },
+      { name: t("methodology.title"), url: pageUrl(loc("/methodology")) },
       { name: groupTitle(entry.group), url },
       { name: entryTitle(entry), url },
     ]),
@@ -61,7 +66,7 @@
 
 <article class="container">
   <nav class="crumbs" aria-label={t("methodology.breadcrumbAria")}>
-    <a href="/methodology">{t("methodology.title")}</a>
+    <a href={loc("/methodology")}>{t("methodology.title")}</a>
     <span aria-hidden="true">›</span>
     <span>{groupTitle(entry.group)}</span>
   </nav>
@@ -94,11 +99,11 @@
   </Prose>
 
   <footer class="foot">
-    <Button href="/methodology" variant="secondary">
+    <Button href={loc("/methodology")} variant="secondary">
       <ArrowLeft size={16} aria-hidden="true" />
       {t("methodology.allArticles")}
     </Button>
-    <Button href="/calculate">
+    <Button href={loc("/calculate")}>
       {t("methodology.tryInCalculator")}
       <ArrowRight size={16} aria-hidden="true" />
     </Button>

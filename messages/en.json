@@ -92,6 +92,10 @@
   "landing.pro.scholars.f4.body": "Every result includes a paragraph explaining the outcome to a non-technical audience — useful when consoling a grieving family.",
 
   "landing.kicker": "Fara'id · Islamic Inheritance",
+  "landing.pageTitle": "FairShare · Islamic Inheritance Calculator (Fara'id)",
+  "landing.metaDescription": "Calculate Fara'id (Islamic inheritance) shares across five madhabs, with each share linked to its Quranic source. Free, offline-first, bilingual EN/AR.",
+  "landing.ogTitle": "FairShare · Islamic Inheritance Calculator",
+  "landing.ogDescription": "Five madhabs side by side, every share linked to its Quranic source. Free, offline-first.",
   "landing.title": "Islamic inheritance, calculated faithfully.",
   "landing.subtitle": "A free, offline calculator for Islamic inheritance. Five madhabs side by side, every share linked to its Quranic source.",
   "landing.cta.primary": "Start a calculation",
@@ -132,6 +136,7 @@
   "landing.cta2.ios": "Download for iOS",
 
   "calculate.title": "Calculate",
+  "calculate.pageTitle": "Calculate Islamic Inheritance Shares · FairShare",
   "calculate.metaDescription": "Walk through a short questionnaire to compute Islamic inheritance shares for any family.",
   "calculate.kicker": "Step {progress}%",
   "calculate.progressAriaLabel": "Questionnaire progress",
@@ -263,6 +268,7 @@
   "result.subject.female": "Female",
 
   "methodology.title": "Methodology",
+  "methodology.pageTitle": "Islamic Inheritance Methodology (Fara'id) · FairShare",
   "methodology.metaDescription": "Classical rules of Islamic inheritance (Fara'id): five madhabs, fixed shares, blocking, residuary heirs, Awl, Radd, and the named special cases.",
   "methodology.heading": "Islamic inheritance, in {count} short reads.",
   "methodology.lede": "Each page covers one school, rule, or special case: the source verses, the worked examples, and where the schools diverge. Useful before you trust any calculator output.",
@@ -323,6 +329,7 @@
   "plain.note.radd": "Leftover estate was redistributed (Radd) among eligible heirs.",
 
   "pricing.kicker": "FairShare Pro",
+  "pricing.pageTitle": "Pricing · FairShare Pro",
   "pricing.title": "FairShare Pro for Practitioners",
   "pricing.lede": "A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, named heirs, real estate amounts, branded PDFs.",
   "pricing.cadence.label": "Billing cadence",
