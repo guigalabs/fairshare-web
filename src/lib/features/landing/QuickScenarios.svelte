@@ -150,7 +150,7 @@
     justify-content: space-between;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: var(--color-surface);
+    background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     color: var(--color-text);
@@ -186,7 +186,7 @@
     display: flex;
     flex-direction: column;
     padding: 0.375rem;
-    background: var(--color-surface);
+    background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
@@ -223,7 +223,7 @@
     border-radius: 999px;
     background: color-mix(in srgb, var(--tint) 12%, transparent);
     color: var(--tint);
-    border: 1.5px solid var(--color-surface);
+    border: 1.5px solid var(--color-bg-elevated);
     margin-inline-start: -6px;
     font-size: 0.6875rem;
     font-weight: 700;

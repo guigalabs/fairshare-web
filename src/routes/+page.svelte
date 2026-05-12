@@ -3,7 +3,6 @@
   import { cubicOut } from "svelte/easing";
   import { env } from "$env/dynamic/public";
   import { Button, Card, Banner, Field, Sheet, TextInput, reducedMotion } from "$lib/ui";
-  import InstallPwaButton from "$lib/components/InstallPwaButton.svelte";
   import QuickScenarios from "$lib/features/landing/QuickScenarios.svelte";
   import ArrowRight from "@lucide/svelte/icons/arrow-right";
   import BookOpen from "@lucide/svelte/icons/book-open";
@@ -297,9 +296,6 @@
           <span class="app-store-label">{t("landing.appStore.label")}</span>
         </span>
       </a>
-    </div>
-    <div class="cta-extras">
-      <InstallPwaButton />
     </div>
   </div>
 </section>
@@ -786,12 +782,32 @@
     justify-content: center;
     gap: 0.75rem;
   }
-  .cta-extras {
-    margin-top: 1.25rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    align-items: center;
+
+  /* Mobile: shrink hero + CTA pills so the row reads as compact pills
+   * matching the web layout at a smaller scale. */
+  @media (max-width: 640px) {
+    .hero-ctas,
+    .cta-buttons {
+      gap: 0.5rem;
+    }
+    .hero-ctas :global(.btn--lg),
+    .cta-buttons :global(.btn--lg) {
+      padding: 0.625rem 1.125rem;
+      font-size: 0.9375rem;
+    }
+    .app-store-badge {
+      padding: 0.5rem 0.875rem;
+      gap: 0.5rem;
+    }
+    .app-store-badge svg {
+      width: 18px;
+      height: 18px;
+    }
+    .app-store-eyebrow {
+      font-size: 0.5625rem;
+    }
+    .app-store-label {
+      font-size: 0.875rem;
+    }
   }
 </style>
