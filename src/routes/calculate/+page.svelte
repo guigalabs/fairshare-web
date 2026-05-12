@@ -12,6 +12,8 @@
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
   import { t } from "$lib/i18n/index.svelte";
+  import { pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
   import { serialiseJsonLd, howToSchema } from "$lib/seo/jsonld";
 
   // HowTo schema for the calculator flow. Steps are deliberately
@@ -129,9 +131,9 @@
 </script>
 
 <svelte:head>
-  <title>Calculate Islamic Inheritance Shares · FairShare</title>
+  <title>{t("calculate.pageTitle")}</title>
   <meta name="description" content={t("calculate.metaDescription")} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/calculate/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
   {@html serialiseJsonLd(calculatorHowTo)}
 </svelte:head>
 

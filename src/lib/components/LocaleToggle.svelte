@@ -1,6 +1,19 @@
 <script lang="ts">
-  import { i18n, LOCALES, t } from "$lib/i18n/index.svelte";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/state";
+  import { i18n, LOCALES, t, type Locale } from "$lib/i18n/index.svelte";
+  import { stripLocale, localePath } from "$lib/i18n/url";
   import Languages from "@lucide/svelte/icons/languages";
+
+  // Locale lives in the URL: "/x" is English, "/ar/x" is Arabic. Picking
+  // a language navigates to the equivalent URL; the in-memory state then
+  // syncs via the root layout effect.
+  function switchTo(target: Locale) {
+    if (target === i18n.current) return;
+    const enPath = stripLocale(page.url.pathname);
+    const dest = localePath(enPath, target) + page.url.search + page.url.hash;
+    goto(dest, { replaceState: false, keepFocus: true });
+  }
 </script>
 
 <div class="seg" role="radiogroup" aria-label={t("ui.language")}>
@@ -12,7 +25,7 @@
         name="locale"
         value={loc}
         checked={i18n.current === loc}
-        onchange={() => i18n.set(loc)}
+        onchange={() => switchTo(loc)}
       />
       <span>{loc.toUpperCase()}</span>
     </label>

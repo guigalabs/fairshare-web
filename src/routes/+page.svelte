@@ -15,10 +15,13 @@
     organizationSchema,
     websiteSchema,
   } from "$lib/seo/jsonld";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
 
   const appSchema = softwareApplicationSchema();
   const orgSchema = organizationSchema();
   const siteSchema = websiteSchema();
+  const canonical = $derived(pageUrl(page.url.pathname));
 
   // Until the iOS app ships, the badge opens a waitlist modal instead of
   // linking to the App Store. Once PUBLIC_APP_STORE_URL is set, click flows
@@ -92,20 +95,14 @@
 </script>
 
 <svelte:head>
-  <title>FairShare · Islamic Inheritance Calculator (Fara'id)</title>
-  <meta
-    name="description"
-    content="Calculate Fara'id (Islamic inheritance) shares across five madhabs, with each share linked to its Quranic source. Free, offline-first, bilingual EN/AR."
-  />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/" />
+  <title>{t("landing.pageTitle")}</title>
+  <meta name="description" content={t("landing.metaDescription")} />
+  <link rel="canonical" href={canonical} />
 
-  <meta property="og:title" content="FairShare · Islamic Inheritance Calculator" />
-  <meta
-    property="og:description"
-    content="Five madhabs side by side, every share linked to its Quranic source. Free, offline-first."
-  />
+  <meta property="og:title" content={t("landing.ogTitle")} />
+  <meta property="og:description" content={t("landing.ogDescription")} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://fairshare.guigalabs.com" />
+  <meta property="og:url" content={canonical} />
   {@html serialiseJsonLd(appSchema)}
   {@html serialiseJsonLd(orgSchema)}
   {@html serialiseJsonLd(siteSchema)}
@@ -115,7 +112,7 @@
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-inner">
-    <a class="pro-banner" href="/pricing" in:fly={enter(0)}>
+    <a class="pro-banner" href={loc("/pricing")} in:fly={enter(0)}>
       <span class="pro-banner-text">{t("landing.pro.banner")}</span>
       <span class="pro-banner-cta">
         {t("landing.pro.cta")}
@@ -130,11 +127,11 @@
       {t("landing.subtitle")}
     </p>
     <div class="hero-ctas" in:fly={enter(360)}>
-      <Button href="/calculate" size="lg" data-sveltekit-preload-code="eager">
+      <Button href={loc("/calculate")} size="lg" data-sveltekit-preload-code="eager">
         {t("landing.cta.primary")}
         <ArrowRight size={18} aria-hidden="true" />
       </Button>
-      <Button href="/methodology" variant="secondary" size="lg">
+      <Button href={loc("/methodology")} variant="secondary" size="lg">
         {t("landing.cta.secondary")}
       </Button>
       <a
@@ -238,7 +235,7 @@
     </div>
 
     <div class="pro-ctas" role="group" aria-label={t("landing.pro.tabsAria")}>
-      <Button href="/pricing" size="lg" data-sveltekit-preload-code="viewport">
+      <Button href={loc("/pricing")} size="lg" data-sveltekit-preload-code="viewport">
         {t("landing.pro.cta.primary")}
       </Button>
       <button
@@ -271,7 +268,7 @@
   </div>
   <div class="madhhab-grid">
     {#each MADHHABS as m (m.slug)}
-      <a class="madhhab-card" href="/methodology/madhhab/{m.slug}">
+      <a class="madhhab-card" href={loc(`/methodology/madhhab/${m.slug}`)}>
         <span class="madhhab-name">{t(m.nameKey)}</span>
         <span class="madhhab-desc">{t(m.descKey)}</span>
       </a>
@@ -285,8 +282,8 @@
     <h2>{t("landing.cta2.title")}</h2>
     <p>{t("landing.cta2.body")}</p>
     <div class="cta-buttons">
-      <Button href="/calculate" size="lg">{t("landing.cta2.primary")}</Button>
-      <Button href="/methodology" variant="secondary" size="lg"
+      <Button href={loc("/calculate")} size="lg">{t("landing.cta2.primary")}</Button>
+      <Button href={loc("/methodology")} variant="secondary" size="lg"
         >{t("landing.cta2.secondary")}</Button
       >
       <a

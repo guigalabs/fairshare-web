@@ -3,6 +3,8 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Button } from "$lib/ui";
   import { i18n } from "$lib/i18n/index.svelte";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
 
   const CONTENT = {
     en: {
@@ -71,7 +73,7 @@
 <svelte:head>
   <title>{content.title}</title>
   <meta name="description" content={content.metaDescription} />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/for-scholars/" />
+  <link rel="canonical" href={pageUrl(page.url.pathname)} />
 </svelte:head>
 
 <section class="container">
@@ -88,8 +90,8 @@
   </Prose>
 
   <div class="cta">
-    <Button href="/pricing">{content.cta.primary}</Button>
-    <Button href="/methodology" variant="secondary">{content.cta.secondary}</Button>
+    <Button href={loc("/pricing")}>{content.cta.primary}</Button>
+    <Button href={loc("/methodology")} variant="secondary">{content.cta.secondary}</Button>
   </div>
 </section>
 

@@ -2,6 +2,7 @@
   import { page } from "$app/state";
   import { Button } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc } from "$lib/i18n/url";
 
   const status = $derived(page.status);
   const is404 = $derived(status === 404);
@@ -21,12 +22,12 @@
     <h1 class="error-title">{t(titleKey)}</h1>
     <p class="error-lede">{t(ledeKey)}</p>
     <div class="error-ctas">
-      <Button href="/" size="lg">{t("error.cta.home")}</Button>
-      <Button href="/calculate" variant="secondary" size="lg">
+      <Button href={loc("/")} size="lg">{t("error.cta.home")}</Button>
+      <Button href={loc("/calculate")} variant="secondary" size="lg">
         {t("error.cta.calculate")}
       </Button>
     </div>
-    <a href="/methodology" class="error-tertiary">{t("error.cta.methodology")}</a>
+    <a href={loc("/methodology")} class="error-tertiary">{t("error.cta.methodology")}</a>
   </div>
 </section>
 

@@ -3,6 +3,10 @@
   import { Button, Card, Field, Sheet, TextInput } from "$lib/ui";
   import Check from "@lucide/svelte/icons/check";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc, pageUrl } from "$lib/i18n/url";
+  import { page } from "$app/state";
+
+  const canonical = $derived(pageUrl(page.url.pathname));
 
   type Cadence = "monthly" | "annual";
   const CADENCES = [
@@ -47,19 +51,19 @@
 </script>
 
 <svelte:head>
-  <title>Pricing · FairShare Pro</title>
+  <title>{t("pricing.pageTitle")}</title>
   <meta
     name="description"
     content="FairShare Pro for Islamic estate practitioners. Case folders, named heirs, estate amounts, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
   />
-  <link rel="canonical" href="https://fairshare.guigalabs.com/pricing/" />
+  <link rel="canonical" href={canonical} />
   <meta property="og:title" content="FairShare Pro for Practitioners" />
   <meta
     property="og:description"
     content="A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://fairshare.guigalabs.com/pricing/" />
+  <meta property="og:url" content={canonical} />
 </svelte:head>
 
 <section class="container">
@@ -116,8 +120,8 @@
   </Card>
 
   <div class="cta">
-    <Button href="/calculate" variant="secondary">{t("pricing.tryFree")}</Button>
-    <Button href="/methodology" variant="secondary">{t("pricing.readMethodology")}</Button>
+    <Button href={loc("/calculate")} variant="secondary">{t("pricing.tryFree")}</Button>
+    <Button href={loc("/methodology")} variant="secondary">{t("pricing.readMethodology")}</Button>
   </div>
 </section>
 

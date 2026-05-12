@@ -10,6 +10,7 @@
   import PrintableResult from "$lib/features/result/PrintableResult.svelte";
   import { ResultStore } from "$lib/features/result/store.svelte";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc } from "$lib/i18n/url";
 
   const store = new ResultStore();
 
@@ -38,7 +39,7 @@
     {/if}
     <EmptyState title={t("result.empty.title")} description={t("result.empty.desc")}>
       {#snippet action()}
-        <Button href="/calculate" size="lg">{t("result.empty.cta")}</Button>
+        <Button href={loc("/calculate")} size="lg">{t("result.empty.cta")}</Button>
       {/snippet}
     </EmptyState>
   {:else if !result || !c}
