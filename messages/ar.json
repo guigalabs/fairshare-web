@@ -92,7 +92,7 @@
   "landing.pro.scholars.f4.body": "تتضمّن كل نتيجة فقرة تشرح الحكم لعموم الناس — مفيدة عند الحديث مع عائلة فقدت عزيزًا.",
 
   "landing.kicker": "الفرائض · الميراث الإسلامي",
-  "landing.title": "ميراث محسوب بإخلاص.",
+  "landing.title": "الميراث الإسلامي، محسوب بإخلاص.",
   "landing.subtitle": "حاسبة مجانية للميراث الإسلامي تعمل دون اتصال. خمسة مذاهب جنبًا إلى جنب، وكل نصيب مربوط بمصدره القرآني.",
   "landing.cta.primary": "ابدأ الحساب",
   "landing.cta.secondary": "اقرأ المنهجية",
@@ -267,6 +267,7 @@
   "methodology.heading": "الميراث الإسلامي، في {count} مقالات مختصرة.",
   "methodology.lede": "تتناول كل صفحة مذهبًا أو قاعدة أو حالة خاصة: الآيات المصدر، والأمثلة المحلولة، وموضع الخلاف بين المذاهب. مفيد قبل الثقة بأي مخرجات حاسبة.",
   "methodology.minRead": "{count} دقيقة قراءة",
+  "methodology.lastUpdated": "آخر تحديث في {date}",
   "methodology.allMeta": "{count} مقالة · مجانية بالكامل، بدون تسجيل.",
   "methodology.breadcrumbAria": "مسار التنقّل",
   "methodology.allArticles": "كل المقالات",

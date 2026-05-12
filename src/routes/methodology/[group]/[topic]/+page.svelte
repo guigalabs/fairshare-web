@@ -16,12 +16,25 @@
   const body = $derived(bodies[i18n.current] || bodies.en);
   const showFallbackBanner = $derived(i18n.current === "ar" && !bodies.ar);
 
+  // Publication date for all methodology articles. Bumping this re-asserts
+  // freshness to search engines and surfaces a visible "Last updated"
+  // line for readers. Move per-entry into methodology.ts if articles
+  // start diverging in age.
+  const PUBLISHED_ISO = "2026-05-01T00:00:00.000Z";
+  const lastUpdatedDisplay = $derived(
+    new Date(PUBLISHED_ISO).toLocaleDateString(i18n.current === "ar" ? "ar" : "en", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  );
+
   const article = $derived(
     articleSchema({
       url,
       title: entryTitle(entry),
       description: entryDescription(entry),
-      publishedISO: "2026-05-01T00:00:00.000Z",
+      publishedISO: PUBLISHED_ISO,
     }),
   );
   const breadcrumb = $derived(
@@ -56,7 +69,13 @@
   <header class="head">
     <p class="kicker">{groupTitle(entry.group)}</p>
     <h1>{entryTitle(entry)}</h1>
-    <p class="meta">{t("methodology.minRead", { count: entry.readingMinutes })}</p>
+    <p class="meta">
+      <span>{t("methodology.minRead", { count: entry.readingMinutes })}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime={PUBLISHED_ISO}
+        >{t("methodology.lastUpdated", { date: lastUpdatedDisplay })}</time
+      >
+    </p>
     <p class="lede">{entryDescription(entry)}</p>
   </header>
 
@@ -126,6 +145,9 @@
   }
   .meta {
     margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     color: var(--color-text-muted);
     font-size: 0.875rem;
   }

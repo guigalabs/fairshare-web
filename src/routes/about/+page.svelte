@@ -3,13 +3,21 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Button } from "$lib/ui";
   import { i18n, t } from "$lib/i18n/index.svelte";
+  import { serialiseJsonLd, personSchema } from "$lib/seo/jsonld";
+
+  const maintainerSchema = personSchema({
+    name: "Mohammed Guiga",
+    jobTitle: "Software engineer",
+    worksFor: { name: "Guiga Labs", url: "https://guigalabs.com" },
+  });
 
   const CONTENT = {
     en: {
       kicker: "About",
       title: "FairShare",
+      pageTitle: "About FairShare",
       metaDescription:
-        "FairShare is an offline-first Islamic inheritance calculator from Guiga Labs. Five madhabs side by side, every share linked to its Quranic source, no accounts, no tracking.",
+        "Offline-first Islamic inheritance calculator from Guiga Labs. Five madhabs side by side, every share linked to its Quranic source. No accounts, no tracking.",
       body: `<p>FairShare is a free, offline-first calculator for Islamic inheritance (<em>Fara'id</em>), built by <a href="https://guigalabs.com">Guiga Labs</a>. It's available as a web app at <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> and as a native iOS app.</p>
 
 <h2>Why we built it</h2>
@@ -30,6 +38,7 @@
     ar: {
       kicker: "عن فيرشير",
       title: "فيرشير",
+      pageTitle: "عن فيرشير",
       metaDescription:
         "فيرشير حاسبة ميراث إسلامي تعمل دون اتصال، من غيغا لابز. خمسة مذاهب جنبًا إلى جنب، كل نصيب مربوط بمصدره القرآني، بدون حسابات، بدون تتبع.",
       body: `<p>فيرشير حاسبة مجانية للميراث الإسلامي (<em>الفرائض</em>) تعمل دون اتصال، طوّرتها <a href="https://guigalabs.com">غيغا لابز</a>. متوفّرة كتطبيق ويب على <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> وكتطبيق أصلي على iOS.</p>
@@ -55,9 +64,10 @@
 </script>
 
 <svelte:head>
-  <title>{content.title} · FairShare</title>
+  <title>{content.pageTitle} · FairShare</title>
   <meta name="description" content={content.metaDescription} />
   <link rel="canonical" href="https://fairshare.guigalabs.com/about/" />
+  {@html serialiseJsonLd(maintainerSchema)}
 </svelte:head>
 
 <section class="container">
