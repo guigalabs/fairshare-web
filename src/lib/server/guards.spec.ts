@@ -48,4 +48,11 @@ describe("requireSession", () => {
     );
     expect(r.status).toBe(302);
   });
+
+  it("redirects when locals.auth is missing (AUTH_SECRET unset, auth handle skipped)", async () => {
+    const r = await captureRedirect(() =>
+      requireSession({ locals: {}, url: new URL("https://x/app/cases") }),
+    );
+    expect(r).toEqual({ status: 302, location: "/login?from=%2Fapp%2Fcases" });
+  });
 });
