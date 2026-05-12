@@ -92,3 +92,52 @@ export function softwareApplicationSchema() {
     publisher: { "@type": "Organization", name: "Guiga Labs", url: "https://guigalabs.com" },
   };
 }
+
+// Site-wide Organization. Lives at @id #organization so other schema
+// blocks (Article.publisher, SoftwareApplication.publisher) can reference
+// it instead of duplicating fields.
+export function organizationSchema(sameAs: string[] = []) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://guigalabs.com/#organization",
+    name: "Guiga Labs",
+    url: "https://guigalabs.com/",
+    logo: `${SITE}/icons/pwa-512.png`,
+    founder: {
+      "@type": "Person",
+      name: "Mohammed Guiga",
+    },
+    sameAs,
+  };
+}
+
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE}/#website`,
+    name: "FairShare",
+    url: `${SITE}/`,
+    inLanguage: ["en", "ar"],
+    publisher: { "@id": "https://guigalabs.com/#organization" },
+  };
+}
+
+export function personSchema(args: {
+  name: string;
+  jobTitle?: string;
+  worksFor?: { name: string; url: string };
+  sameAs?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: args.name,
+    jobTitle: args.jobTitle,
+    worksFor: args.worksFor
+      ? { "@type": "Organization", name: args.worksFor.name, url: args.worksFor.url }
+      : undefined,
+    sameAs: args.sameAs,
+  };
+}

@@ -12,6 +12,32 @@
   import { labelFor } from "$lib/features/questionnaire/heirLabels";
   import { MADHHABS, type Madhhab } from "$engine";
   import { t } from "$lib/i18n/index.svelte";
+  import { serialiseJsonLd, howToSchema } from "$lib/seo/jsonld";
+
+  // HowTo schema for the calculator flow. Steps are deliberately
+  // high-level — the actual questionnaire branches dynamically based on
+  // family composition, so enumerating every question would misrepresent
+  // it. Three steps capture the user-visible arc: school → questionnaire
+  // → result with citations.
+  const calculatorHowTo = howToSchema({
+    name: "Calculate Islamic inheritance shares (Fara'id)",
+    description:
+      "Compute Fara'id shares for any family, with each share linked to its Quranic source. Free, offline, and bilingual EN/AR.",
+    steps: [
+      {
+        name: "Choose a school of thought (madhhab)",
+        text: "Pick one of the five Sunni schools — General (majority), Hanafi, Maliki, Shafi'i, or Hanbali — or accept the General default.",
+      },
+      {
+        name: "Walk through the family questionnaire",
+        text: "Answer short questions about the deceased's surviving family: spouse, parents, children, siblings, and other named heirs.",
+      },
+      {
+        name: "Review the computed shares",
+        text: "Read each heir's share and the Quranic verse (4:11, 4:12, 4:176) or classical rule it derives from. Export or share the result.",
+      },
+    ],
+  });
 
   // A `?madhhab=` URL param takes precedence over the stored value so a
   // colleague-shared link can pin the right school.
@@ -103,9 +129,10 @@
 </script>
 
 <svelte:head>
-  <title>{t("calculate.title")} · FairShare</title>
+  <title>Calculate Islamic Inheritance Shares · FairShare</title>
   <meta name="description" content={t("calculate.metaDescription")} />
   <link rel="canonical" href="https://fairshare.guigalabs.com/calculate/" />
+  {@html serialiseJsonLd(calculatorHowTo)}
 </svelte:head>
 
 <section class="container">

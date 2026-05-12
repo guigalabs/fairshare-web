@@ -9,9 +9,16 @@
   import ShieldCheck from "@lucide/svelte/icons/shield-check";
   import WifiOff from "@lucide/svelte/icons/wifi-off";
   import { t } from "$lib/i18n/index.svelte";
-  import { serialiseJsonLd, softwareApplicationSchema } from "$lib/seo/jsonld";
+  import {
+    serialiseJsonLd,
+    softwareApplicationSchema,
+    organizationSchema,
+    websiteSchema,
+  } from "$lib/seo/jsonld";
 
   const appSchema = softwareApplicationSchema();
+  const orgSchema = organizationSchema();
+  const siteSchema = websiteSchema();
 
   // Until the iOS app ships, the badge opens a waitlist modal instead of
   // linking to the App Store. Once PUBLIC_APP_STORE_URL is set, click flows
@@ -88,7 +95,7 @@
   <title>FairShare · Islamic Inheritance Calculator (Fara'id)</title>
   <meta
     name="description"
-    content="Calculate Fara'id (Islamic inheritance) shares with confidence. Five madhabs side by side, every share linked to its Quranic source. Free, offline-first, bilingual EN/AR."
+    content="Calculate Fara'id (Islamic inheritance) shares across five madhabs, with each share linked to its Quranic source. Free, offline-first, bilingual EN/AR."
   />
   <link rel="canonical" href="https://fairshare.guigalabs.com/" />
 
@@ -100,6 +107,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://fairshare.guigalabs.com" />
   {@html serialiseJsonLd(appSchema)}
+  {@html serialiseJsonLd(orgSchema)}
+  {@html serialiseJsonLd(siteSchema)}
 </svelte:head>
 
 <!-- Hero -->

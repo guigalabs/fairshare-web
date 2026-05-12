@@ -92,7 +92,7 @@
   "landing.pro.scholars.f4.body": "Every result includes a paragraph explaining the outcome to a non-technical audience — useful when consoling a grieving family.",
 
   "landing.kicker": "Fara'id · Islamic Inheritance",
-  "landing.title": "Inheritance, calculated faithfully.",
+  "landing.title": "Islamic inheritance, calculated faithfully.",
   "landing.subtitle": "A free, offline calculator for Islamic inheritance. Five madhabs side by side, every share linked to its Quranic source.",
   "landing.cta.primary": "Start a calculation",
   "landing.cta.secondary": "Read the methodology",
@@ -263,10 +263,11 @@
   "result.subject.female": "Female",
 
   "methodology.title": "Methodology",
-  "methodology.metaDescription": "The classical rules of Islamic inheritance (Fara'id) explained. Five madhabs, the core rules of fixed shares, blocking, residuary heirs, Awl, and Radd, plus the named special cases.",
+  "methodology.metaDescription": "Classical rules of Islamic inheritance (Fara'id): five madhabs, fixed shares, blocking, residuary heirs, Awl, Radd, and the named special cases.",
   "methodology.heading": "Islamic inheritance, in {count} short reads.",
   "methodology.lede": "Each page covers one school, rule, or special case: the source verses, the worked examples, and where the schools diverge. Useful before you trust any calculator output.",
   "methodology.minRead": "{count} min read",
+  "methodology.lastUpdated": "Last updated {date}",
   "methodology.allMeta": "{count} articles · all free, no signup.",
   "methodology.breadcrumbAria": "Breadcrumb",
   "methodology.allArticles": "All articles",
