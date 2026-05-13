@@ -1,15 +1,20 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { Button, Field, TextInput } from "$lib/ui";
   import { t } from "$lib/i18n/index.svelte";
   import type { PageData } from "./$types";
 
   let { data }: { data: PageData } = $props();
 
-  let letterheadText = $state(data.branding?.letterheadText ?? "");
-  let customDisclaimerEn = $state(data.branding?.customDisclaimerEn ?? "");
-  let customDisclaimerAr = $state(data.branding?.customDisclaimerAr ?? "");
-  let primaryColor = $state(data.branding?.primaryColor ?? "#0f172a");
-  let signatureBlock = $state(data.branding?.signatureBlock ?? "");
+  // Seed the form with the server-loaded branding once on mount. Wrap each
+  // read in untrack() so Svelte doesn't flag the intentional one-shot
+  // capture as the state_referenced_locally pattern — the form is meant
+  // to hold user edits, not auto-sync with subsequent data changes.
+  let letterheadText = $state(untrack(() => data.branding?.letterheadText ?? ""));
+  let customDisclaimerEn = $state(untrack(() => data.branding?.customDisclaimerEn ?? ""));
+  let customDisclaimerAr = $state(untrack(() => data.branding?.customDisclaimerAr ?? ""));
+  let primaryColor = $state(untrack(() => data.branding?.primaryColor ?? "#0f172a"));
+  let signatureBlock = $state(untrack(() => data.branding?.signatureBlock ?? ""));
 
   let saving = $state(false);
   let savedAt = $state<Date | null>(null);

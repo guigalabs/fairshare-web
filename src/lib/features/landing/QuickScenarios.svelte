@@ -28,8 +28,8 @@
   }
 
   let open = $state(false);
-  let trigger: HTMLButtonElement | undefined;
-  let menu: HTMLDivElement | undefined;
+  let trigger = $state<HTMLButtonElement | undefined>(undefined);
+  let menu = $state<HTMLDivElement | undefined>(undefined);
 
   function toggle() {
     open = !open;
