@@ -3,7 +3,7 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Button } from "$lib/ui";
   import { i18n, t } from "$lib/i18n/index.svelte";
-  import { loc, pageUrl } from "$lib/i18n/url";
+  import { loc, pageUrl, localizeBodyHtml } from "$lib/i18n/url";
   import { page } from "$app/state";
   import { serialiseJsonLd, personSchema } from "$lib/seo/jsonld";
 
@@ -78,7 +78,7 @@
   <Prose>
     {#snippet children()}
       {#if i18n.current === "ar"}
-        {@html CONTENT.ar.body}
+        {@html localizeBodyHtml(CONTENT.ar.body, "ar")}
       {:else}
         {@html CONTENT.en.body}
       {/if}

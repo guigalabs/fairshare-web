@@ -53,3 +53,29 @@ export function pageUrl(pathname: string): string {
 export function loc(path: string): string {
   return localePath(path, i18n.current);
 }
+
+// Internal hrefs we want to localize: paths starting with `/` followed by a
+// lowercase letter, but NOT paths we deliberately keep unprefixed:
+//   /ar/...     already localized
+//   /api/...    JSON API, no locale
+//   /app/...    auth-walled Pro app surface
+//   /icons/...  /og/... /fonts/... static assets
+//   /manifest... PWA manifest
+//   /_app/...   SvelteKit immutable assets
+//
+// Anything else (e.g. /methodology/..., /disclaimer, /calculate) gets the
+// /ar prefix prepended when rendering an Arabic page.
+const INTERNAL_HREF =
+  /href="(\/(?!ar\/|ar"|api\/|app\/|icons\/|og\/|fonts\/|manifest|_app\/)[a-z][^"]*)"/g;
+
+/**
+ * Rewrite internal hrefs inside an HTML body string to use the given locale.
+ *
+ * Use for prose chunks that ship as static HTML (methodology articles,
+ * About / Terms / Privacy bodies) so that links inside them keep the
+ * reader in the locale they were already browsing in. No-op for EN.
+ */
+export function localizeBodyHtml(html: string, locale: Locale): string {
+  if (locale === "en") return html;
+  return html.replace(INTERNAL_HREF, (_m, path) => `href="/ar${path}"`);
+}

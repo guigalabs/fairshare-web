@@ -2,7 +2,7 @@
   import Prose from "$lib/components/Prose.svelte";
   import { Banner } from "$lib/ui";
   import { i18n } from "$lib/i18n/index.svelte";
-  import { pageUrl } from "$lib/i18n/url";
+  import { pageUrl, localizeBodyHtml } from "$lib/i18n/url";
   import { page } from "$app/state";
 
   const CONTENT = {
@@ -84,7 +84,7 @@
   <Banner tone="warning">
     {#snippet children()}
       {#if i18n.current === "ar"}
-        {@html CONTENT.ar.banner}
+        {@html localizeBodyHtml(CONTENT.ar.banner, "ar")}
       {:else}
         {@html CONTENT.en.banner}
       {/if}
@@ -94,7 +94,7 @@
   <Prose>
     {#snippet children()}
       {#if i18n.current === "ar"}
-        {@html CONTENT.ar.body}
+        {@html localizeBodyHtml(CONTENT.ar.body, "ar")}
       {:else}
         {@html CONTENT.en.body}
       {/if}
