@@ -55,4 +55,18 @@ describe("requireSession", () => {
     );
     expect(r).toEqual({ status: 302, location: "/login?from=%2Fapp%2Fcases" });
   });
+
+  it("redirects to /ar/login when the request came from the /ar subtree", async () => {
+    const r = await captureRedirect(() =>
+      requireSession(makeEvent(null, "https://x/ar/app/cases")),
+    );
+    expect(r).toEqual({ status: 302, location: "/ar/login?from=%2Far%2Fapp%2Fcases" });
+  });
+
+  it("redirects to /ar/login when locals.auth is missing on an AR request", async () => {
+    const r = await captureRedirect(() =>
+      requireSession({ locals: {}, url: new URL("https://x/ar/app/cases?folder=7") }),
+    );
+    expect(r.location).toBe("/ar/login?from=%2Far%2Fapp%2Fcases%3Ffolder%3D7");
+  });
 });
