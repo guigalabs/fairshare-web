@@ -59,3 +59,28 @@ test("AR methodology drill-down has Arabic title and Arabic canonical", async ({
     "https://fairshare.guigalabs.com/ar/methodology/madhhab/hanafi/",
   );
 });
+
+test("AR home: sample-family picker links route to /ar/result", async ({ page }) => {
+  await page.goto("/ar");
+  // Open the dropdown
+  const trigger = page.locator(".quick-scenarios .trigger");
+  await trigger.click();
+  // Every item in the menu should deep-link into /ar/result, not /result.
+  const items = page.locator(".quick-scenarios .menu .item");
+  await expect(items.first()).toBeVisible();
+  const hrefs = await items.evaluateAll((els) => els.map((e) => e.getAttribute("href") || ""));
+  expect(hrefs.length).toBeGreaterThan(0);
+  for (const h of hrefs) {
+    expect(h.startsWith("/ar/result")).toBe(true);
+  }
+});
+
+test("AR methodology article body: cross-links stay inside /ar/", async ({ page }) => {
+  // Pick an article that the EN body cross-references several other
+  // methodology pages (Hanafi mentions grandfather-with-siblings, etc.).
+  await page.goto("/ar/methodology/madhhab/hanafi");
+  // Every internal /methodology/* link inside the prose body should have
+  // the /ar/ prefix; none should send the reader back to the EN tree.
+  const proseLinks = page.locator(".container :not(header):not(.foot) a[href^='/methodology/']");
+  await expect(proseLinks).toHaveCount(0);
+});

@@ -7,6 +7,7 @@
   import { encodeCase } from "$lib/share";
   import { inheritanceCase } from "$engine";
   import { t } from "$lib/i18n/index.svelte";
+  import { loc } from "$lib/i18n/url";
 
   // Mirrors HeirHelpers categories — kept inline so we can include the green
   // "accent" tint that doesn't map to any heir category.
@@ -23,7 +24,7 @@
   function urlFor(id: string): string {
     const s = SCENARIOS.find((x) => x.id === id)!;
     const c = inheritanceCase(s.subjectGender, s.heirs, s.madhhab);
-    return `/result?case=${encodeCase(c)}`;
+    return `${loc("/result")}?case=${encodeCase(c)}`;
   }
 
   let open = $state(false);
