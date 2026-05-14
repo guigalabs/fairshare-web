@@ -54,13 +54,13 @@
   <title>{t("pricing.pageTitle")}</title>
   <meta
     name="description"
-    content="FairShare Pro for Islamic estate practitioners. Case folders, named heirs, estate amounts, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
+    content="FairShare Pro for Islamic estate practitioners. Case folders, named heirs, estate amounts, branded PDFs, side-by-side madhab compare. $9/mo or $89/yr."
   />
   <link rel="canonical" href={canonical} />
   <meta property="og:title" content="FairShare Pro for Practitioners" />
   <meta
     property="og:description"
-    content="A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, branded PDFs, side-by-side madhab compare. $19/mo or $179/yr."
+    content="A workspace for Islamic estate attorneys, wasiyyah drafters, and scholars. Case folders, branded PDFs, side-by-side madhab compare. $9/mo or $89/yr."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
@@ -93,10 +93,10 @@
 
         <div class="price">
           {#if cadence === "monthly"}
-            <span class="price-amount">$19</span>
+            <span class="price-amount">$9</span>
             <span class="price-unit">{t("pricing.perMonth")}</span>
           {:else}
-            <span class="price-amount">$179</span>
+            <span class="price-amount">$89</span>
             <span class="price-unit">{t("pricing.perYear")}</span>
             <span class="price-savings">{t("pricing.annualSavings")}</span>
           {/if}
