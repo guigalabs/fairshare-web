@@ -14,10 +14,10 @@ test("/pricing has monthly and annual cadence toggle with both prices visible", 
   await expect(monthly).toBeVisible();
   await expect(annual).toBeVisible();
 
-  await expect(page.getByText("$19")).toBeVisible();
+  await expect(page.getByText("$9")).toBeVisible();
 
   await annual.click();
-  await expect(page.getByText("$179")).toBeVisible();
+  await expect(page.getByText("$89")).toBeVisible();
 });
 
 test("/pricing exposes a waitlist email form via the Subscribe modal", async ({ page }) => {
