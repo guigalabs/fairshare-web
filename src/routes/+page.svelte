@@ -230,7 +230,7 @@
     </ul>
 
     <div class="pro-price">
-      <span class="pro-amount">$19<span class="pro-unit">/mo</span></span>
+      <span class="pro-amount">$9<span class="pro-unit">/mo</span></span>
       <span class="pro-or">{t("landing.pro.orAnnual")}</span>
     </div>
 
