@@ -76,8 +76,10 @@ export function calculate(c: InheritanceCase): CalculationResult {
     });
   }
 
-  // 3. Fixed shares
-  let shares: HeirShare[] = assignFixedShares(activeHeirs, c.subjectGender, c.madhhab);
+  // 3. Fixed shares — pass the pre-blocking `c.heirs` as `originalHeirs` so
+  // the mother's-share reduction can count siblings that have been blocked
+  // from inheritance by the father (hajb nuqsan vs hajb hirman, Q4:11).
+  let shares: HeirShare[] = assignFixedShares(activeHeirs, c.subjectGender, c.madhhab, c.heirs);
   if (shares.length > 0) {
     const desc = shares.map((s) => `${s.heirType}: ${s.fraction.toString()}`).join(", ");
     steps.push({

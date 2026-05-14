@@ -118,4 +118,85 @@ describe("InheritanceEngine — classical scenarios", () => {
     const r = calculate(c);
     expect(r.blockedHeirs.some((b) => b.heirType === "paternalGrandfather")).toBe(true);
   });
+
+  // Q4:11 — "if the deceased left brothers or sisters, the mother has a sixth."
+  // The mother's reduction from 1/3 to 1/6 triggers on the *presence* of 2+
+  // siblings, even when those siblings are themselves blocked from inheriting
+  // by the father (or, in Hanafi, the paternal grandfather). This is the
+  // distinction between hajb hirman (total blocking) and hajb nuqsan (reduction
+  // blocking).
+  it("Wife + mother + father + 2 full brothers -> wife 1/4, mother 1/6, father 7/12 (siblings blocked, but reduce mother)", () => {
+    const c = inheritanceCase(
+      "male",
+      [
+        heirEntry("wife", 1),
+        heirEntry("mother", 1),
+        heirEntry("father", 1),
+        heirEntry("fullBrother", 2),
+      ],
+      "general",
+    );
+    const r = calculate(c);
+    expect(r.blockedHeirs.some((b) => b.heirType === "fullBrother")).toBe(true);
+    expect(r.appliedSpecialCase).toBeUndefined();
+    expect(shareOf(r.shares, "wife").equals(Fraction.ONE_FOURTH)).toBe(true);
+    expect(shareOf(r.shares, "mother").equals(Fraction.ONE_SIXTH)).toBe(true);
+    expect(shareOf(r.shares, "father").equals(new Fraction(7, 12))).toBe(true);
+  });
+
+  it("Husband + mother + father + 2 maternal half-siblings -> husband 1/2, mother 1/6, father 1/3 (not Umariatan)", () => {
+    const c = inheritanceCase(
+      "female",
+      [
+        heirEntry("husband", 1),
+        heirEntry("mother", 1),
+        heirEntry("father", 1),
+        heirEntry("maternalHalfBrother", 1),
+        heirEntry("maternalHalfSister", 1),
+      ],
+      "general",
+    );
+    const r = calculate(c);
+    expect(r.blockedHeirs.some((b) => b.heirType === "maternalHalfBrother")).toBe(true);
+    expect(r.blockedHeirs.some((b) => b.heirType === "maternalHalfSister")).toBe(true);
+    expect(r.appliedSpecialCase).toBeUndefined();
+    expect(shareOf(r.shares, "husband").equals(Fraction.ONE_HALF)).toBe(true);
+    expect(shareOf(r.shares, "mother").equals(Fraction.ONE_SIXTH)).toBe(true);
+    expect(shareOf(r.shares, "father").equals(Fraction.ONE_THIRD)).toBe(true);
+  });
+
+  it("Wife + mother + father + 1 full brother -> Umariatan still applies (only 1 sibling, no reduction)", () => {
+    const c = inheritanceCase(
+      "male",
+      [
+        heirEntry("wife", 1),
+        heirEntry("mother", 1),
+        heirEntry("father", 1),
+        heirEntry("fullBrother", 1),
+      ],
+      "general",
+    );
+    const r = calculate(c);
+    expect(r.blockedHeirs.some((b) => b.heirType === "fullBrother")).toBe(true);
+    expect(r.appliedSpecialCase).toBe("umariatan");
+    expect(shareOf(r.shares, "wife").equals(Fraction.ONE_FOURTH)).toBe(true);
+    expect(shareOf(r.shares, "mother").equals(Fraction.ONE_FOURTH)).toBe(true);
+    expect(shareOf(r.shares, "father").equals(Fraction.ONE_HALF)).toBe(true);
+  });
+
+  it("Hanafi: grandfather blocks siblings, but 2+ siblings still reduce mother to 1/6", () => {
+    const c = inheritanceCase(
+      "male",
+      [
+        heirEntry("wife", 1),
+        heirEntry("mother", 1),
+        heirEntry("paternalGrandfather", 1),
+        heirEntry("fullBrother", 2),
+      ],
+      "hanafi",
+    );
+    const r = calculate(c);
+    expect(r.blockedHeirs.some((b) => b.heirType === "fullBrother")).toBe(true);
+    expect(shareOf(r.shares, "mother").equals(Fraction.ONE_SIXTH)).toBe(true);
+  });
 });

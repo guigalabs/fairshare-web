@@ -226,7 +226,23 @@ export class QuestionFlow {
     this.collectedHeirs.push(heirEntry(type, count));
   }
 
+  private get hasAnyDescendant(): boolean {
+    return this.collectedHeirs.some(
+      (h) =>
+        h.type === "son" ||
+        h.type === "daughter" ||
+        h.type === "sonsSon" ||
+        h.type === "sonsDaughter",
+    );
+  }
+
   private get shouldAskSiblings(): boolean {
+    // Mother's share drops from 1/3 to 1/6 on the *presence* of 2+ siblings
+    // (Q4:11), even when those siblings are blocked from inheriting by the
+    // father or (Hanafi) the paternal grandfather. When the mother is alive
+    // with no descendants we still need the sibling count for her share;
+    // descendants already reduce her to 1/6 so we can skip then.
+    if (this.motherAlive && !this.hasAnyDescendant) return true;
     if (this.fatherAlive) return false;
     if (this.madhhab === "hanafi" && this.grandfatherAlive) return false;
     return true;
@@ -270,6 +286,7 @@ export class QuestionFlow {
       case "motherAlive":
         if (!this.fatherAlive) return "paternalGrandfatherAlive";
         if (this.shouldAskGrandmothers) return "hasGrandmothers";
+        if (this.shouldAskSiblings) return "hasFullSiblings";
         return "done";
       case "paternalGrandfatherAlive":
         if (this.shouldAskGrandmothers) return "hasGrandmothers";

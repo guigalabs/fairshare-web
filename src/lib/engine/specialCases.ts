@@ -35,6 +35,7 @@ function checkUmariatan(
   shares: HeirShare[],
   activeHeirs: readonly HeirEntry[],
   present: ReadonlySet<HeirType>,
+  originalHeirs: readonly HeirEntry[],
 ): { result: SpecialCase; shares: HeirShare[] } | null {
   if (!has("mother", present) || !has("father", present)) return null;
   const hasHusband = has("husband", present);
@@ -43,7 +44,10 @@ function checkUmariatan(
 
   if (hasAny(["son", "daughter", "sonsSon", "sonsDaughter"], present)) return null;
 
-  const sibCount = activeHeirs
+  // Umariatan is disqualified by the *presence* of 2+ siblings — even when
+  // they are blocked from inheriting by the father — because that switches
+  // the mother to 1/6 (Q4:11). Use the pre-blocking list.
+  const sibCount = originalHeirs
     .filter((e) => SIBLING_TYPES.includes(e.type))
     .reduce((acc, e) => acc + e.count, 0);
   if (sibCount >= 2) return null;
@@ -223,7 +227,7 @@ export function checkAndApplySpecialCases(
 ): SpecialCase | undefined {
   const present = new Set(activeHeirs.map((e) => e.type));
 
-  let r = checkUmariatan(shares, activeHeirs, present);
+  let r = checkUmariatan(shares, activeHeirs, present, c.heirs);
   if (r) return r.result;
   r = checkMusharkah(shares, activeHeirs, present, madhhab);
   if (r) return r.result;
