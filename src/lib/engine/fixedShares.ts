@@ -46,6 +46,7 @@ function fixedShare(
   count: number,
   present: ReadonlySet<HeirType>,
   heirs: readonly HeirEntry[],
+  originalHeirs: readonly HeirEntry[],
 ): Fraction | null {
   switch (heirType) {
     case "husband":
@@ -59,7 +60,10 @@ function fixedShare(
 
     case "mother":
       if (hasDescendants(present)) return Fraction.ONE_SIXTH;
-      if (siblingCount(heirs) >= 2) return Fraction.ONE_SIXTH;
+      // Q4:11 reduces the mother to 1/6 on the *presence* of 2+ siblings,
+      // even when those siblings are blocked from inheriting (hajb nuqsan vs
+      // hajb hirman). Use the pre-blocking heir list so blocked siblings count.
+      if (siblingCount(originalHeirs) >= 2) return Fraction.ONE_SIXTH;
       return Fraction.ONE_THIRD;
 
     case "daughter":
@@ -125,11 +129,12 @@ export function assignFixedShares(
   heirs: readonly HeirEntry[],
   _subjectGender: Gender,
   _madhhab: Madhhab,
+  originalHeirs: readonly HeirEntry[] = heirs,
 ): HeirShare[] {
   const present = new Set(heirs.map((e) => e.type));
   const shares: HeirShare[] = [];
   for (const e of heirs) {
-    const f = fixedShare(e.type, e.count, present, heirs);
+    const f = fixedShare(e.type, e.count, present, heirs, originalHeirs);
     if (f) shares.push(makeShare(e.type, e.count, f));
   }
   return shares;
