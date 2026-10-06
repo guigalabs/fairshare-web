@@ -112,16 +112,14 @@
     margin-bottom: 1.5rem;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-warning-text);
   }
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 </style>

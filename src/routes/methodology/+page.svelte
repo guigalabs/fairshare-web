@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Card } from "$lib/ui";
   import {
     METHODOLOGY,
     entriesByGroup,
@@ -73,24 +72,18 @@
       <ul class="grid">
         {#each entriesByGroup(group) as e (e.slug)}
           <li>
-            <a href={loc(`/methodology/${e.group}/${e.slug}`)} class="card-link">
-              <Card>
-                {#snippet children()}
-                  <h3 class="entry-title">{entryTitle(e)}</h3>
-                  <p class="entry-desc">{entryDescription(e)}</p>
-                  <p class="entry-meta">
-                    {t("methodology.minRead", { count: e.readingMinutes })}
-                  </p>
-                {/snippet}
-              </Card>
+            <a href={loc(`/methodology/${e.group}/${e.slug}`)} class="entry">
+              <h3 class="entry-title">{entryTitle(e)}</h3>
+              <p class="entry-desc">{entryDescription(e)}</p>
+              <p class="entry-meta">
+                {t("methodology.minRead", { count: e.readingMinutes })}
+              </p>
             </a>
           </li>
         {/each}
       </ul>
     </section>
   {/each}
-
-  <p class="all-meta">{t("methodology.allMeta", { count: METHODOLOGY.length })}</p>
 
   <section class="faq" aria-labelledby="faq-heading">
     <h2 id="faq-heading" class="faq-heading">Frequently asked questions</h2>
@@ -114,18 +107,16 @@
     max-width: 38rem;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .lede {
     margin-top: 1rem;
@@ -134,69 +125,63 @@
     font-size: 1.0625rem;
   }
   .group {
-    margin-top: 2.5rem;
+    margin-top: 3rem;
+    display: grid;
+    gap: 0.75rem 3rem;
+  }
+  @media (min-width: 860px) {
+    .group {
+      grid-template-columns: 14rem 1fr;
+    }
   }
   .group-title {
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
+    font-size: 1.375rem;
+    color: var(--color-text);
   }
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    column-gap: 2.5rem;
     list-style: none;
+    margin: 0;
     padding: 0;
+    border-top: 1px solid var(--color-border-strong);
   }
   @media (min-width: 640px) {
     .grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  @media (min-width: 1000px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .grid li {
+    border-bottom: 1px solid var(--color-border);
   }
-  .card-link {
-    text-decoration: none;
-    color: inherit;
+  .entry {
     display: block;
     height: 100%;
-    border-radius: var(--radius-lg);
-    transition: transform 0.15s;
+    padding: 1.125rem 0 1.25rem;
+    text-decoration: none;
+    color: inherit;
   }
-  .card-link:hover {
-    transform: translateY(-2px);
-  }
-  .card-link:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+  .entry:hover .entry-title {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
   .entry-title {
-    font-size: 1.0625rem;
-    font-weight: 600;
+    font-size: 1.1875rem;
     color: var(--color-text);
   }
   .entry-desc {
-    margin-top: 0.5rem;
+    margin-top: 0.375rem;
     color: var(--color-text-secondary);
     font-size: 0.9375rem;
     line-height: 1.55;
   }
   .entry-meta {
-    margin-top: 0.875rem;
+    margin-top: 0.625rem;
     font-size: 0.8125rem;
     color: var(--color-text-muted);
-  }
-  .all-meta {
-    margin-top: 3rem;
-    text-align: center;
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
   }
   .faq {
     margin-top: 3.5rem;
@@ -204,7 +189,7 @@
   }
   .faq-heading {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.01em;
     margin-bottom: 1.5rem;
   }

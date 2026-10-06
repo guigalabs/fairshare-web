@@ -50,16 +50,16 @@
     <header class="head">
       <p class="kicker">{t("result.kicker")}</p>
       <h1>
-        {t("result.heirsHeading", {
-          gender:
-            safeC.subjectGender === "male" ? t("result.subject.male") : t("result.subject.female"),
-          madhhab: t(`madhhab.${safeC.madhhab}.name`),
-        })}
+        {safeC.subjectGender === "male" ? t("result.heading.male") : t("result.heading.female")}
       </h1>
       <p class="subject-meta">
-        {safeC.heirs.length === 1
-          ? t("result.heirsCount.one", { count: safeC.heirs.length })
-          : t("result.heirsCount.other", { count: safeC.heirs.length })}
+        {t("result.meta", {
+          madhhab: t(`madhhab.${safeC.madhhab}.name`),
+          heirs:
+            safeC.heirs.length === 1
+              ? t("result.heirsCount.one", { count: 1 })
+              : t("result.heirsCount.other", { count: safeC.heirs.length }),
+        })}
         {#if store.whatIfActive}
           <span class="whatif-flag">{t("result.whatif.flag")}</span>
         {/if}
@@ -126,19 +126,16 @@
     margin-bottom: 1.5rem;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-muted);
   }
   .head h1 {
     margin-top: 0.375rem;
     font-size: 1.875rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     line-height: 1.15;
-    text-transform: capitalize;
   }
   .subject-meta {
     margin-top: 0.5rem;

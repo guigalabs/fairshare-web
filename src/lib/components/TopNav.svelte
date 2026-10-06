@@ -1,7 +1,5 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import Calculator from "@lucide/svelte/icons/calculator";
-  import BookOpen from "@lucide/svelte/icons/book-open";
   import Menu from "@lucide/svelte/icons/menu";
   import X from "@lucide/svelte/icons/x";
   import LocaleToggle from "$lib/components/LocaleToggle.svelte";
@@ -49,7 +47,6 @@
         class:nav-link--active={isCalc}
         aria-current={isCalc ? "page" : undefined}
       >
-        <Calculator size={16} aria-hidden="true" />
         {t("nav.calculate")}
       </a>
       <a
@@ -58,12 +55,11 @@
         class:nav-link--active={isMethodology}
         aria-current={isMethodology ? "page" : undefined}
       >
-        <BookOpen size={16} aria-hidden="true" />
         {t("nav.methodology")}
       </a>
       <a
         href={loc("/pricing")}
-        class="nav-link nav-link--pro"
+        class="nav-link"
         class:nav-link--active={isPro}
         aria-current={isPro ? "page" : undefined}
       >
@@ -98,7 +94,6 @@
         class:mobile-link--active={isCalc}
         aria-current={isCalc ? "page" : undefined}
       >
-        <Calculator size={18} aria-hidden="true" />
         {t("nav.calculate")}
       </a>
       <a
@@ -107,12 +102,11 @@
         class:mobile-link--active={isMethodology}
         aria-current={isMethodology ? "page" : undefined}
       >
-        <BookOpen size={18} aria-hidden="true" />
         {t("nav.methodology")}
       </a>
       <a
         href={loc("/pricing")}
-        class="mobile-link mobile-link--pro"
+        class="mobile-link"
         class:mobile-link--active={isPro}
         aria-current={isPro ? "page" : undefined}
       >
@@ -127,20 +121,17 @@
     position: sticky;
     top: 0;
     z-index: 30;
-    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    backdrop-filter: saturate(180%) blur(10px);
+    background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
   }
   .topnav-inner {
-    max-width: 1100px;
+    max-width: 1120px;
     margin: 0 auto;
     height: 60px;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    padding: 0 1.25rem;
+    display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
   .brand {
     display: inline-flex;
@@ -151,54 +142,42 @@
     color: var(--color-text);
   }
   .brand-mark {
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 0.4375rem; /* matches iOS app icon corner radius (~22.37%) */
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
     object-fit: cover;
     display: block;
   }
   .brand-name {
-    font-weight: 700;
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    font-weight: 600;
     letter-spacing: -0.01em;
   }
   .nav-links {
     display: none;
-    justify-content: center;
-    gap: 0.25rem;
+    align-self: stretch;
+    gap: 1.75rem;
   }
   .nav-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.5rem 0.875rem;
-    border-radius: var(--radius-pill);
     font-size: 0.9375rem;
     color: var(--color-text-muted);
     text-decoration: none;
-    transition:
-      background-color 0.15s,
-      color 0.15s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
   }
   .nav-link:hover {
     color: var(--color-text);
-    background: var(--color-bg-elevated);
   }
   .nav-link--active {
     color: var(--color-text);
-    font-weight: 500;
-  }
-  .nav-link--pro {
-    color: var(--color-accent);
-    font-weight: 500;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
-  }
-  .nav-link--pro:hover {
-    color: var(--color-accent);
-    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    border-bottom-color: var(--color-accent);
   }
   .nav-end {
+    margin-inline-start: auto;
     display: flex;
-    justify-content: end;
     align-items: center;
     gap: 0.5rem;
   }
@@ -211,43 +190,37 @@
     border: 0;
     background: transparent;
     color: var(--color-text);
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-md);
     cursor: pointer;
   }
   .menu-button:hover {
-    background: var(--color-bg-elevated);
+    background: var(--color-wash);
   }
   .mobile-nav {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem 1rem;
+    padding: 0.25rem 1.25rem 0.75rem;
     border-top: 1px solid var(--color-border);
     background: var(--color-bg);
   }
   .mobile-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.875rem 0.75rem;
+    padding: 0.875rem 0;
     color: var(--color-text);
     text-decoration: none;
-    font-size: 1rem;
-    border-radius: var(--radius-md);
+    font-size: 1.0625rem;
+    border-bottom: 1px solid var(--color-border);
   }
-  .mobile-link:hover {
-    background: var(--color-bg-elevated);
+  .mobile-link:last-child {
+    border-bottom: 0;
   }
   .mobile-link--active {
-    font-weight: 600;
-  }
-  .mobile-link--pro {
     color: var(--color-accent);
     font-weight: 500;
   }
 
   @media (min-width: 640px) {
     .nav-links {
-      display: inline-flex;
+      display: flex;
     }
     .menu-button {
       display: none;

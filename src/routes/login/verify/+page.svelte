@@ -12,7 +12,6 @@
 
 <section class="container">
   <ArticleHeader
-    align="center"
     kicker={t("login.verify.kicker")}
     title={t("login.verify.title")}
     lede={t("login.verify.lede")}

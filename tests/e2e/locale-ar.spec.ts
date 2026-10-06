@@ -60,19 +60,10 @@ test("AR methodology drill-down has Arabic title and Arabic canonical", async ({
   );
 });
 
-test("AR home: sample-family picker links route to /ar/result", async ({ page }) => {
+test("AR home: sample-family link routes to /ar/result", async ({ page }) => {
   await page.goto("/ar");
-  // Open the dropdown
-  const trigger = page.locator(".quick-scenarios .trigger");
-  await trigger.click();
-  // Every item in the menu should deep-link into /ar/result, not /result.
-  const items = page.locator(".quick-scenarios .menu .item");
-  await expect(items.first()).toBeVisible();
-  const hrefs = await items.evaluateAll((els) => els.map((e) => e.getAttribute("href") || ""));
-  expect(hrefs.length).toBeGreaterThan(0);
-  for (const h of hrefs) {
-    expect(h.startsWith("/ar/result")).toBe(true);
-  }
+  const href = await page.locator(".ledger a.open").getAttribute("href");
+  expect(href?.startsWith("/ar/result")).toBe(true);
 });
 
 test("AR methodology article body: cross-links stay inside /ar/", async ({ page }) => {

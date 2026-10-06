@@ -29,12 +29,7 @@
 </svelte:head>
 
 <section class="container">
-  <ArticleHeader
-    align="center"
-    kicker={t("login.kicker")}
-    title={t("login.title")}
-    lede={t("login.lede")}
-  />
+  <ArticleHeader kicker={t("login.kicker")} title={t("login.title")} lede={t("login.lede")} />
 
   <form class="form" method="POST" action="?/default" onsubmit={onEmailSubmit}>
     <input type="hidden" name="providerId" value="resend" />

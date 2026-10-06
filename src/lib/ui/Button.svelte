@@ -68,33 +68,31 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    font-family: var(--font-sans);
     font-weight: 500;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-md);
     transition:
-      background-color 0.15s,
-      color 0.15s,
-      border-color 0.15s,
-      transform 0.15s;
+      background-color 0.12s,
+      color 0.12s,
+      border-color 0.12s,
+      box-shadow 0.12s;
     text-decoration: none;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
     border: 1px solid transparent;
-    line-height: 1;
+    line-height: 1.2;
     -webkit-user-select: none;
     user-select: none;
   }
-  .btn:hover {
-    transform: scale(1.02);
-  }
   .btn:active {
-    transform: scale(0.98);
+    box-shadow: inset 0 1px 2px rgba(22, 41, 31, 0.2);
   }
   .btn:disabled,
   .btn[aria-busy="true"] {
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: not-allowed;
-    transform: none;
+    box-shadow: none;
   }
   .btn--full {
     width: 100%;
@@ -102,30 +100,28 @@
 
   /* sizes */
   .btn--sm {
-    padding: 0.5rem 1rem;
+    padding: 0.4375rem 0.75rem;
     font-size: 0.875rem;
   }
   .btn--md {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.625rem 1.125rem;
+    font-size: 0.9375rem;
   }
   .btn--lg {
-    padding: 1rem 2rem;
-    font-size: 1.0625rem;
+    padding: 0.8125rem 1.375rem;
+    font-size: 1rem;
   }
 
   /* variants */
   .btn--primary {
     background: var(--color-accent);
-    /* Inverted text — works in both light (white-on-dark) and dark
-     * (dark-on-off-white) since accent is monochromatic on each theme. */
-    color: var(--color-bg);
+    color: #fff;
   }
   .btn--primary:hover {
     background: var(--color-accent-hover);
   }
   .btn--secondary {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     color: var(--color-text);
     border-color: var(--color-border-strong);
   }
@@ -137,7 +133,7 @@
     color: var(--color-text);
   }
   .btn--ghost:hover {
-    background: var(--color-bg-elevated);
+    background: var(--color-wash);
   }
   .btn--destructive {
     background: var(--color-error);

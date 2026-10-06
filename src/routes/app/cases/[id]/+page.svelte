@@ -196,17 +196,15 @@
     flex-wrap: wrap;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
   .head h1 {
     margin-top: 0.25rem;
     font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--color-text);
   }
   .meta {

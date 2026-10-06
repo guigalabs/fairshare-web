@@ -148,9 +148,7 @@
   }
   .kicker {
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-weight: 500;
     color: #0a8754;
   }
   .date {
@@ -161,8 +159,8 @@
 
   .title h1 {
     font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     line-height: 1.15;
     margin: 0;
   }
@@ -181,9 +179,7 @@
 
   h2 {
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-weight: 500;
     color: #0a8754;
     margin: 0 0 10px 0;
   }

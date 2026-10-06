@@ -53,17 +53,15 @@
   .error-kicker {
     margin-top: 1rem;
     font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
   .error-title {
     margin-top: 0.75rem;
     font-size: clamp(1.875rem, 4vw, 2.75rem);
     line-height: 1.15;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--color-text);
   }
   .error-lede {
