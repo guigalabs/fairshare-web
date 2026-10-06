@@ -17,7 +17,7 @@ let resendCache: ResendClient | undefined;
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   const env = event.platform?.env;
   if (!env) {
-    throw new Error("Cloudflare platform env missing — adapter-cloudflare must be active.");
+    throw new Error("Cloudflare platform env missing, adapter-cloudflare must be active.");
   }
 
   const db = makeDb(env.DB);

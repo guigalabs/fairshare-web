@@ -14,9 +14,9 @@
       metaDescription:
         "Privacy policy for FairShare web. The app is offline-first, collects no personal data, and stores everything locally on your device.",
       body: `<h2>Summary</h2>
-<p>FairShare web is an offline-first calculator. We do not collect, transmit, or sell any personal data. All calculations run entirely in your browser.</p>
+<p>FairShare web is an offline-first calculator. We don't collect, transmit or sell any personal data. All calculations run entirely in your browser.</p>
 
-<h2>Information we do not collect</h2>
+<h2>What we don't collect</h2>
 <p>FairShare does <strong>not</strong> collect, store, or transmit any of the following:</p>
 <ul>
   <li>Personal identifiers (name, email, IP address linkage, device fingerprint)</li>
@@ -26,9 +26,9 @@
   <li>Advertising identifiers</li>
   <li>Health, financial account, or payment information</li>
 </ul>
-<p>The web app makes no outbound API calls during normal use. Loading the page itself goes through Cloudflare's CDN, which logs basic request metadata (browser user-agent, country, referer) for abuse prevention; that data is governed by <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> and not accessible to us individually.</p>
+<p>The web app makes no outbound API calls during normal use. Loading the page itself goes through Cloudflare's CDN, which logs basic request metadata (browser user-agent, country, referer) for abuse prevention. That data is governed by <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> and not accessible to us individually.</p>
 
-<h2>Information stored locally</h2>
+<h2>What stays on your device</h2>
 <p>The following lives <strong>only on your device</strong>, in your browser's storage:</p>
 <ul>
   <li><strong>Saved calculations</strong> you explicitly choose to save (heir counts, selected school, calculation name). Stored in IndexedDB.</li>
@@ -37,10 +37,10 @@
 <p>You can delete saved calculations at any time from the Settings page. Clearing your browser's site data removes everything FairShare has stored.</p>
 
 <h2>Sharing and PDF export</h2>
-<p>When you tap <strong>Share</strong>, your calculation is encoded as a URL fragment and passed to your device's native share sheet (or copied to your clipboard). We never see the URL; it goes directly between your browser and whoever you share it with.</p>
+<p>When you tap <strong>Share</strong>, your calculation is encoded as a URL fragment and passed to your device's native share sheet (or copied to your clipboard). We never see the URL. It goes directly between your browser and whoever you share it with.</p>
 <p>When you tap <strong>Export PDF</strong>, the PDF is generated entirely in your browser and downloaded as a file. Nothing is uploaded.</p>
 
-<h2>Third-party SDKs</h2>
+<h2>Third-party code</h2>
 <p>FairShare web uses <strong>no third-party analytics, advertising, or tracking SDKs</strong>.</p>
 
 <h2>Children's privacy</h2>
@@ -58,7 +58,7 @@
       body: `<h2>الموجز</h2>
 <p>فيرشير على الويب حاسبة تعمل دون اتصال. لا نجمع أي بيانات شخصية ولا نرسلها ولا نبيعها. تتم جميع الحسابات داخل متصفّحك بالكامل.</p>
 
-<h2>المعلومات التي لا نجمعها</h2>
+<h2>ما لا نجمعه</h2>
 <p>فيرشير <strong>لا</strong> يجمع أو يحفظ أو يرسل أيًا مما يلي:</p>
 <ul>
   <li>المعرّفات الشخصية (الاسم، البريد، ربط عنوان IP، بصمة الجهاز)</li>
@@ -70,7 +70,7 @@
 </ul>
 <p>لا يصدر التطبيق أي طلبات API إلى الإنترنت في الاستخدام العادي. يمرّ تحميل الصفحة نفسها عبر شبكة Cloudflare التي تسجّل بيانات وصفية أساسية (وكيل المتصفح، البلد، الإحالة) لأغراض منع الإساءة؛ وتخضع هذه البيانات لـ<a href="https://www.cloudflare.com/privacypolicy/">سياسة خصوصية Cloudflare</a> وليست متاحة لنا بشكل فردي.</p>
 
-<h2>المعلومات المحفوظة محليًا</h2>
+<h2>ما يبقى على جهازك</h2>
 <p>يبقى ما يلي <strong>على جهازك فقط</strong>، في تخزين متصفّحك:</p>
 <ul>
   <li><strong>الحسابات المحفوظة</strong> التي تختار حفظها (أعداد الورثة، المذهب المختار، اسم الحساب). تُخزَّن في IndexedDB.</li>
@@ -97,7 +97,7 @@
 </script>
 
 <svelte:head>
-  <title>{content.kicker} · FairShare</title>
+  <title>{content.kicker} | FairShare</title>
   <meta name="description" content={content.metaDescription} />
   <link rel="canonical" href={pageUrl(page.url.pathname)} />
 </svelte:head>

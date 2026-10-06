@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>{is404 ? "Page not found" : "Something went wrong"} · FairShare</title>
+  <title>{is404 ? "Page not found" : "Something went wrong"} | FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

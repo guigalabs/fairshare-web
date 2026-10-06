@@ -8,55 +8,55 @@
 
   const CONTENT = {
     en: {
-      kicker: "For Practitioners",
-      title: "Built for Islamic estate attorneys",
-      lede: "Replace the spreadsheet-and-Word workflow you've been using to compute Fara'id distributions for clients. Every case in one place, with the math, citations, and deliverables a practising attorney needs.",
+      kicker: "For attorneys",
+      title: "FairShare Pro for Islamic estate attorneys",
+      lede: "If you work out Fara'id distributions in a spreadsheet and then retype them into Word for the client, Pro does both in one place. You get the shares, the verse citations and a PDF you can hand over.",
       metaDescription:
-        "A workspace for Islamic estate attorneys: case folders per family, named heirs, debts and wasiyyah deductions, branded PDFs, side-by-side madhab comparison.",
-      body: `<h2>What's included</h2>
+        "FairShare Pro for Islamic estate attorneys: a folder for each family, heirs by name, debt and wasiyyah deductions, PDFs on your letterhead, and the madhabs compared side by side.",
+      body: `<h2>What you get</h2>
 <ul>
-  <li><strong>Case folders per family.</strong> Group multiple estates under one client (the Hassan family's grandfather and grandmother), with notes, tags, and a hearing date on each case.</li>
-  <li><strong>Named heirs.</strong> Capture each son, daughter, and spouse by name and identifier so they appear on the distribution document, not just as "sons: 3."</li>
-  <li><strong>Estate amounts and deductions.</strong> Enter the gross estate, funeral expenses, debts, and bequests; the calculator validates the 1/3 wasiyyah cap and applies Fara'id to the net estate.</li>
-  <li><strong>Branded PDFs.</strong> Upload your firm logo and letterhead, add an editable advisory paragraph and signature block, and download a deliverable you can hand a client.</li>
-  <li><strong>Side-by-side madhab comparison.</strong> When a family is mixed-school or you need to counsel on the difference, render Hanafi, Maliki, Shafi'i, Hanbali, and General results in one view.</li>
-  <li><strong>Search, filter, export.</strong> Find any case in seconds. Export your data as JSON or CSV at any time.</li>
+  <li><strong>A folder for each family.</strong> Keep several estates under one client (say, the Hassan family's grandfather and grandmother). Each case has its own notes, tags and hearing date.</li>
+  <li><strong>Heirs by name.</strong> Enter each son, daughter and spouse with a name and identifier, so the distribution document lists actual people instead of "sons: 3."</li>
+  <li><strong>Estate amounts and deductions.</strong> Enter the gross estate, funeral costs, debts and bequests. Pro checks that bequests stay within the one-third wasiyyah limit, then applies Fara'id to what's left.</li>
+  <li><strong>PDFs on your letterhead.</strong> Upload your firm's logo and letterhead, add your own advisory paragraph and a signature block, and download a PDF you can give the client.</li>
+  <li><strong>Madhabs side by side.</strong> If the family follows different schools, or you need to explain how they differ, you can see the Hanafi, Maliki, Shafi'i, Hanbali and General results on one screen.</li>
+  <li><strong>Search and export.</strong> Search and filter your cases, and export your data as JSON or CSV whenever you want.</li>
 </ul>
 
-<h2>Why FairShare and not a spreadsheet</h2>
-<p>The Fara'id engine is built in TypeScript with BigInt-backed exact fractions, so every share is computed precisely without floating-point drift. The named edge cases (Awl, Radd, Hajb, Umariatan, Musharakah, Grandfather-with-siblings) are all detected automatically. Every share is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12, 4:176).</p>
+<h2>Why not just use a spreadsheet</h2>
+<p>Spreadsheets work in decimals, so shares like a third or a sixth pick up rounding errors. FairShare's engine uses exact fractions (BigInt in TypeScript), so they don't. It also spots the named edge cases for you: Awl, Radd, Hajb, Umariatan, Musharakah and the grandfather with siblings. And every share links to the verse in Surah An-Nisa that sets it (4:11, 4:12, 4:176).</p>
 
-<h2>For diaspora clients</h2>
-<p>FairShare is bilingual EN/AR with full RTL. The branded PDF can carry both your English advisory text and an Arabic disclaimer for clients who'll share it with family back home.</p>
+<h2>Clients with family abroad</h2>
+<p>FairShare works in English and Arabic, with full right-to-left support. A PDF can carry your advisory text in English and a disclaimer in Arabic, which helps when the client plans to send it to relatives back home.</p>
 
-<h2>Who's it for</h2>
-<p>Solo practitioners and small firms doing Islamic estate planning, wasiyyah drafting, and inheritance dispute work. Institutional pricing is available for madrassas and Sharia finance firms; contact us directly.</p>`,
+<h2>Who it's for</h2>
+<p>Solo practitioners and small firms that handle Islamic estate planning, wasiyyah drafting or inheritance disputes. If you're a madrassa or an Islamic finance firm, contact us about institutional pricing.</p>`,
       cta: { primary: "See pricing", secondary: "Try the free calculator" },
     },
     ar: {
-      kicker: "للممارسين",
-      title: "بُني لمحامي تخطيط التركات الإسلامية",
-      lede: "بديل لطريقة العمل بالجداول وملفات Word التي تستخدمها لحساب قسمة الفرائض لموكليك. كل ملف في مكان واحد، مع الحساب والاستشهادات والمخرجات التي يحتاجها المحامي الممارس.",
+      kicker: "للمحامين",
+      title: "فيرشير برو لمحامي التركات الإسلامية",
+      lede: "إن كنت تحسب قسمة الفرائض في جدول بيانات ثم تنقلها إلى ملف Word لموكّلك، فإن برو يجمع الخطوتين في مكان واحد. تحصل على الأنصبة والإحالات إلى الآيات وملف PDF تسلّمه للموكّل.",
       metaDescription:
-        "بيئة عمل لمحامي تخطيط التركات الإسلامية: ملفات لكل عائلة، ورثة بالاسم، خصومات الديون والوصايا، تقارير PDF بشعار المكتب، مقارنة المذاهب جنبًا إلى جنب.",
-      body: `<h2>ما الذي يشمله الاشتراك</h2>
+        "فيرشير برو لمحامي التركات الإسلامية: ملف لكل عائلة، وورثة بأسمائهم، وخصم الديون والوصايا، وتقارير PDF على ورق مكتبك، ومقارنة بين نتائج المذاهب.",
+      body: `<h2>ما تحصل عليه</h2>
 <ul>
-  <li><strong>ملفات لكل عائلة.</strong> اجمع عدّة تركات تحت موكّل واحد (جدّ آل حسن وجدّتهم)، مع ملاحظات ووسوم وتاريخ الجلسة لكل ملف.</li>
-  <li><strong>ورثة بالاسم.</strong> سجّل كل ابن وبنت وزوج بالاسم والمعرّف ليظهروا على وثيقة القسمة، لا مجرد "أبناء: 3".</li>
-  <li><strong>قيم التركة والخصومات.</strong> أدخل إجمالي التركة ومصاريف الجنازة والديون والوصايا؛ تتحقّق الحاسبة من حدّ الثلث في الوصية وتطبّق الفرائض على صافي التركة.</li>
-  <li><strong>تقارير PDF بشعار المكتب.</strong> ارفع شعار مكتبك ورأس الورق، أضف فقرة استشارية قابلة للتحرير وخانة توقيع، ونزّل ملفًا قابلاً للتسليم للموكّل.</li>
-  <li><strong>مقارنة المذاهب جنبًا إلى جنب.</strong> حين تختلط مذاهب العائلة أو تحتاج لإيضاح الفرق، اعرض نتائج الحنفي والمالكي والشافعي والحنبلي والعام في شاشة واحدة.</li>
-  <li><strong>بحث وتصفية وتصدير.</strong> اعثر على أي ملف في ثوانٍ. صدِّر بياناتك بصيغة JSON أو CSV في أي وقت.</li>
+  <li><strong>ملف لكل عائلة.</strong> احفظ عدّة تركات تحت موكّل واحد (جدّ آل حسن وجدّتهم مثلًا). لكل ملف ملاحظاته ووسومه وتاريخ جلسته.</li>
+  <li><strong>الورثة بأسمائهم.</strong> أدخل كل ابن وبنت وزوج باسمه ومعرّفه، فتذكر وثيقة القسمة أشخاصًا بأعيانهم بدلًا من "أبناء: 3".</li>
+  <li><strong>قيمة التركة والخصومات.</strong> أدخل إجمالي التركة ونفقات الجنازة والديون والوصايا. يتحقّق برو من أن الوصية لا تتجاوز الثلث، ثم يطبّق الفرائض على ما بقي.</li>
+  <li><strong>تقارير PDF على ورق مكتبك.</strong> ارفع شعار مكتبك ورأس الورق، وأضف فقرتك الاستشارية وخانة التوقيع، ثم نزّل ملف PDF تسلّمه للموكّل.</li>
+  <li><strong>نتائج المذاهب متجاورة.</strong> إن اختلفت مذاهب أفراد العائلة، أو احتجت إلى شرح الفرق بينها، ترى نتائج الحنفي والمالكي والشافعي والحنبلي والرأي العام في شاشة واحدة.</li>
+  <li><strong>البحث والتصدير.</strong> ابحث في ملفاتك وصفِّها، وصدِّر بياناتك بصيغة JSON أو CSV متى شئت.</li>
 </ul>
 
-<h2>لماذا فيرشير وليس جدول بيانات</h2>
-<p>محرّك الفرائض مكتوب بـ TypeScript مع كسور دقيقة مدعومة بـ BigInt، فيُحسب كل نصيب بدقّة دون أي انحراف في الفواصل العشرية. الحالات الخاصة المسماة (العَوْل، الرَّد، الحجب، العمريتان، المشتركة، الجد مع الإخوة) تُكتشف جميعها تلقائيًا. كل نصيب مربوط بآية سورة النساء التي تنصّ عليه (4:11، 4:12، 4:176).</p>
+<h2>لماذا لا يكفي جدول البيانات</h2>
+<p>جداول البيانات تعمل بالكسور العشرية، فتتسرّب أخطاء التقريب إلى أنصبة مثل الثلث والسدس. أما محرّك فيرشير فيستخدم كسورًا دقيقة (عبر BigInt في TypeScript) فلا يقع في ذلك. ويتعرّف من تلقاء نفسه على الحالات الخاصة المعروفة: العَوْل، والرَّد، والحجب، والعمريتان، والمشتركة، والجد مع الإخوة. وكل نصيب مربوط بآية سورة النساء التي تنصّ عليه (4:11، 4:12، 4:176).</p>
 
-<h2>للموكّلين في المهجر</h2>
-<p>فيرشير ثنائي اللغة عربي/إنجليزي مع دعم كامل للكتابة من اليمين إلى اليسار. يستطيع تقرير PDF حمل نصّك الاستشاري بالإنجليزية وإخلاء مسؤولية بالعربية للموكّلين الذين سيشاركونه مع أفراد عائلتهم في الوطن.</p>
+<h2>موكّلون لهم أهل في الخارج</h2>
+<p>يعمل فيرشير بالعربية والإنجليزية، مع دعم كامل للكتابة من اليمين إلى اليسار. ويمكن أن يحمل ملف PDF نصّك الاستشاري بالإنجليزية وإخلاء مسؤولية بالعربية، وهذا مفيد حين يريد الموكّل إرساله إلى أقاربه في بلده.</p>
 
-<h2>لمن هذا الاشتراك</h2>
-<p>الممارسون الأفراد والمكاتب الصغيرة الذين يعملون في تخطيط التركات الإسلامية وصياغة الوصايا والنزاعات الميراثية. تتوفّر تسعيرة مؤسسية للمدارس الشرعية وشركات التمويل الإسلامي؛ تواصل معنا مباشرة.</p>`,
+<h2>لمن برو</h2>
+<p>للمحامين الأفراد والمكاتب الصغيرة العاملين في تخطيط التركات الإسلامية وصياغة الوصايا ونزاعات الميراث. وإن كنت تمثّل مدرسة شرعية أو شركة تمويل إسلامي، فتواصل معنا بشأن التسعير المؤسسي.</p>`,
       cta: { primary: "اطلع على الأسعار", secondary: "جرّب الحاسبة المجانية" },
     },
   } as const;

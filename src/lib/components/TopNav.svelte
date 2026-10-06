@@ -17,7 +17,7 @@
 
   let menuOpen = $state(false);
 
-  // Close the menu when the route changes — otherwise tapping a link leaves
+  // Close the menu when the route changes, otherwise tapping a link leaves
   // the drawer overlapping the new page.
   $effect(() => {
     void path;
@@ -38,6 +38,7 @@
         aria-hidden="true"
       />
       <span class="brand-name">{t("nav.brand")}</span>
+      <span class="brand-suffix" aria-hidden="true">/ fairshare.guigalabs.com</span>
     </a>
 
     <nav class="nav-links" aria-label={t("ui.primaryNav")}>
@@ -122,58 +123,74 @@
     top: 0;
     z-index: 30;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
   }
   .topnav-inner {
-    max-width: 1120px;
+    max-width: 1200px;
     margin: 0 auto;
-    height: 60px;
-    padding: 0 1.25rem;
+    min-height: 66px;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: 2rem;
+    border-bottom: 2px solid var(--color-edge);
   }
   .brand {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    min-width: 0;
     padding-block: 1rem;
     text-decoration: none;
     color: var(--color-text);
+    white-space: nowrap;
   }
   .brand-mark {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 0.375rem;
+    width: 1.375rem;
+    height: 1.375rem;
     object-fit: cover;
     display: block;
   }
   .brand-name {
-    font-family: var(--font-serif);
-    font-size: 1.1875rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .brand-suffix {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
   }
   .nav-links {
     display: none;
-    align-self: stretch;
-    gap: 1.75rem;
+    gap: 1.625rem;
+    margin-inline-start: auto;
   }
   .nav-link {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.9375rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
     color: var(--color-text-muted);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    white-space: nowrap;
+  }
+  :global(html[dir="rtl"]) .nav-link {
+    font-family: var(--font-arabic);
+    font-size: 0.9375rem;
+    letter-spacing: 0;
   }
   .nav-link:hover {
     color: var(--color-text);
   }
   .nav-link--active {
     color: var(--color-text);
-    border-bottom-color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
   .nav-end {
     margin-inline-start: auto;
@@ -187,40 +204,58 @@
     justify-content: center;
     width: 44px;
     height: 44px;
-    border: 0;
-    background: transparent;
+    border: 2px solid var(--color-edge);
+    background: var(--color-bg);
     color: var(--color-text);
-    border-radius: var(--radius-md);
     cursor: pointer;
-  }
-  .menu-button:hover {
-    background: var(--color-wash);
   }
   .mobile-nav {
     display: flex;
     flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 0.25rem 1.25rem 0.75rem;
-    border-top: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-edge);
     background: var(--color-bg);
   }
   .mobile-link {
     padding: 0.875rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
     color: var(--color-text);
     text-decoration: none;
-    font-size: 1.0625rem;
     border-bottom: 1px solid var(--color-border);
+  }
+  :global(html[dir="rtl"]) .mobile-link {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
   }
   .mobile-link:last-child {
     border-bottom: 0;
   }
   .mobile-link--active {
     color: var(--color-accent);
-    font-weight: 500;
   }
 
+  @media (max-width: 860px) {
+    .brand-suffix {
+      display: none;
+    }
+  }
+  @media (max-width: 639px) {
+    .topnav-inner {
+      padding: 0 1.125rem;
+      gap: 1rem;
+    }
+  }
   @media (min-width: 640px) {
     .nav-links {
       display: flex;
+    }
+    .nav-end {
+      margin-inline-start: 0.5rem;
     }
     .menu-button {
       display: none;

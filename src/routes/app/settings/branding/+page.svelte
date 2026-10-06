@@ -8,7 +8,7 @@
 
   // Seed the form with the server-loaded branding once on mount. Wrap each
   // read in untrack() so Svelte doesn't flag the intentional one-shot
-  // capture as the state_referenced_locally pattern — the form is meant
+  // capture as the state_referenced_locally pattern, the form is meant
   // to hold user edits, not auto-sync with subsequent data changes.
   let letterheadText = $state(untrack(() => data.branding?.letterheadText ?? ""));
   let customDisclaimerEn = $state(untrack(() => data.branding?.customDisclaimerEn ?? ""));
@@ -49,7 +49,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("app.branding.title")} · FairShare Pro</title>
+  <title>{t("app.branding.title")} | FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
@@ -129,7 +129,7 @@
   .textarea {
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     color: var(--color-text);
@@ -141,7 +141,7 @@
   .color {
     width: 4rem;
     height: 2.25rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     cursor: pointer;

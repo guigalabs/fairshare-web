@@ -13,14 +13,14 @@
       lastUpdated: `Last updated: ${LAST_UPDATED}`,
       metaDescription:
         "Terms of use for FairShare web. Free educational tool, no warranty, see the disclaimer for limits on reliance.",
-      body: `<h2>Free educational tool</h2>
+      body: `<h2>A free educational tool</h2>
 <p>FairShare web is provided free of charge as an educational reference for Islamic inheritance (Fara'id). There are no fees, no subscriptions, and no in-app purchases.</p>
 
 <h2>Permitted use</h2>
 <p>You may use FairShare for personal, educational, or professional reference. You may share links to specific calculations, embed screenshots in articles or social media, and reference the methodology pages with attribution to <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a>.</p>
 
-<h2>Acceptable use</h2>
-<p>Don't try to break the app for other users (no automated abuse, no attempts to circumvent rate limits or interfere with the static delivery infrastructure). The calculator is offline-first by design, so there's nothing to abuse on a server, but the same principle applies to bandwidth-level abuse against the CDN.</p>
+<h2>What not to do</h2>
+<p>Don't try to break the app for other users. That means no automated abuse, and no attempts to get around rate limits or interfere with the static delivery infrastructure. The calculator is offline-first by design, so there's nothing on a server to abuse. The same rule still applies to bandwidth-level abuse against the CDN.</p>
 
 <h2>No warranty</h2>
 <p>FairShare is provided "as is", without warranty of any kind, express or implied. While the inheritance engine is tested against the canonical classical scenarios, we make no guarantee that it will produce the correct distribution for every conceivable family configuration or every interpretation within the schools we support.</p>
@@ -30,13 +30,13 @@
 <p>To the fullest extent permitted by law, Guiga Labs is not liable for any direct, indirect, incidental, or consequential loss arising from use of FairShare or reliance on its output.</p>
 
 <h2>Open source components</h2>
-<p>FairShare is built on open source software (SvelteKit, Vite, Tailwind, Dexie, pdf-lib, and others). These are licensed under their own terms; nothing in these terms restricts your rights under those licences.</p>
+<p>FairShare is built on open source software (SvelteKit, Vite, Tailwind, Dexie, pdf-lib, and others). These are licensed under their own terms, and nothing in these terms restricts your rights under those licences.</p>
 
 <h2>Changes</h2>
 <p>We may update these terms from time to time. The "Last updated" date above tracks the most recent change.</p>
 
 <h2>Contact</h2>
-<p>Questions about these terms or the app generally: <a href="mailto:hello@guigalabs.com">hello@guigalabs.com</a>.</p>`,
+<p>If you have questions about these terms or the app in general, email <a href="mailto:hello@guigalabs.com">hello@guigalabs.com</a>.</p>`,
     },
     ar: {
       kicker: "الشروط",
@@ -50,7 +50,7 @@
 <h2>الاستخدام المسموح</h2>
 <p>يمكنك استخدام فيرشير للمراجعة الشخصية أو التعليمية أو المهنية. يمكنك مشاركة روابط حسابات بعينها، وتضمين لقطات شاشة في المقالات أو وسائل التواصل، والإحالة إلى صفحات المنهجية مع الإشارة إلى <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a>.</p>
 
-<h2>الاستخدام المقبول</h2>
+<h2>ما لا يُسمح به</h2>
 <p>لا تحاول تعطيل التطبيق على المستخدمين الآخرين (لا إساءة آلية، ولا محاولات لتجاوز حدود المعدّل أو التشويش على البنية التحتية الثابتة). الحاسبة تعمل دون اتصال بالتصميم، فلا يوجد ما يمكن إساءة استخدامه على خادم، لكن المبدأ نفسه ينطبق على الإساءة على مستوى عرض الحزمة على شبكة CDN.</p>
 
 <h2>لا يوجد ضمان</h2>
@@ -67,7 +67,7 @@
 <p>قد نحدّث هذه الشروط من حين لآخر. يتتبّع تاريخ "آخر تحديث" أعلاه آخر تغيير.</p>
 
 <h2>للتواصل</h2>
-<p>للأسئلة حول هذه الشروط أو التطبيق بشكل عام: <a href="mailto:hello@guigalabs.com">hello@guigalabs.com</a>.</p>`,
+<p>إن كانت لديك أسئلة عن هذه الشروط أو عن التطبيق عمومًا، راسلنا على <a href="mailto:hello@guigalabs.com">hello@guigalabs.com</a>.</p>`,
     },
   } as const;
 
@@ -75,7 +75,7 @@
 </script>
 
 <svelte:head>
-  <title>{content.title} · FairShare</title>
+  <title>{content.title} | FairShare</title>
   <meta name="description" content={content.metaDescription} />
   <link rel="canonical" href={pageUrl(page.url.pathname)} />
 </svelte:head>

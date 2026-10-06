@@ -46,7 +46,7 @@ export function netEstate(args: {
   return net < 0n ? 0n : net;
 }
 
-/** "After funeral and debts" — the base for the 1/3 wasiyyah cap. */
+/** "After funeral and debts", the base for the 1/3 wasiyyah cap. */
 export function bequeathableBase(args: { gross: Cents; funeral: Cents; debts: Cents }): Cents {
   const base = args.gross - args.funeral - args.debts;
   return base < 0n ? 0n : base;

@@ -42,7 +42,7 @@ describe("requireSession", () => {
     expect(r.location).toBe("/login?from=%2Fapp%2Fcases%3Ffolder%3D42");
   });
 
-  it("redirects when session has no user (defensive — Auth.js can yield this)", async () => {
+  it("redirects when session has no user (defensive, Auth.js can yield this)", async () => {
     const r = await captureRedirect(() =>
       requireSession(makeEvent({ expires: "2099-01-01" } as Session)),
     );

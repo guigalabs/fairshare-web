@@ -37,7 +37,7 @@ export class QuestionnaireRunner {
   /**
    * Switch madhhab without losing answers. Most steps are identical across
    * schools, so the user stays where they were. The history stack is kept
-   * intact — Back replays under the new madhhab, which is the desired behavior.
+   * intact, Back replays under the new madhhab, which is the desired behavior.
    */
   setMadhhab(madhhab: Madhhab): void {
     if (this.flow.madhhab === madhhab) return;

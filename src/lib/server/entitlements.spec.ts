@@ -32,7 +32,7 @@ describe("hasProEntitlement", () => {
     expect(hasProEntitlement({ status: "canceled", currentPeriodEnd: past }, now)).toBe(false);
   });
 
-  it("denies on trialing (the free site is the trial — no in-product trial)", () => {
+  it("denies on trialing (the free site is the trial, no in-product trial)", () => {
     expect(hasProEntitlement({ status: "trialing", currentPeriodEnd: future }, now)).toBe(false);
   });
 

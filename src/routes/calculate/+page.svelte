@@ -16,27 +16,25 @@
   import { page } from "$app/state";
   import { serialiseJsonLd, howToSchema } from "$lib/seo/jsonld";
 
-  // HowTo schema for the calculator flow. Steps are deliberately
-  // high-level — the actual questionnaire branches dynamically based on
-  // family composition, so enumerating every question would misrepresent
-  // it. Three steps capture the user-visible arc: school → questionnaire
-  // → result with citations.
+  // HowTo schema for the calculator flow. Steps stay high-level because the
+  // questionnaire branches on family composition. Three steps: school,
+  // questionnaire, result with citations.
   const calculatorHowTo = howToSchema({
     name: "Calculate Islamic inheritance shares (Fara'id)",
     description:
-      "Compute Fara'id shares for any family, with each share linked to its Quranic source. Free, offline, and bilingual EN/AR.",
+      "Work out Fara'id shares for a family, with each share linked to its Quranic source. It's free, works offline, and comes in English and Arabic.",
     steps: [
       {
         name: "Choose a school of thought (madhhab)",
-        text: "Pick one of the five Sunni schools — General (majority), Hanafi, Maliki, Shafi'i, or Hanbali — or accept the General default.",
+        text: "Pick General (the majority view), Hanafi, Maliki, Shafi'i, or Hanbali. If you don't choose, General is used.",
       },
       {
         name: "Walk through the family questionnaire",
-        text: "Answer short questions about the deceased's surviving family: spouse, parents, children, siblings, and other named heirs.",
+        text: "Answer short questions about who the deceased left behind: spouse, parents, children, siblings, and other heirs.",
       },
       {
         name: "Review the computed shares",
-        text: "Read each heir's share and the Quranic verse (4:11, 4:12, 4:176) or classical rule it derives from. Export or share the result.",
+        text: "See each heir's share along with the Quranic verse (4:11, 4:12, 4:176) or classical rule it comes from. You can export or share the result.",
       },
     ],
   });
@@ -303,7 +301,7 @@
   .madhhab-pill {
     padding: 0.4375rem 0.6875rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     background: var(--color-bg-elevated);
     color: var(--color-text-secondary);
     font-size: 0.8125rem;
@@ -330,7 +328,7 @@
     padding: 0.25rem 0.625rem;
     border-radius: var(--radius-sm);
     background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     color: var(--color-text-secondary);
   }
 

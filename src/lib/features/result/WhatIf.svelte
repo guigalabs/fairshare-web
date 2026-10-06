@@ -34,7 +34,7 @@
 
 <style>
   .whatif {
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-lg);
     background: var(--color-bg-elevated);
     padding: 1.25rem;

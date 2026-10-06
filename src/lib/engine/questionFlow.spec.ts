@@ -21,7 +21,7 @@ function runFlow(
   return { flow, visited };
 }
 
-describe("QuestionFlow — sibling questions for mother's-share reduction (Q4:11)", () => {
+describe("QuestionFlow, sibling questions for mother's-share reduction (Q4:11)", () => {
   it("asks about siblings when mother and father are alive (even though siblings are blocked)", () => {
     // Male deceased, wife, no children, father alive, mother alive.
     // Siblings will be blocked from inheriting by the father, BUT their

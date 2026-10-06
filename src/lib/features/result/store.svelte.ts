@@ -29,7 +29,7 @@ function readStoredCase(): ReadResult {
   if (token) {
     const fromUrl = decodeCase(token);
     if (fromUrl) return { case: fromUrl, linkError: false };
-    // Token present but unreadable — likely truncated by SMS/Twitter/WhatsApp.
+    // Token present but unreadable, likely truncated by SMS/Twitter/WhatsApp.
     // Don't fall through silently; surface it to the user.
     return { case: null, linkError: true };
   }

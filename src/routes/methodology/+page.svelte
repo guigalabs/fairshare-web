@@ -25,27 +25,27 @@
   const FAQS = [
     {
       q: "What is Fara'id?",
-      a: "Fara'id is the Islamic law of inheritance: a system of fixed shares prescribed in the Quran (Surah An-Nisa 4:11, 4:12, and 4:176) that determines how a deceased Muslim's estate is divided among their heirs.",
+      a: "Fara'id is the Islamic law of inheritance. It uses fixed shares set out in the Quran (Surah An-Nisa 4:11, 4:12, and 4:176) to decide how a Muslim's estate is divided among their heirs.",
     },
     {
       q: "How many fixed Quranic shares are there?",
-      a: "Six: one-half (1/2), one-quarter (1/4), one-eighth (1/8), two-thirds (2/3), one-third (1/3), and one-sixth (1/6). The article on fixed shares lists which heir receives which.",
+      a: "Six: one-half (1/2), one-quarter (1/4), one-eighth (1/8), two-thirds (2/3), one-third (1/3), and one-sixth (1/6). The fixed shares article lists which heirs get each one.",
     },
     {
-      q: "What are the five Sunni schools of inheritance?",
-      a: "The four classical Sunni madhabs are Hanafi, Maliki, Shafi'i, and Hanbali. FairShare also surfaces a fifth 'General' position that reflects the points the four schools agree on — useful when you don't need to commit to a specific madhab.",
+      q: "Which schools of thought does FairShare support?",
+      a: "The four classical Sunni madhabs: Hanafi, Maliki, Shafi'i, and Hanbali. There's also a General option that follows the points the four schools agree on. Pick it if you don't follow a specific madhab.",
     },
     {
       q: "What is Awl?",
-      a: "When the prescribed fixed shares add up to more than the whole estate (because of overlapping fractions), Awl scales every share down proportionally so the totals fit within the estate.",
+      a: "Sometimes the fixed shares add up to more than the whole estate. Awl reduces every share in proportion so the total fits the estate.",
     },
     {
       q: "What is Radd?",
-      a: "When the prescribed shares add up to less than the estate and there are no residuary heirs (Asabah), Radd returns the surplus to the non-spouse fixed-share heirs proportionally.",
+      a: "When the fixed shares add up to less than the estate and there are no residuary heirs (Asabah), Radd gives the surplus back to the fixed-share heirs other than the spouse, in proportion to their shares.",
     },
     {
       q: "Is FairShare a replacement for a mufti or attorney?",
-      a: "No. FairShare is an educational tool. Real estate distributions involve facts (debts, wasiyyah, jurisdictional law) that no calculator can capture. Always consult a qualified mufti and a licensed attorney for any actual distribution.",
+      a: "No. FairShare is for learning and checking your understanding. A real distribution depends on things a calculator can't see, like debts, a wasiyyah, and local law. For an actual estate, talk to a qualified mufti and a licensed attorney.",
     },
   ];
   const faqs = faqSchema(FAQS.map(({ q, a }) => ({ q, a })));
@@ -86,7 +86,7 @@
   {/each}
 
   <section class="faq" aria-labelledby="faq-heading">
-    <h2 id="faq-heading" class="faq-heading">Frequently asked questions</h2>
+    <h2 id="faq-heading" class="faq-heading">Common questions</h2>
     {#each FAQS as item (item.q)}
       <div class="faq-item">
         <h3 class="faq-q">{item.q}</h3>

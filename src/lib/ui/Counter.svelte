@@ -84,7 +84,7 @@
     width: 2.75rem;
     height: 2.75rem;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     background: var(--color-bg-elevated);
     color: var(--color-text);
     font-size: 1.125rem;

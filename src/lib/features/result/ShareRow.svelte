@@ -12,8 +12,7 @@
     <p class="row-name">{labelFor(share.heirType, share.count)}</p>
     <p class="row-meta">
       <span class="fraction">{share.fraction.toString()}</span>
-      <span class="dot">·</span>
-      <span class="pct">{share.percentage.toFixed(2)}%</span>
+      <span class="pct">({share.percentage.toFixed(2)}%)</span>
     </p>
   </div>
 </div>
@@ -47,10 +46,6 @@
     font-feature-settings: "frac";
     color: var(--color-text-secondary);
     font-weight: 500;
-  }
-  .dot {
-    margin: 0 0.25rem;
-    color: var(--color-text-subtle);
   }
   .pct {
     font-variant-numeric: tabular-nums;

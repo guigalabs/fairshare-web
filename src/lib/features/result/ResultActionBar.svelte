@@ -3,7 +3,7 @@
   import FileDown from "@lucide/svelte/icons/file-down";
   import type { CalculationResult, InheritanceCase } from "$engine";
   import { t } from "$lib/i18n/index.svelte";
-  // pdf-lib (~430 KB) is lazy-imported inside the click handler — /result
+  // pdf-lib (~430 KB) is lazy-imported inside the click handler, /result
   // doesn't pay for it on initial load.
 
   interface Props {

@@ -31,25 +31,21 @@
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 0.875rem 1.125rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-elevated);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg);
     font-size: 0.9375rem;
     line-height: 1.5;
     color: var(--color-text-secondary);
   }
   .banner--warning {
     background: var(--color-warning-bg);
-    border-color: var(--color-warning-border);
+    border: 2px solid var(--color-warning-border);
     color: var(--color-warning-text);
   }
   .banner--scholar {
-    border-color: transparent;
-    border-inline-start: 3px solid var(--color-accent);
-    border-radius: 0;
+    border-inline-start: 4px solid var(--color-accent);
     background: var(--color-wash);
-    color: var(--color-text-secondary);
   }
   .banner-body {
     flex: 1;

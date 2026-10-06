@@ -10,7 +10,7 @@ export const prerender = false;
  *
  * MP forbids `payment_method_types`, `automatic_tax`, `tax_id_collection`,
  * `subscription_data.default_tax_rates`, and `subscription_data.invoice_settings`
- * — Stripe handles all of those itself when MP is enabled. The session
+ *, Stripe handles all of those itself when MP is enabled. The session
  * carries `subscription_data[metadata][user_id]` so the eventual
  * `customer.subscription.created` webhook can bind back to our user row.
  *

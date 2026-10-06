@@ -67,7 +67,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("settings.title")} · FairShare</title>
+  <title>{t("settings.title")} | FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

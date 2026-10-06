@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("app.cases.new.title")} · FairShare Pro</title>
+  <title>{t("app.cases.new.title")} | FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
@@ -179,7 +179,7 @@
   .control {
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     color: var(--color-text);

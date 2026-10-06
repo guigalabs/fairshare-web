@@ -15,13 +15,13 @@
 <style>
   .card {
     background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-edge);
   }
   .card--padded {
-    padding: 1.5rem;
+    padding: 1.375rem;
   }
+  /* Shadowed cards mean "you can do something here". */
   .card--elevated {
-    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow);
   }
 </style>

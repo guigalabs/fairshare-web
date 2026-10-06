@@ -73,6 +73,6 @@
     font-size: 0.95em;
     background: var(--color-bg-elevated);
     padding: 0.125rem 0.375rem;
-    border-radius: 4px;
+    border-radius: 0;
   }
 </style>

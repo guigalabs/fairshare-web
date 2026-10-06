@@ -1,7 +1,7 @@
 import type { Gender, HeirEntry, HeirType, InheritanceCase, Madhhab } from "./types";
 import { heirEntry, inheritanceCase } from "./types";
 
-// 1:1 port of Flow/QuestionFlow.swift. Plain TS class — UI layer wraps it
+// 1:1 port of Flow/QuestionFlow.swift. Plain TS class, UI layer wraps it
 // with reactive state ($state in Svelte) when used from the questionnaire.
 
 export type QuestionStep =

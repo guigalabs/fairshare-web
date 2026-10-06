@@ -74,7 +74,7 @@ export async function share(opts: {
       if (err instanceof DOMException && err.name === "AbortError") {
         return "cancelled";
       }
-      // Other errors (NotAllowedError, DataError, etc.) — fall through to
+      // Other errors (NotAllowedError, DataError, etc.), fall through to
       // clipboard so the user still has a way to share.
     }
   }

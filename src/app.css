@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* FairShare in the Guiga Labs "warm brutalist" language shared with
+ * honeybee, in FairShare's own greens. The rule that keeps it calm: EDGES
+ * ARE STRUCTURAL, HAIRLINES ARE INCIDENTAL. Anything you act on (button,
+ * field, card) gets a 2px ink edge and a hard, blur-free shadow. Dividers
+ * inside a surface stay hairline. */
 @theme {
   --color-bg: var(--color-bg-actual);
   --color-bg-elevated: var(--color-bg-elevated-actual);
@@ -10,6 +15,7 @@
   --color-text-subtle: var(--color-text-subtle-actual);
   --color-border: var(--color-border-actual);
   --color-border-strong: var(--color-border-strong-actual);
+  --color-edge: var(--color-edge-actual);
   --color-accent: var(--color-accent-actual);
   --color-accent-hover: var(--color-accent-hover-actual);
   --color-warning-bg: var(--color-warning-bg-actual);
@@ -18,21 +24,22 @@
   --color-error: var(--color-error-actual);
   --color-error-hover: var(--color-error-hover-actual);
 
-  --font-sans: "IBM Plex Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-serif: "Source Serif 4 Variable", "Iowan Old Style", Georgia, serif;
+  --font-display: "Gabarito Variable", "Gabarito", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Spectral", Georgia, serif;
+  --font-sans:
+    "Hanken Grotesk Variable", "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --font-arabic: "IBM Plex Sans Arabic", "Geeza Pro", sans-serif;
-  --font-arabic-display: "Noto Naskh Arabic Variable", "Noto Naskh Arabic", "Geeza Pro", serif;
+  --font-arabic-display: "Noto Kufi Arabic Variable", "Geeza Pro", sans-serif;
+  --font-arabic-serif: "Noto Naskh Arabic Variable", "Geeza Pro", serif;
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-pill: 9999px;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-pill: 0;
 }
 
-/* Single light theme by product decision. Ink is a deep green rather than
- * black so type and the brand green read as one family. All text tokens
- * hit WCAG AA on both --color-bg and --color-wash. */
 :root {
   --color-bg-actual: #ffffff;
   --color-bg-elevated-actual: #ffffff;
@@ -41,15 +48,21 @@
   --color-text-secondary-actual: #3f4e46;
   --color-text-muted-actual: #4f5d55;
   --color-text-subtle-actual: #5e6b64;
-  --color-border-actual: #d3dcd6;
-  --color-border-strong-actual: #a9b7ae;
+  --color-border-actual: rgba(22, 41, 31, 0.14);
+  --color-border-strong-actual: rgba(22, 41, 31, 0.32);
+  --color-edge-actual: #16291f;
   --color-accent-actual: #0b6b45;
   --color-accent-hover-actual: #084f33;
   --color-warning-bg-actual: #fbf3e2;
-  --color-warning-border-actual: #e6cf98;
+  --color-warning-border-actual: #6a4300;
   --color-warning-text-actual: #6a4300;
   --color-error-actual: #b42318;
   --color-error-hover-actual: #912018;
+
+  /* Hard shadows, zero blur. */
+  --shadow: 5px 5px 0 var(--color-edge);
+  --shadow-sm: 3px 3px 0 var(--color-edge);
+  --shadow-accent: 4px 4px 0 var(--color-accent);
 }
 
 @layer base {
@@ -73,41 +86,70 @@
     font-family: var(--font-arabic);
   }
 
-  /* Headings set in the text serif. Weight stays moderate: the serif carries
-   * the voice, so it doesn't need to shout. */
   h1,
-  h2,
-  h3 {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    font-optical-sizing: auto;
-    letter-spacing: -0.01em;
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
     text-wrap: balance;
   }
-  html[dir="rtl"] :is(h1, h2, h3) {
+  h3 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  html[dir="rtl"] :is(h1, h2) {
     font-family: var(--font-arabic-display);
     letter-spacing: 0;
+    line-height: 1.3;
   }
 
   a {
-    text-underline-offset: 0.18em;
+    text-underline-offset: 3px;
     text-decoration-thickness: 1px;
   }
 
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: 2px;
   }
 }
 
-/* True diagonal fractions (1/8, 2/3) from the serif's OpenType frac table. */
-.frac {
+/* Mono section label: "/ THE SIX SHARES". */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.eyebrow::before {
+  content: "/ ";
+}
+html[dir="rtl"] .eyebrow {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
+}
+
+/* Reading copy is set in the serif. */
+.serif {
   font-family: var(--font-serif);
-  font-feature-settings:
-    "frac" 1,
-    "lnum" 1;
-  font-variant-numeric: diagonal-fractions lining-nums;
+}
+html[dir="rtl"] .serif {
+  font-family: var(--font-arabic-serif);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fractions read as plain numerals in this system. Kept as a hook. */
+.frac {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {

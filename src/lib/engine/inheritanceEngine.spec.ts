@@ -7,7 +7,7 @@ import type { HeirShare } from "./result";
 // Curated regression set covering the classical Fara'id cases. Each
 // expectation comes from the canonical worked examples in the FairShareEngine
 // Swift test suite (FairShareEngineTests/) and must produce bit-identical
-// fractions on both sides — that's the parity contract.
+// fractions on both sides, that's the parity contract.
 
 function shareOf(shares: readonly HeirShare[], type: string): Fraction {
   const s = shares.find((x) => x.heirType === type);
@@ -15,7 +15,7 @@ function shareOf(shares: readonly HeirShare[], type: string): Fraction {
   return s.fraction;
 }
 
-describe("InheritanceEngine — classical scenarios", () => {
+describe("InheritanceEngine, classical scenarios", () => {
   it("daughter alone -> 1/2 (no Radd until Adjustments path detects no residuary)", () => {
     // Single daughter, no other heirs: daughter takes 1/2 by fixed share.
     // With no residuary heir, Radd applies and she takes the full estate (1/1).
@@ -119,7 +119,7 @@ describe("InheritanceEngine — classical scenarios", () => {
     expect(r.blockedHeirs.some((b) => b.heirType === "paternalGrandfather")).toBe(true);
   });
 
-  // Q4:11 — "if the deceased left brothers or sisters, the mother has a sixth."
+  // Q4:11, "if the deceased left brothers or sisters, the mother has a sixth."
   // The mother's reduction from 1/3 to 1/6 triggers on the *presence* of 2+
   // siblings, even when those siblings are themselves blocked from inheriting
   // by the father (or, in Hanafi, the paternal grandfather). This is the

@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-  <title>Sign in · FairShare Pro</title>
+  <title>Sign in | FairShare Pro</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

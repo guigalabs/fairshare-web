@@ -155,8 +155,9 @@
     background: color-mix(in srgb, var(--tint) 8%, transparent);
     border: 0.75px solid color-mix(in srgb, var(--tint) 15%, transparent);
     padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-family: ui-rounded, system-ui, sans-serif;
+    border-radius: 0;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
   }
   .branch {
     display: flex;
@@ -258,7 +259,8 @@
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--color-text);
-    font-family: ui-rounded, system-ui, sans-serif;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
     z-index: 2;
     position: relative;
   }

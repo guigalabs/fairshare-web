@@ -1,4 +1,4 @@
-// JSON-LD helpers — used in <svelte:head>{@html serialiseJsonLd(...)}.
+// JSON-LD helpers, used in <svelte:head>{@html serialiseJsonLd(...)}.
 // Always escape "</" so a stray closing-script sequence in data can never
 // terminate the inline <script> tag.
 

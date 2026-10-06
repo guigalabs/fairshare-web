@@ -75,220 +75,241 @@
   }
 </script>
 
-<figure class="ledger" aria-labelledby="ledger-title">
-  <figcaption class="ledger-head">
-    <span id="ledger-title" class="ledger-title">{t("home.ledger.title")}</span>
-    <div
-      class="tabs"
-      role="tablist"
-      aria-label={t("home.ledger.tabsAria")}
-      tabindex="-1"
-      onkeydown={onKeydown}
-    >
-      {#each examples as s, i (s.id)}
-        <button
-          type="button"
-          role="tab"
-          id="ledger-tab-{s.id}"
-          aria-selected={i === active}
-          aria-controls="ledger-panel"
-          tabindex={i === active ? 0 : -1}
-          class="tab"
-          onclick={() => (active = i)}
-        >
-          {t(s.nameKey)}
-        </button>
-      {/each}
-    </div>
-  </figcaption>
+<div class="ledger">
+  <p class="caption">{t("home.ledger.title")}</p>
+  <div
+    class="tabs"
+    role="tablist"
+    aria-label={t("home.ledger.tabsAria")}
+    tabindex="-1"
+    onkeydown={onKeydown}
+  >
+    {#each examples as s, i (s.id)}
+      <button
+        type="button"
+        role="tab"
+        id="ledger-tab-{s.id}"
+        aria-selected={i === active}
+        aria-controls="ledger-panel"
+        tabindex={i === active ? 0 : -1}
+        class="tab"
+        onclick={() => (active = i)}
+      >
+        {t(s.nameKey)}
+      </button>
+    {/each}
+  </div>
 
   <div id="ledger-panel" role="tabpanel" aria-labelledby="ledger-tab-{scenario.id}">
-    <p class="family">{t("home.ledger.leaves", { family: t(scenario.descKey) })}</p>
+    <figure class="receipt">
+      <figcaption class="receipt-head">
+        <span class="receipt-title">{t("home.ledger.receipt")}</span>
+        <span class="family">{t("home.ledger.leaves", { family: t(scenario.descKey) })}</span>
+      </figcaption>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">{t("home.ledger.col.heir")}</th>
-          <th scope="col" class="num">{t("home.ledger.col.share")}</th>
-          <th scope="col" class="num">{t("home.ledger.col.percent")}</th>
-          <th scope="col" class="num">{t("home.ledger.col.source")}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each rows as { share, color } (share.heirType)}
+      <table class="table">
+        <thead>
           <tr>
-            <th scope="row">
-              <span class="swatch" style:background={color} aria-hidden="true"></span>
-              {t(`heir.${share.heirType}`)}
-              {#if share.count > 1}<span class="count">× {share.count}</span>{/if}
-            </th>
-            <td class="num frac">{share.fraction.numerator}/{share.fraction.denominator}</td>
-            <td class="num pct">{pct(share.percentage)}</td>
-            <td class="num verse">{VERSE[share.heirType] ?? ""}</td>
+            <th scope="col">{t("home.ledger.col.heir")}</th>
+            <th scope="col" class="num">{t("home.ledger.col.share")}</th>
+            <th scope="col" class="num">{t("home.ledger.col.percent")}</th>
+            <th scope="col" class="num">{t("home.ledger.col.source")}</th>
           </tr>
+        </thead>
+        <tbody>
+          {#each rows as { share, color } (share.heirType)}
+            <tr>
+              <th scope="row">
+                <span class="swatch" style:background={color} aria-hidden="true"></span>
+                {t(`heir.${share.heirType}`)}
+                {#if share.count > 1}<span class="count">× {share.count}</span>{/if}
+              </th>
+              <td class="num share">{share.fraction.numerator}/{share.fraction.denominator}</td>
+              <td class="num pct">{pct(share.percentage)}</td>
+              <td class="num verse">{VERSE[share.heirType] ?? ""}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+
+      <div class="bar" aria-hidden="true">
+        {#each rows as { share, color } (share.heirType)}
+          <span class="seg" style:flex-grow={share.percentage} style:background={color}></span>
         {/each}
-      </tbody>
-    </table>
+      </div>
 
-    <div class="bar" aria-hidden="true">
-      {#each rows as { share, color } (share.heirType)}
-        <span class="seg" style:flex-grow={share.percentage} style:background={color}></span>
-      {/each}
-    </div>
-
-    <p class="note">{t(noteKey)}</p>
-    <a class="open" {href}>{t("home.ledger.open")}</a>
+      <p class="note">{t(noteKey)}</p>
+      <a class="open" {href}>{t("home.ledger.open")}</a>
+    </figure>
   </div>
-</figure>
+</div>
 
 <style>
   .ledger {
-    margin: 0;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.25rem 1.375rem;
+    min-width: 0;
   }
-  @media (min-width: 640px) {
-    .ledger {
-      padding: 1.5rem 1.75rem 1.75rem;
-    }
-  }
-  .ledger-head {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding-bottom: 0.875rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .ledger-title {
-    font-size: 0.875rem;
+  .caption {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
     color: var(--color-text-muted);
+  }
+  :global(html[dir="rtl"]) .caption {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+    font-size: 0.875rem;
   }
   .tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
+    gap: 0.375rem;
+    margin: 0.75rem 0 1.5rem;
   }
   .tab {
-    padding: 0.25rem 0;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    background: none;
-    font: inherit;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+    padding: 0.375rem 0.5625rem;
+    border: 2px solid var(--color-edge);
+    background: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text);
     white-space: nowrap;
     cursor: pointer;
+    transition:
+      transform 90ms ease,
+      box-shadow 90ms ease;
   }
   .tab:hover {
-    color: var(--color-text);
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow-sm);
   }
   .tab[aria-selected="true"] {
-    color: var(--color-text);
-    font-weight: 500;
-    border-bottom-color: var(--color-accent);
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
   }
 
-  .family {
-    margin-top: 1.125rem;
-    font-family: var(--font-serif);
-    font-size: 1.1875rem;
-    line-height: 1.35;
+  .receipt {
+    margin: 0;
+    border: 2px solid var(--color-edge);
+    border-top: 8px solid var(--color-accent);
+    background: var(--color-bg);
+    box-shadow: var(--shadow);
+    padding: 1.125rem 1.25rem 1.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    /* Hangs slightly off true, like it came out of a printer. */
+    transform: rotate(0.6deg);
   }
-  :global(html[dir="rtl"]) .family {
-    font-family: var(--font-arabic-display);
+  :global(html[dir="rtl"]) .receipt {
+    transform: rotate(-0.6deg);
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+    font-size: 0.875rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .receipt {
+      transition: transform 160ms ease;
+    }
+    .receipt:hover {
+      transform: rotate(0deg);
+    }
+  }
+  .receipt-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-edge);
+  }
+  .receipt-title {
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+  .family {
+    color: var(--color-text-muted);
   }
 
   .table {
     width: 100%;
-    margin-top: 0.75rem;
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 0.9375rem;
-  }
-  .table thead th:nth-child(2) {
-    width: 4.25rem;
-  }
-  .table thead th:nth-child(3) {
-    width: 5.75rem;
-  }
-  .table thead th:nth-child(4) {
-    width: 3.75rem;
   }
   .table thead th {
-    padding: 0.5rem 0;
-    font-size: 0.8125rem;
+    padding: 0.625rem 0 0.375rem;
+    font-size: 0.6875rem;
     font-weight: 400;
     color: var(--color-text-muted);
     text-align: start;
+    text-transform: uppercase;
     border-bottom: 1px solid var(--color-border);
+  }
+  .table thead th:nth-child(2) {
+    width: 4rem;
+  }
+  .table thead th:nth-child(3) {
+    width: 5.25rem;
+  }
+  .table thead th:nth-child(4) {
+    width: 3.5rem;
   }
   .table tbody th,
   .table td {
-    padding: 0.625rem 0;
+    padding: 0.5rem 0;
     border-bottom: 1px solid var(--color-border);
     vertical-align: baseline;
   }
   .table tbody th {
     font-weight: 500;
     text-align: start;
+    color: var(--color-text);
   }
   .table .num {
     text-align: end;
-    padding-inline-start: 1rem;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
   .swatch {
     display: inline-block;
     width: 0.625rem;
     height: 0.625rem;
-    border-radius: 2px;
     margin-inline-end: 0.5rem;
+    border: 1px solid var(--color-edge);
   }
   .count {
     font-weight: 400;
     color: var(--color-text-muted);
     margin-inline-start: 0.25rem;
   }
-  td.frac {
-    font-size: 1.375rem;
-    line-height: 1;
+  .share {
+    font-weight: 500;
+    color: var(--color-text);
   }
-  .pct {
-    font-variant-numeric: tabular-nums;
-    color: var(--color-text-secondary);
-  }
+  .pct,
   .verse {
-    font-size: 0.8125rem;
     color: var(--color-text-muted);
-    font-variant-numeric: tabular-nums;
   }
 
   .bar {
     display: flex;
-    gap: 2px;
     height: 0.875rem;
-    margin-top: 1.25rem;
+    margin-top: 1.125rem;
+    border: 2px solid var(--color-edge);
   }
   .seg {
     flex-basis: 0;
     min-width: 3px;
     transition: flex-grow 0.35s ease;
   }
-  .seg:first-child {
-    border-start-start-radius: 2px;
-    border-end-start-radius: 2px;
-  }
-  .seg:last-child {
-    border-start-end-radius: 2px;
-    border-end-end-radius: 2px;
+  .seg + .seg {
+    border-inline-start: 2px solid var(--color-edge);
   }
 
   .note {
     margin-top: 1rem;
-    font-size: 0.9375rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--color-text-secondary);
   }
   .open {
@@ -296,8 +317,19 @@
     margin-top: 0.875rem;
     font-weight: 500;
     color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
   }
   .open:hover {
-    color: var(--color-accent-hover);
+    text-decoration-color: currentColor;
+  }
+
+  @media (max-width: 480px) {
+    .receipt {
+      padding-inline: 0.875rem;
+    }
+    .table thead th:nth-child(3) {
+      width: 4.25rem;
+    }
   }
 </style>

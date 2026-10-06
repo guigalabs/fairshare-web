@@ -193,12 +193,12 @@ function renderDeceasedBlock(s: RenderState, c: PractitionerCaseInput): void {
   if (c.jurisdiction) meta.push(c.jurisdiction);
   if (c.deceasedIdentifier) meta.push(`ID: ${c.deceasedIdentifier}`);
   if (meta.length) {
-    drawText(s, meta.join(" · "), 10, s.helv, rgb(0.4, 0.4, 0.4));
+    drawText(s, meta.join(", "), 10, s.helv, rgb(0.4, 0.4, 0.4));
     s.y -= LINE;
   }
   drawText(
     s,
-    `Madhhab: ${c.madhhab} · Subject gender: ${c.subjectGender}`,
+    `Madhhab: ${c.madhhab}. Deceased: ${c.subjectGender}.`,
     10,
     s.helv,
     rgb(0.4, 0.4, 0.4),
@@ -336,7 +336,7 @@ function renderFooter(s: RenderState, input: PractitionerPdfInput): void {
     color: rgb(0.4, 0.4, 0.4),
     maxWidth: s.width - MARGIN * 2,
   });
-  s.page.drawText(`Generated ${generated} · fairshare.guigalabs.com`, {
+  s.page.drawText(`Generated ${generated} at fairshare.guigalabs.com`, {
     x: MARGIN,
     y: MARGIN + 8,
     size: 8,

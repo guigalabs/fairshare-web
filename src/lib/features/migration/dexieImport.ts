@@ -32,7 +32,7 @@ export interface ImportResult {
 /**
  * Read every locally-saved case from Dexie and POST it to /api/cases.
  * The endpoint is idempotent enough that re-runs (across devices) cause
- * duplicates — Phase 2 will add a dedupe-hash. For now, we only call
+ * duplicates, Phase 2 will add a dedupe-hash. For now, we only call
  * this once per device (the FLAG_KEY guards re-runs).
  */
 export async function importLocalCases(): Promise<ImportResult> {

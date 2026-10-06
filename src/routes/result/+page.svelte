@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("result.title")} · FairShare</title>
+  <title>{t("result.title")} | FairShare</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

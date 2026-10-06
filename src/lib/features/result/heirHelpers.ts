@@ -1,4 +1,4 @@
-// 1:1 port of FairShare iOS HeirHelpers.swift — colors, names, icons.
+// 1:1 port of FairShare iOS HeirHelpers.swift, colors, names, icons.
 // Used by FamilyTree + ShareRow + Walkthrough so the categorisation matches
 // the iOS app pixel-for-pixel.
 

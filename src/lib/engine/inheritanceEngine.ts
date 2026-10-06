@@ -8,7 +8,7 @@ import { checkAndApplySpecialCases } from "./specialCases";
 import { assignResidualShares } from "./residualShares";
 import { applyAwl, applyRadd } from "./adjustments";
 
-// 1:1 port of Engine/InheritanceEngine.swift — orchestrator.
+// 1:1 port of Engine/InheritanceEngine.swift, orchestrator.
 
 const RESIDUARY_TYPES: ReadonlySet<HeirType> = new Set([
   "son",
@@ -76,7 +76,7 @@ export function calculate(c: InheritanceCase): CalculationResult {
     });
   }
 
-  // 3. Fixed shares — pass the pre-blocking `c.heirs` as `originalHeirs` so
+  // 3. Fixed shares, pass the pre-blocking `c.heirs` as `originalHeirs` so
   // the mother's-share reduction can count siblings that have been blocked
   // from inheritance by the father (hajb nuqsan vs hajb hirman, Q4:11).
   let shares: HeirShare[] = assignFixedShares(activeHeirs, c.subjectGender, c.madhhab, c.heirs);
@@ -98,7 +98,7 @@ export function calculate(c: InheritanceCase): CalculationResult {
     });
   }
 
-  // 5. Residual shares (skip if a special case already handled them — except
+  // 5. Residual shares (skip if a special case already handled them, except
   // grandfather-with-siblings which still needs residuary treatment per Swift)
   if (specialCase === undefined || specialCase === "grandFatherWithSiblings") {
     const pre = [...shares];

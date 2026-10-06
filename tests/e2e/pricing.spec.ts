@@ -49,7 +49,7 @@ test("/pricing waitlist submit posts to /api/waitlist with source=pro and shows 
   await dialog.getByRole("textbox", { name: /email/i }).fill("amina@example.com");
   await dialog.getByRole("button", { name: "Notify me" }).click();
 
-  await expect(dialog.getByRole("status")).toHaveText(/you're in/i);
+  await expect(dialog.getByRole("status")).toHaveText(/on the list/i);
   expect(captured).toEqual([{ email: "amina@example.com", source: "pro" }]);
 });
 
@@ -68,5 +68,5 @@ test("/pricing waitlist surfaces an inline error when /api/waitlist fails", asyn
   await dialog.getByRole("textbox", { name: /email/i }).fill("amina@example.com");
   await dialog.getByRole("button", { name: "Notify me" }).click();
 
-  await expect(dialog.getByRole("alert")).toHaveText(/something went wrong/i);
+  await expect(dialog.getByRole("alert")).toHaveText(/didn't go through/i);
 });

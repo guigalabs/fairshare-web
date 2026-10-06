@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Check your email · FairShare Pro</title>
+  <title>Check your email | FairShare Pro</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 
