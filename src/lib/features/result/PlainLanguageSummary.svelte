@@ -21,7 +21,7 @@
 
   const bodySlide = reducedMotion ? { duration: 0 } : { duration: 200 };
 
-  // Bold percentages and fractions inside a sentence — keeps the math
+  // Bold percentages and fractions inside a sentence, keeps the math
   // visually anchored without overloading the prose around it.
   function highlight(text: string): string {
     return text

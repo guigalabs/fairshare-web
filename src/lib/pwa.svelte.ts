@@ -2,7 +2,7 @@
 //
 // Listens for `beforeinstallprompt` (Chrome/Edge/Android), holds the deferred
 // event reactively so the UI can offer an Install button. iOS Safari has no
-// programmatic install — for that audience we surface a hint to use the
+// programmatic install, for that audience we surface a hint to use the
 // Share -> Add to Home Screen flow instead.
 
 import { browser } from "$app/environment";

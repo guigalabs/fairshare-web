@@ -97,7 +97,7 @@
 </script>
 
 <svelte:head>
-  <title>{c.deceasedName} · FairShare Pro</title>
+  <title>{c.deceasedName} | FairShare Pro</title>
 </svelte:head>
 
 <section class="head">
@@ -106,7 +106,7 @@
     <h1>{c.deceasedName}</h1>
     <p class="meta">
       {#if c.dateOfDeath}{t("app.cases.detail.dod", { date: c.dateOfDeath })}{/if}
-      {#if c.jurisdiction}· {c.jurisdiction}{/if}
+      {#if c.jurisdiction}, {c.jurisdiction}{/if}
     </p>
   </div>
   <div class="actions">

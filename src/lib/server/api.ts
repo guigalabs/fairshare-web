@@ -17,7 +17,7 @@ export interface AuthenticatedApiContext {
 
 /**
  * Extract a Drizzle client + the authenticated user from a SvelteKit
- * request event. Throws 401 (not a redirect — these are JSON endpoints)
+ * request event. Throws 401 (not a redirect, these are JSON endpoints)
  * if the visitor is unauthenticated.
  */
 export async function authedApiContext(event: ApiRequestEvent): Promise<AuthenticatedApiContext> {

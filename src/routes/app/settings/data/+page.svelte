@@ -28,7 +28,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("app.data.title")} · FairShare Pro</title>
+  <title>{t("app.data.title")} | FairShare Pro</title>
 </svelte:head>
 
 <section class="head">

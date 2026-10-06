@@ -38,7 +38,7 @@ export const DELETE: RequestHandler = async (event) => {
     // Network failures on this fetch (DNS, connection reset, timeout)
     // throw rather than returning a non-ok Response, so we have to
     // try/catch as well as branch on res.ok. Either way, the user's
-    // delete request must not be blocked on Stripe — manual
+    // delete request must not be blocked on Stripe, manual
     // reconciliation is fine if Stripe is briefly unreachable.
     try {
       const res = await stripeRequest({

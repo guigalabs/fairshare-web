@@ -44,8 +44,8 @@ function checkUmariatan(
 
   if (hasAny(["son", "daughter", "sonsSon", "sonsDaughter"], present)) return null;
 
-  // Umariatan is disqualified by the *presence* of 2+ siblings — even when
-  // they are blocked from inheriting by the father — because that switches
+  // Umariatan is disqualified by the *presence* of 2+ siblings, even when
+  // they are blocked from inheriting by the father, because that switches
   // the mother to 1/6 (Q4:11). Use the pre-blocking list.
   const sibCount = originalHeirs
     .filter((e) => SIBLING_TYPES.includes(e.type))

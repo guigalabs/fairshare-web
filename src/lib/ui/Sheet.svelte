@@ -61,7 +61,7 @@
   .scrim {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(22, 41, 31, 0.45);
     z-index: 49;
   }
   .sheet {
@@ -69,8 +69,8 @@
     z-index: 50;
     background: var(--color-bg-elevated);
     color: var(--color-text);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+    border: 2px solid var(--color-edge);
+    box-shadow: var(--shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -99,7 +99,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-edge);
   }
   .sheet-title {
     font-size: 1.125rem;

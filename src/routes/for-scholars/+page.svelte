@@ -8,61 +8,61 @@
 
   const CONTENT = {
     en: {
-      kicker: "For Scholars & Madrassas",
-      title: "For scholars, imams, and madrassas",
-      lede: "A teaching, mediation, and reference tool for those answering inheritance questions in classrooms, mosques, and consultations.",
+      kicker: "For scholars and madrassas",
+      title: "FairShare for scholars, imams and madrassas",
+      lede: "For people who answer inheritance questions in class, at the mosque or in private consultations. Use it to teach, to help settle a disagreement, or to check an answer.",
       metaDescription:
-        "FairShare for scholars, imams, and madrassas teaching Fara'id. Side-by-side madhab comparison, full Quranic citations, and a walkthrough that shows the reasoning.",
-      body: `<h2>How it gets used</h2>
+        "How scholars, imams and madrassas can use FairShare to teach Fara'id: the madhabs compared side by side, the Quranic verse behind each share, and a step-by-step walkthrough of the reasoning.",
+      body: `<h2>How people use it</h2>
 <ul>
-  <li><strong>Teaching Fara'id.</strong> Walk students through any family scenario and let the step-by-step explanation show how each share is derived: fixed shares first, then 'awl or radd, then residue.</li>
-  <li><strong>Public Q&A.</strong> When a congregant asks "what's the share of two daughters and a wife?" you can run the answer in seconds and have the verse reference at hand.</li>
-  <li><strong>Mediation and dispute work.</strong> When families disagree on which madhab applies, the side-by-side compare view shows the difference plainly without you having to hand-compute four parallel scenarios.</li>
+  <li><strong>Teaching Fara'id.</strong> Set up any family and let students follow the step-by-step explanation of each share: the fixed shares first, then 'awl or radd, then the residue.</li>
+  <li><strong>Answering questions.</strong> When someone asks after prayer "what do two daughters and a wife get?", you can work it out in seconds with the verse reference in front of you.</li>
+  <li><strong>Mediating disputes.</strong> When a family disagrees about which madhab applies, the compare view shows exactly where the schools differ. You don't have to work out four scenarios by hand.</li>
 </ul>
 
 <h2>What's included</h2>
 <ul>
-  <li><strong>Five madhabs side by side.</strong> General, Hanafi, Maliki, Shafi'i, and Hanbali rulings rendered as columns for the same family. The named edge cases (Umariatan, Musharakah, Grandfather-with-siblings) are surfaced where they apply.</li>
-  <li><strong>Quranic citations.</strong> Every fixed share is linked to the verse in Surah An-Nisa that prescribes it (4:11, 4:12, 4:176).</li>
-  <li><strong>Plain-language summary.</strong> Each result includes a paragraph explaining the outcome to a non-technical audience, which helps when explaining to a grieving family.</li>
-  <li><strong>Branded PDFs.</strong> If you teach at a madrassa or run a fatwa service, your logo, letterhead, and disclaimer go on every export.</li>
-  <li><strong>Bilingual EN/AR.</strong> Full RTL, with the Arabic side rendered in Noto Naskh.</li>
+  <li><strong>Five columns for one family.</strong> General, Hanafi, Maliki, Shafi'i and Hanbali results sit next to each other. Named edge cases (Umariatan, Musharakah, the grandfather with siblings) are flagged where they apply.</li>
+  <li><strong>Quranic citations.</strong> Every fixed share links to the verse in Surah An-Nisa that sets it (4:11, 4:12, 4:176).</li>
+  <li><strong>A plain-language summary.</strong> Each result comes with a short paragraph that explains the outcome without jargon. It helps when you're talking with a grieving family.</li>
+  <li><strong>PDFs with your name on them.</strong> If you teach at a madrassa or run a fatwa service, your logo, letterhead and disclaimer go on every export.</li>
+  <li><strong>English and Arabic.</strong> Full right-to-left support, with Arabic set in Noto Naskh.</li>
 </ul>
 
 <h2>The engine</h2>
-<p>FairShare's calculator is a TypeScript port of the Swift package that powers the iOS app. It uses BigInt-backed exact fractions, runs entirely in your browser, and is tested against a corpus of classical scenarios, including all the named edge cases. The methodology pages walk through each madhab's rulings in detail.</p>
+<p>The calculator is a TypeScript port of the Swift package behind the iOS app. It uses exact fractions (BigInt), runs entirely in your browser, and is tested against a set of classical cases that includes all the named edge cases. The methodology pages go through each madhab's rulings in detail.</p>
 
-<h2>Who's it for</h2>
-<p>Imams, mufti consultants, scholars working on inheritance questions, and madrassas teaching Fara'id. Institutional pricing is available; contact us directly for madrassa licenses.</p>`,
+<h2>Who it's for</h2>
+<p>Imams, muftis who take consultations, scholars who work on inheritance questions, and madrassas that teach Fara'id. We offer institutional pricing, so get in touch if you need licenses for a madrassa.</p>`,
       cta: { primary: "See pricing", secondary: "Read the methodology" },
     },
     ar: {
       kicker: "للعلماء والمدارس الشرعية",
-      title: "للعلماء والأئمّة والمدارس الشرعية",
-      lede: "أداة للتدريس والتحكيم والمراجعة لمن يجيبون عن مسائل الميراث في الفصول والمساجد والاستشارات.",
+      title: "فيرشير للعلماء والأئمّة والمدارس الشرعية",
+      lede: "لمن يجيب عن مسائل الميراث في الدرس أو في المسجد أو في الاستشارات الخاصة. استخدمه في التدريس، أو للمساعدة في فضّ خلاف، أو للتحقّق من جواب.",
       metaDescription:
-        "فيرشير للعلماء والأئمّة والمدارس الشرعية الذين يدرّسون الفرائض. مقارنة المذاهب جنبًا إلى جنب، إحالات قرآنية كاملة، وشرح خطوة بخطوة يُظهر منطق الحكم.",
+        "كيف يستخدم العلماء والأئمّة والمدارس الشرعية فيرشير في تدريس الفرائض: مقارنة بين نتائج المذاهب، والآية التي يستند إليها كل نصيب، وشرح للحساب خطوة بخطوة.",
       body: `<h2>كيف يُستخدم</h2>
 <ul>
-  <li><strong>تدريس الفرائض.</strong> امشِ مع الطلاب عبر أي مسألة عائلية ودَع الشرح خطوة بخطوة يُبيّن طريقة استنباط كل نصيب: الفروض المقدّرة أولًا، ثم العَوْل أو الرَّد، ثم الباقي.</li>
-  <li><strong>الأسئلة العامة.</strong> عندما يسأل أحد المصلّين "ما نصيب بنتين وزوجة؟" يمكنك الحصول على الجواب في ثوانٍ مع الإحالة إلى الآية.</li>
-  <li><strong>التحكيم وفضّ النزاعات.</strong> حين تختلف العائلات على المذهب الذي يُطبَّق، تُظهر شاشة المقارنة الفرق بوضوح دون الحاجة إلى حساب أربعة سيناريوهات يدويًا.</li>
+  <li><strong>تدريس الفرائض.</strong> أدخل أي مسألة ودَع الطلاب يتابعون الشرح خطوة بخطوة لكل نصيب: الفروض المقدّرة أولًا، ثم العَوْل أو الرَّد، ثم الباقي.</li>
+  <li><strong>الإجابة عن الأسئلة.</strong> حين يسألك أحدهم بعد الصلاة "كم تأخذ البنتان والزوجة؟"، تحسب الجواب في ثوانٍ والآية أمامك.</li>
+  <li><strong>التحكيم في النزاعات.</strong> حين تختلف العائلة في المذهب الذي يُطبَّق، تُظهر شاشة المقارنة مواضع الاختلاف بين المذاهب بدقّة، فلا تضطر إلى حساب أربع مسائل يدويًا.</li>
 </ul>
 
-<h2>ما الذي يشمله</h2>
+<h2>ما الذي يتضمّنه</h2>
 <ul>
-  <li><strong>خمسة مذاهب جنبًا إلى جنب.</strong> أحكام العام والحنفي والمالكي والشافعي والحنبلي معروضة في أعمدة لنفس العائلة. تُبرَز الحالات الخاصة المسماة (العمريتان، المشتركة، الجد مع الإخوة) حيث تنطبق.</li>
-  <li><strong>الإحالات القرآنية.</strong> كل فرض ثابت مربوط بآية سورة النساء التي تنصّ عليه (4:11، 4:12، 4:176).</li>
-  <li><strong>ملخّص بكلمات بسيطة.</strong> تتضمّن كل نتيجة فقرة تشرح الحكم لعموم الناس، مما يفيد في الحديث مع عائلة فقدت عزيزًا.</li>
-  <li><strong>تقارير PDF بشعار المؤسسة.</strong> إن كنت تدرّس في مدرسة شرعية أو تُدير خدمة فتوى، يظهر شعارك ورأس الورق وإخلاء المسؤولية على كل تصدير.</li>
-  <li><strong>ثنائي اللغة عربي/إنجليزي.</strong> دعم كامل للكتابة من اليمين إلى اليسار، مع تقديم الجانب العربي بخط نوتو نسخ.</li>
+  <li><strong>خمسة أعمدة للعائلة نفسها.</strong> نتائج الرأي العام والحنفي والمالكي والشافعي والحنبلي متجاورة. وتنبّهك الحاسبة إلى الحالات الخاصة (العمريتان، المشتركة، الجد مع الإخوة) حين تنطبق.</li>
+  <li><strong>الإحالات القرآنية.</strong> كل فرض مقدّر مربوط بآية سورة النساء التي تنصّ عليه (4:11، 4:12، 4:176).</li>
+  <li><strong>ملخّص بلغة بسيطة.</strong> مع كل نتيجة فقرة قصيرة تشرحها دون مصطلحات فقهية، وهذا يفيد حين تتحدّث مع عائلة فقدت عزيزًا.</li>
+  <li><strong>تقارير PDF باسم مؤسستك.</strong> إن كنت تدرّس في مدرسة شرعية أو تدير خدمة فتوى، يظهر شعارك ورأس الورق وإخلاء المسؤولية في كل ملف تصدّره.</li>
+  <li><strong>العربية والإنجليزية.</strong> دعم كامل للكتابة من اليمين إلى اليسار، والنص العربي بخط نوتو نسخ.</li>
 </ul>
 
 <h2>المحرّك</h2>
-<p>حاسبة فيرشير نسخة TypeScript من حزمة Swift التي تشغّل تطبيق iOS. تستخدم كسورًا دقيقة مدعومة بـ BigInt، وتعمل داخل متصفّحك بالكامل، ومختبَرة على ذخيرة من السيناريوهات الكلاسيكية تشمل جميع الحالات الخاصة المسماة. تُفصّل صفحات المنهجية أحكام كل مذهب.</p>
+<p>حاسبة فيرشير نسخة TypeScript من حزمة Swift التي يعمل بها تطبيق iOS. تستخدم كسورًا دقيقة (عبر BigInt)، وتعمل داخل متصفّحك بالكامل، ونختبرها على مجموعة من المسائل الكلاسيكية تشمل كل الحالات الخاصة المعروفة. وتشرح صفحات المنهجية أحكام كل مذهب بالتفصيل.</p>
 
-<h2>لمن هذا الاشتراك</h2>
-<p>الأئمّة والمستشارون والعلماء العاملون في مسائل الميراث، والمدارس الشرعية التي تدرّس الفرائض. تتوفّر تسعيرة مؤسسية؛ تواصل معنا مباشرة بشأن تراخيص المدارس.</p>`,
+<h2>لمن هو</h2>
+<p>للأئمّة، والمفتين الذين يستقبلون الاستفتاءات، والعلماء المشتغلين بمسائل الميراث، والمدارس الشرعية التي تدرّس الفرائض. لدينا تسعير مؤسسي، فتواصل معنا إن احتجت إلى تراخيص لمدرستك.</p>`,
       cta: { primary: "اطلع على الأسعار", secondary: "اقرأ المنهجية" },
     },
   } as const;

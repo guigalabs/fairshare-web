@@ -45,8 +45,9 @@
     align-items: center;
     min-height: 2.25rem;
     padding: 0 0.5rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
     color: var(--color-text-muted);
     cursor: pointer;
   }
@@ -64,9 +65,15 @@
   .seg-option--active {
     color: var(--color-text);
     font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
   .seg-option span[lang="ar"] {
     font-family: var(--font-arabic);
+    font-size: 0.9375rem;
+    letter-spacing: 0;
   }
   .seg-option:has(input:focus-visible) {
     outline: 2px solid var(--color-accent);

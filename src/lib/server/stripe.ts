@@ -15,7 +15,7 @@ const STRIPE_API_BASE = "https://api.stripe.com/v1";
  *
  * Header `Stripe-Signature` is comma-separated `t=<unix>,v1=<hex>,v0=<old>`.
  * The signed payload is `${t}.${rawBody}`, HMAC-SHA256 with the webhook
- * signing secret. Stripe rotates by appending v1 entries — we accept the
+ * signing secret. Stripe rotates by appending v1 entries, we accept the
  * payload if any v1 matches.
  *
  * Pure: no fetch / DB. Tested directly.
@@ -117,7 +117,7 @@ interface StripeSubscription {
 }
 
 interface StripeWebhook {
-  /** `evt_*` — unique per delivered event. Used for idempotency. */
+  /** `evt_*`, unique per delivered event. Used for idempotency. */
   id: string;
   /** Unix seconds the event was created at Stripe. Used to drop stale replays. */
   created: number;

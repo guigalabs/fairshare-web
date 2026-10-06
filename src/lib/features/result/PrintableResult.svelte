@@ -9,9 +9,6 @@
 
   const sentences = $derived(generatePlainLanguage(result, inputCase.subjectGender));
 
-  const subject = $derived(
-    inputCase.subjectGender === "male" ? t("result.subject.male") : t("result.subject.female"),
-  );
   const generated = $derived(new Date().toLocaleString(i18n.current));
 </script>
 
@@ -40,15 +37,16 @@
 
   <section class="title">
     <h1>
-      {t("result.heirsHeading", {
-        gender: subject,
-        madhhab: t(`madhhab.${inputCase.madhhab}.name`),
-      })}
+      {inputCase.subjectGender === "male" ? t("result.heading.male") : t("result.heading.female")}
     </h1>
     <p class="subtitle">
-      {inputCase.heirs.length === 1
-        ? t("result.heirsCount.one", { count: inputCase.heirs.length })
-        : t("result.heirsCount.other", { count: inputCase.heirs.length })}
+      {t("result.meta", {
+        madhhab: t(`madhhab.${inputCase.madhhab}.name`),
+        heirs:
+          inputCase.heirs.length === 1
+            ? t("result.heirsCount.one", { count: 1 })
+            : t("result.heirsCount.other", { count: inputCase.heirs.length }),
+      })}
     </p>
   </section>
 

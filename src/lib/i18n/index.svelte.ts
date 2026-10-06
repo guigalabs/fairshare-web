@@ -1,4 +1,4 @@
-// Lightweight i18n. Single bundle of EN + AR loaded statically — no
+// Lightweight i18n. Single bundle of EN + AR loaded statically, no
 // dynamic import gymnastics for two locales.
 //
 // Locale is URL-driven: "/x" is English (canonical), "/ar/x" is Arabic.
@@ -30,7 +30,7 @@ class I18n {
   }
 
   /**
-   * Look up a translation. Falls back to the key itself when missing — makes
+   * Look up a translation. Falls back to the key itself when missing, makes
    * untranslated strings visible during development. Supports {placeholder}
    * substitution.
    */

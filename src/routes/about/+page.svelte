@@ -19,22 +19,22 @@
       title: "FairShare",
       pageTitle: "About FairShare",
       metaDescription:
-        "Offline-first Islamic inheritance calculator from Guiga Labs. Five madhabs side by side, every share linked to its Quranic source. No accounts, no tracking.",
-      body: `<p>FairShare is a free, offline-first calculator for Islamic inheritance (<em>Fara'id</em>), built by <a href="https://guigalabs.com">Guiga Labs</a>. It's available as a web app at <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> and as a native iOS app.</p>
+        "A free Islamic inheritance calculator from Guiga Labs. It works offline, compares the four Sunni schools side by side and links every share to the verse behind it.",
+      body: `<p>FairShare is a free calculator for Islamic inheritance (<em>Fara'id</em>), made by <a href="https://guigalabs.com">Guiga Labs</a>. You can use it on the web at <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> or as an iOS app, and it works offline.</p>
 
-<h2>Why we built it</h2>
-<p>Islamic inheritance is one of the most precisely specified legal systems in the Quran. More verses are devoted to it than to prayer, fasting, or zakat. But existing calculators either silently follow a single school of thought, fail on well-known edge cases (Awl, Radd, Umariatan), or hide the reasoning behind opaque numbers.</p>
-<p>FairShare exists to do two things at once: produce the <em>right</em> answer for each of the five Sunni schools (General, Hanafi, Maliki, Shafi'i, Hanbali), and <em>show its work</em>. Every share is linked to the Quranic verse that prescribes it.</p>
+<h2>Why we made it</h2>
+<p>The Quran spells out inheritance in more detail than almost any other area of law. More verses deal with it than with prayer, fasting or zakat. Yet most calculators we tried picked one school of thought without saying so, got the well-known edge cases wrong (Awl, Radd, Umariatan), or handed back numbers with no explanation.</p>
+<p>FairShare tries to fix both problems. It gives the answer under each of the four Sunni schools (Hanafi, Maliki, Shafi'i, Hanbali) plus a General majority view, and it shows how it got there. Every share links to the Quranic verse that sets it.</p>
 
 <h2>How the calculator works</h2>
-<p>Every calculation runs entirely in your browser. The inheritance engine is a pure TypeScript port of the Swift package that powers the iOS app, with BigInt-backed exact fractions to guarantee parity with the iOS calculations. We test against 28+ classical scenarios, including the named edge cases, to catch regressions.</p>
-<p>Saved calculations live in your browser's IndexedDB. Nothing is uploaded anywhere. There are no accounts, no analytics SDKs, no advertising. The only outbound network request FairShare ever makes is downloading the page itself.</p>
+<p>The math runs in your browser. The engine is a TypeScript port of the Swift package behind the iOS app, and it uses exact fractions (BigInt under the hood) so the web and iOS results always match. We test it against more than two dozen classical cases, including the named edge cases, so we notice if something breaks.</p>
+<p>Calculations you save in the free calculator stay in your browser's IndexedDB and aren't uploaded. You don't need an account to use it, and there are no analytics SDKs or ads. Once the page has loaded, the calculator doesn't talk to a server. FairShare Pro, the paid workspace for attorneys, works differently: it stores your cases in your account.</p>
 
-<h2>The team</h2>
-<p>FairShare is built by <strong>Mohammed Guiga</strong>, a software engineer based in California. The project is open to contributions and feedback. For press kits, see <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.</p>
+<h2>Who makes it</h2>
+<p>FairShare is made by <strong>Mohammed Guiga</strong>, a software engineer in California. Feedback and contributions are welcome. Press materials are at <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.</p>
 
-<h2>Important caveat</h2>
-<p>FairShare is an educational tool, not a religious or legal authority. Real estate distributions involve facts (debts, wasiyyah, jurisdictional law) that no calculator can capture. Please consult a qualified mufti and a licensed attorney for any actual distribution. See the <a href="/disclaimer">full disclaimer</a> for details.</p>`,
+<h2>Before you use it on an actual estate</h2>
+<p>FairShare is a learning tool. It isn't a religious or legal authority. Dividing an actual estate depends on things a calculator can't know, like debts, bequests (wasiyyah) and local law. For a real distribution, please talk to a qualified mufti and a licensed attorney. The <a href="/disclaimer">disclaimer</a> has the details.</p>`,
       cta: { primary: "Try the calculator", secondary: "Read the methodology" },
     },
     ar: {
@@ -42,22 +42,22 @@
       title: "فيرشير",
       pageTitle: "عن فيرشير",
       metaDescription:
-        "فيرشير حاسبة ميراث إسلامي تعمل دون اتصال، من غيغا لابز. خمسة مذاهب جنبًا إلى جنب، كل نصيب مربوط بمصدره القرآني، بدون حسابات، بدون تتبع.",
-      body: `<p>فيرشير حاسبة مجانية للميراث الإسلامي (<em>الفرائض</em>) تعمل دون اتصال، طوّرتها <a href="https://guigalabs.com">غيغا لابز</a>. متوفّرة كتطبيق ويب على <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> وكتطبيق أصلي على iOS.</p>
+        "فيرشير حاسبة مجانية للميراث الإسلامي من غيغا لابز تعمل دون اتصال. تعرض نتائج المذاهب السنية الأربعة متجاورة، وتربط كل نصيب بالآية التي تنص عليه.",
+      body: `<p>فيرشير حاسبة مجانية للميراث الإسلامي (<em>الفرائض</em>) من <a href="https://guigalabs.com">غيغا لابز</a>. يمكنك استخدامها على الويب في <a href="https://fairshare.guigalabs.com">fairshare.guigalabs.com</a> أو تطبيقًا على iOS، وهي تعمل دون اتصال بالإنترنت.</p>
 
-<h2>لماذا بنيناها</h2>
-<p>الميراث الإسلامي من أكثر الأنظمة القانونية تفصيلًا في القرآن، بل خُصّصت له آيات أكثر مما خُصّص للصلاة أو الصيام أو الزكاة. ومع ذلك فإن الحاسبات القائمة إما تتّبع مذهبًا واحدًا دون توضيح، أو تفشل في الحالات الخاصة المعروفة (العَوْل، الرَّد، العمريتان)، أو تخفي المنطق وراء أرقام مبهمة.</p>
-<p>وُجدت فيرشير لتفعل أمرين معًا: تُنتج النتيجة <em>الصحيحة</em> لكل من المذاهب السنية الخمسة (العام، الحنفي، المالكي، الشافعي، الحنبلي)، و<em>تُظهر طريقة حسابها</em>. كل نصيب مربوط بالآية القرآنية التي تنصّ عليه.</p>
+<h2>لماذا صنعناها</h2>
+<p>فصّل القرآن أحكام الميراث تفصيلًا قلّ أن نجده في باب آخر، وآياته أكثر من آيات الصلاة أو الصيام أو الزكاة. ومع ذلك وجدنا أن أغلب الحاسبات تتّبع مذهبًا واحدًا دون أن تذكر ذلك، أو تخطئ في الحالات المعروفة (العَوْل، الرَّد، العمريتان)، أو تعطيك أرقامًا بلا شرح.</p>
+<p>تحاول فيرشير معالجة الأمرين. فهي تعطيك الجواب على كل مذهب من المذاهب السنية الأربعة (الحنفي، المالكي، الشافعي، الحنبلي) وعلى رأي الجمهور العام، وتشرح كيف وصلت إليه. وكل نصيب مربوط بالآية التي تنصّ عليه.</p>
 
 <h2>كيف تعمل الحاسبة</h2>
-<p>تتم كل عملية حساب داخل متصفّحك بالكامل. محرّك الميراث هو نسخة TypeScript خالصة من حزمة Swift التي تشغّل تطبيق iOS، مع كسور دقيقة مدعومة بـ BigInt لضمان التطابق مع حسابات iOS. نختبر النظام على أكثر من 28 سيناريو كلاسيكيًا تشمل الحالات الخاصة المسماة، حتى نرصد أي انحراف.</p>
-<p>تُحفظ الحسابات في قاعدة بيانات المتصفح (IndexedDB). لا يُرفع أي شيء إلى أي خادم. لا توجد حسابات، ولا أدوات تحليل، ولا إعلانات. الطلب الوحيد الذي يصدر عن فيرشير إلى الإنترنت هو تنزيل الصفحة نفسها.</p>
+<p>يجري الحساب كله داخل متصفّحك. المحرّك نسخة TypeScript من حزمة Swift التي يعمل بها تطبيق iOS، ويستخدم كسورًا دقيقة (عبر BigInt) حتى تتطابق نتائج الويب مع نتائج iOS دائمًا. نختبره على أكثر من عشرين مسألة كلاسيكية، منها الحالات الخاصة المعروفة بأسمائها، لنكتشف أي خلل فور حدوثه.</p>
+<p>ما تحفظه من حسابات في الحاسبة المجانية يبقى في قاعدة بيانات متصفّحك (IndexedDB) ولا يُرفع إلى أي خادم. لا تحتاج إلى إنشاء حساب لاستخدامها، ولا توجد أدوات تحليل ولا إعلانات. وبعد تحميل الصفحة لا تتصل الحاسبة بأي خادم. أما فيرشير برو، وهي مساحة العمل المدفوعة للمحامين، فتحفظ ملفاتك في حسابك.</p>
 
-<h2>الفريق</h2>
-<p>طوّر فيرشير <strong>محمد قيقة</strong>، مهندس برمجيات مقيم في كاليفورنيا. المشروع مفتوح للمساهمات والملاحظات. للحصول على المواد الإعلامية، انظر <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.</p>
+<h2>من يطوّرها</h2>
+<p>يطوّر فيرشير <strong>محمد قيقة</strong>، مهندس برمجيات يقيم في كاليفورنيا. نرحّب بالملاحظات والمساهمات. المواد الإعلامية متاحة على <a href="https://guigalabs.com/fairshare/press">guigalabs.com/fairshare/press</a>.</p>
 
-<h2>تحفّظ مهم</h2>
-<p>فيرشير أداة تعليمية لا مرجع شرعي ولا قانوني. تتضمّن قسمة التركات الفعلية وقائع (ديون، وصايا، قانون محلي) لا تستطيع أي حاسبة الإحاطة بها. يرجى استشارة مفتٍ مؤهّل ومحامٍ مرخّص قبل تطبيق أي قسمة فعلية. للمزيد، انظر <a href="/ar/disclaimer">إخلاء المسؤولية الكامل</a>.</p>`,
+<h2>قبل أن تستخدمها في تركة فعلية</h2>
+<p>فيرشير أداة للتعلّم، وليست مرجعًا شرعيًا ولا قانونيًا. قسمة التركة الفعلية تتوقّف على أمور لا تعرفها الحاسبة، كالديون والوصايا والقانون المحلي. لأي قسمة حقيقية، استشر مفتيًا مؤهّلًا ومحاميًا مرخّصًا. التفاصيل في <a href="/ar/disclaimer">إخلاء المسؤولية</a>.</p>`,
       cta: { primary: "جرّب الحاسبة", secondary: "اقرأ المنهجية" },
     },
   } as const;
@@ -66,7 +66,7 @@
 </script>
 
 <svelte:head>
-  <title>{content.pageTitle} · FairShare</title>
+  <title>{content.pageTitle} | FairShare</title>
   <meta name="description" content={content.metaDescription} />
   <link rel="canonical" href={pageUrl(page.url.pathname)} />
   {@html serialiseJsonLd(maintainerSchema)}

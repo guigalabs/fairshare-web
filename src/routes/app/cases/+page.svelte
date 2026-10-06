@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-  <title>{t("app.cases.title")} · FairShare Pro</title>
+  <title>{t("app.cases.title")} | FairShare Pro</title>
 </svelte:head>
 
 {#if !data.isPro}
@@ -67,8 +67,8 @@
             <span class="case-name">{c.deceasedName}</span>
             <span class="case-meta">
               {t(`madhhab.${c.madhhab}.name`)}
-              {#if c.dateOfDeath}· {t("app.cases.dod")} {c.dateOfDeath}{/if}
-              {#if c.jurisdiction}· {c.jurisdiction}{/if}
+              {#if c.dateOfDeath}, {t("app.cases.dod")} {c.dateOfDeath}{/if}
+              {#if c.jurisdiction}, {c.jurisdiction}{/if}
             </span>
           </a>
         </li>

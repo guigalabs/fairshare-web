@@ -135,7 +135,7 @@ function makeFakeDb(existing: { id: string; lastEventAt?: number | null } | null
   return { fakeDb, captured };
 }
 
-describe("applySubscriptionEvent — current_period_end resolution", () => {
+describe("applySubscriptionEvent, current_period_end resolution", () => {
   const baseEvent = {
     id: "evt_test_1",
     type: "customer.subscription.updated",
@@ -217,7 +217,7 @@ describe("applySubscriptionEvent — current_period_end resolution", () => {
   });
 });
 
-describe("applySubscriptionEvent — out-of-order event guard", () => {
+describe("applySubscriptionEvent, out-of-order event guard", () => {
   const evt = (id: string, created: number, status = "active") => ({
     id,
     type: "customer.subscription.updated",

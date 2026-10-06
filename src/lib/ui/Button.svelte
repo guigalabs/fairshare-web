@@ -68,29 +68,36 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    white-space: nowrap;
     font-family: var(--font-sans);
-    font-weight: 500;
-    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: 2px solid var(--color-edge);
+    border-radius: 0;
+    box-shadow: var(--shadow-sm);
     transition:
-      background-color 0.12s,
-      color 0.12s,
-      border-color 0.12s,
-      box-shadow 0.12s;
+      transform 90ms ease,
+      box-shadow 90ms ease,
+      background-color 90ms ease;
     text-decoration: none;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
-    border: 1px solid transparent;
     line-height: 1.2;
     -webkit-user-select: none;
     user-select: none;
   }
-  .btn:active {
-    box-shadow: inset 0 1px 2px rgba(22, 41, 31, 0.2);
+  .btn:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: var(--shadow);
+  }
+  /* The press: the button travels into its own shadow. */
+  .btn:active:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--color-edge);
   }
   .btn:disabled,
   .btn[aria-busy="true"] {
-    opacity: 0.55;
+    opacity: 0.45;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -100,15 +107,15 @@
 
   /* sizes */
   .btn--sm {
-    padding: 0.4375rem 0.75rem;
+    padding: 0.5rem 0.875rem;
     font-size: 0.875rem;
   }
   .btn--md {
-    padding: 0.625rem 1.125rem;
+    padding: 0.6875rem 1.25rem;
     font-size: 0.9375rem;
   }
   .btn--lg {
-    padding: 0.8125rem 1.375rem;
+    padding: 0.875rem 1.625rem;
     font-size: 1rem;
   }
 
@@ -117,30 +124,32 @@
     background: var(--color-accent);
     color: #fff;
   }
-  .btn--primary:hover {
-    background: var(--color-accent-hover);
-  }
   .btn--secondary {
     background: var(--color-bg);
     color: var(--color-text);
-    border-color: var(--color-border-strong);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-size: 0.8125rem;
   }
-  .btn--secondary:hover {
-    border-color: var(--color-text);
+  :global(html[dir="rtl"]) .btn--secondary {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+    font-size: 0.9375rem;
   }
   .btn--ghost {
     background: transparent;
     color: var(--color-text);
+    border-color: transparent;
+    box-shadow: none;
   }
-  .btn--ghost:hover {
-    background: var(--color-wash);
+  .btn--ghost:hover:not(:disabled) {
+    border-color: var(--color-edge);
+    box-shadow: var(--shadow-sm);
   }
   .btn--destructive {
     background: var(--color-error);
     color: #fff;
-  }
-  .btn--destructive:hover {
-    background: var(--color-error-hover);
   }
 
   .btn-spinner {

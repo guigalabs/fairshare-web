@@ -53,7 +53,7 @@
 </script>
 
 <svelte:head>
-  <title>{entryTitle(entry)} · FairShare</title>
+  <title>{entryTitle(entry)} | FairShare</title>
   <meta name="description" content={entryDescription(entry)} />
   <link rel="canonical" href={url} />
   <meta property="og:title" content={entryTitle(entry)} />
@@ -75,8 +75,7 @@
     <p class="kicker">{groupTitle(entry.group)}</p>
     <h1>{entryTitle(entry)}</h1>
     <p class="meta">
-      <span>{t("methodology.minRead", { count: entry.readingMinutes })}</span>
-      <span aria-hidden="true">·</span>
+      <span>{t("methodology.minRead", { count: entry.readingMinutes })}.</span>
       <time datetime={PUBLISHED_ISO}
         >{t("methodology.lastUpdated", { date: lastUpdatedDisplay })}</time
       >

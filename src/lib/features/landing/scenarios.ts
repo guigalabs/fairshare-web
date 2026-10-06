@@ -13,7 +13,7 @@ export interface Scenario {
   subjectGender: Gender;
   madhhab: Madhhab;
   heirs: HeirEntry[];
-  /** Category used to pick the card tint — picks one heir group to lead the visual identity. */
+  /** Category used to pick the card tint, picks one heir group to lead the visual identity. */
   tintCategory: HeirCategory | "accent";
 }
 

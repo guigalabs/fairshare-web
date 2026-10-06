@@ -10,7 +10,7 @@
   .input {
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border-strong);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     color: var(--color-text);
@@ -18,7 +18,6 @@
   }
   .input:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+    box-shadow: var(--shadow-accent);
   }
 </style>

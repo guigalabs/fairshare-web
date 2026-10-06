@@ -34,7 +34,8 @@
     border-radius: var(--radius-pill);
     font-size: 0.875rem;
     font-weight: 500;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border: 2px solid var(--color-edge);
+    box-shadow: var(--shadow-sm);
     max-width: calc(100% - 2rem);
   }
   .toast--success {

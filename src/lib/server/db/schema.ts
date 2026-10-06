@@ -4,13 +4,13 @@ const genId = () => crypto.randomUUID();
 const now = () => new Date();
 
 // Dates and timestamps:
-//   Full timestamps: `integer({ mode: "timestamp_ms" })` — Unix epoch (ms),
+//   Full timestamps: `integer({ mode: "timestamp_ms" })`, Unix epoch (ms),
 //   drizzle marshals to/from JS Date.
 //   Date-only fields (e.g. dateOfDeath): plain `text` storing YYYY-MM-DD strings,
 //   matching what the app passes to input[type=date].
 // Money:
 //   stored as decimal-safe TEXT (e.g. "487000.00"). The app already parses
-//   via parseCents() / formatCents() — same shape as the previous Postgres
+//   via parseCents() / formatCents(), same shape as the previous Postgres
 //   `numeric(18,2)` semantics, just without the engine-side type check.
 // JSON:
 //   text({ mode: "json" }). SQLite has JSON1 built in if we ever need to
@@ -160,7 +160,7 @@ export const waitlist = sqliteTable(
     referrer: text("referrer"),
     createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull().$defaultFn(now),
   },
-  // One row per (email, source) pair — a user can sign up for both Pro and
+  // One row per (email, source) pair, a user can sign up for both Pro and
   // iOS independently, but not duplicate themselves on the same list.
   (t) => [unique("waitlist_email_source_uniq").on(t.email, t.source)],
 );
