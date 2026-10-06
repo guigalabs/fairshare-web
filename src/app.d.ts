@@ -21,6 +21,7 @@ declare global {
         AUTH_SECRET: string;
         RESEND_API_KEY: string;
         AUTH_EMAIL_FROM: string;
+        CF_EMAIL_SEND_TOKEN?: string;
         GOOGLE_CLIENT_ID: string;
         GOOGLE_CLIENT_SECRET: string;
         STRIPE_SECRET_KEY: string;
@@ -29,6 +30,7 @@ declare global {
         STRIPE_PRICE_ID_MONTHLY: string;
         STRIPE_PRICE_ID_ANNUAL: string;
       };
+      context?: ExecutionContext;
     }
   }
 }

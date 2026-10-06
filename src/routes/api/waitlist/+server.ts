@@ -1,6 +1,7 @@
 import { json, type RequestHandler } from "@sveltejs/kit";
 import { makeDb } from "$lib/server/db/client";
 import { waitlist } from "$lib/server/db/schema";
+import { sendWaitlistAlert } from "$lib/server/notify";
 
 export const prerender = false;
 
@@ -37,10 +38,21 @@ export const POST: RequestHandler = async ({ request, platform }) => {
   // ok:true so the UI shows the "Thanks" state regardless of whether this is
   // a first-time signup or a re-submit.
   const db = makeDb(d1);
-  await db
+  const inserted = await db
     .insert(waitlist)
     .values({ email, source, referrer })
-    .onConflictDoNothing({ target: [waitlist.email, waitlist.source] });
+    .onConflictDoNothing({ target: [waitlist.email, waitlist.source] })
+    .returning({ id: waitlist.id });
+
+  // Alert only on first-time signups, after the response is sent. A failed
+  // alert is logged and never fails the signup.
+  const token = platform?.env?.CF_EMAIL_SEND_TOKEN;
+  if (inserted.length > 0 && token) {
+    const alert = sendWaitlistAlert(token, { email, source, referrer }).catch((err) =>
+      console.error(err),
+    );
+    platform?.context?.waitUntil(alert);
+  }
 
   return json({ ok: true });
 };
