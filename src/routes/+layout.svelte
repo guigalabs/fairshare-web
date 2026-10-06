@@ -1,4 +1,12 @@
 <script lang="ts">
+  import "@fontsource-variable/source-serif-4/opsz.css";
+  import "@fontsource/ibm-plex-sans/400.css";
+  import "@fontsource/ibm-plex-sans/500.css";
+  import "@fontsource/ibm-plex-sans/600.css";
+  import "@fontsource/ibm-plex-sans-arabic/arabic-400.css";
+  import "@fontsource/ibm-plex-sans-arabic/arabic-500.css";
+  import "@fontsource/ibm-plex-sans-arabic/arabic-600.css";
+  import "@fontsource-variable/noto-naskh-arabic/index.css";
   import "../app.css";
   import TopNav from "$lib/components/TopNav.svelte";
   import SiteFooter from "$lib/components/SiteFooter.svelte";
@@ -56,7 +64,7 @@
     inset-inline-start: 0.5rem;
     top: 0.5rem;
     padding: 0.5rem 0.875rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-md);
     background: var(--color-accent);
     color: var(--color-bg);
     font-weight: 500;

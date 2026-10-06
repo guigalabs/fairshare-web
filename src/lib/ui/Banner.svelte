@@ -45,8 +45,11 @@
     color: var(--color-warning-text);
   }
   .banner--scholar {
-    border-color: var(--color-accent);
-    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg-elevated));
+    border-color: transparent;
+    border-inline-start: 3px solid var(--color-accent);
+    border-radius: 0;
+    background: var(--color-wash);
+    color: var(--color-text-secondary);
   }
   .banner-body {
     flex: 1;

@@ -67,12 +67,7 @@
 </svelte:head>
 
 <section class="container">
-  <ArticleHeader
-    align="center"
-    kicker={t("pricing.kicker")}
-    title={t("pricing.title")}
-    lede={t("pricing.lede")}
-  />
+  <ArticleHeader kicker={t("pricing.kicker")} title={t("pricing.title")} lede={t("pricing.lede")} />
 
   <Card>
     {#snippet children()}
@@ -164,17 +159,16 @@
   .plan {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.25rem;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .cadence {
     display: inline-flex;
-    padding: 0.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-bg-elevated);
+    padding: 0.1875rem;
+    border-radius: var(--radius-md);
+    background: var(--color-wash);
   }
   .cadence-btn {
     padding: 0.5625rem 1rem;
@@ -183,7 +177,7 @@
     color: var(--color-text-secondary);
     background: transparent;
     border: none;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition:
       background 0.15s,
@@ -192,20 +186,20 @@
   .cadence-btn.active {
     background: var(--color-bg);
     color: var(--color-text);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 0 1px var(--color-border-strong);
   }
 
   .price {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: center;
     gap: 0.5rem;
   }
   .price-amount {
-    font-size: clamp(2.25rem, 6vw, 3.25rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-size: clamp(2.75rem, 6vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1;
     color: var(--color-text);
   }
   .price-unit {
@@ -214,7 +208,6 @@
   }
   .price-savings {
     width: 100%;
-    text-align: center;
     font-size: 0.8125rem;
     color: var(--color-accent);
     font-weight: 500;
@@ -226,9 +219,10 @@
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: 0.625rem 1.5rem;
     width: 100%;
-    max-width: 32rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
   }
   @media (min-width: 600px) {
     .features {
@@ -250,8 +244,8 @@
 
   .subscribe {
     width: 100%;
-    max-width: 18rem;
-    margin: 0.5rem 0 0.25rem;
+    max-width: 16rem;
+    margin: 0.5rem 0 0;
   }
   .comingSoon {
     font-size: 0.8125rem;
@@ -279,6 +273,5 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    justify-content: center;
   }
 </style>

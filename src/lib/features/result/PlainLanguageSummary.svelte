@@ -83,11 +83,9 @@
     background: transparent;
     border: 0;
     cursor: pointer;
-    color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
     text-align: start;
   }
   .header:hover {

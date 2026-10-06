@@ -45,7 +45,7 @@
 <style>
   .head h1 {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-text);
     margin-bottom: 1.5rem;
   }

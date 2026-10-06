@@ -112,11 +112,9 @@
     justify-content: center;
   }
   .rule {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent);
-    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
   }
   .verse {
     margin-top: 0.25rem;

@@ -156,8 +156,8 @@
   }
   .head h1 {
     font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--color-text);
   }
   .form {

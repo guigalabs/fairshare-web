@@ -23,7 +23,7 @@
   .prose :global(h2) {
     margin-top: 2.5rem;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--color-text);
   }

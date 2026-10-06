@@ -149,10 +149,8 @@
   }
   .tier-label {
     margin: 0 0 0.5rem;
-    font-size: 0.625rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: color-mix(in srgb, var(--tint) 85%, transparent);
     background: color-mix(in srgb, var(--tint) 8%, transparent);
     border: 0.75px solid color-mix(in srgb, var(--tint) 15%, transparent);

@@ -137,11 +137,9 @@
     background: var(--color-bg-elevated);
   }
   .row-legend {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
     padding: 0 0.25rem;
   }
   .row-main {

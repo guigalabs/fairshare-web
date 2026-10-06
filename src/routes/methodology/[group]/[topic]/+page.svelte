@@ -136,17 +136,15 @@
     max-width: 38rem;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
   .head h1 {
     margin-top: 0.5rem;
     font-size: clamp(1.625rem, 3.5vw, 2.25rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .meta {
     margin-top: 0.5rem;

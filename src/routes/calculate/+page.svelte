@@ -260,17 +260,15 @@
     margin-bottom: 1.5rem;
   }
   .kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-muted);
   }
   .head h1 {
     margin-top: 0.375rem;
     font-size: 1.875rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     line-height: 1.15;
   }
   .progress {
@@ -304,7 +302,7 @@
   }
   .madhhab-pill {
     padding: 0.4375rem 0.6875rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);
     color: var(--color-text-secondary);
@@ -318,7 +316,7 @@
   .madhhab-pill--active {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-bg);
+    color: #fff;
   }
 
   .summary {
@@ -330,7 +328,7 @@
   .chip {
     font-size: 0.8125rem;
     padding: 0.25rem 0.625rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     color: var(--color-text-secondary);
