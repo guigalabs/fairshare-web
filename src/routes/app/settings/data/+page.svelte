@@ -76,7 +76,7 @@
     color: var(--color-text);
   }
   .card {
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     padding: 1.25rem 1.5rem;
     background: var(--color-bg-elevated);

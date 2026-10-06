@@ -58,7 +58,7 @@
 
 <style>
   .walk {
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-lg);
     background: var(--color-bg-elevated);
     overflow: hidden;
@@ -125,7 +125,7 @@
   .blocked {
     margin: 0 1.25rem 1.25rem;
     padding: 0.75rem 1rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
   }

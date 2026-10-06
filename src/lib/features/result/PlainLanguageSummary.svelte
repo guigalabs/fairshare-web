@@ -68,8 +68,8 @@
 
 <style>
   .plain-language {
-    border: 1px solid var(--color-border);
-    border-radius: 14px;
+    border: 2px solid var(--color-edge);
+    border-radius: 0;
     background: var(--color-surface);
     overflow: hidden;
   }
@@ -146,7 +146,7 @@
     margin-top: 0.875rem;
     padding: 0.625rem 0.75rem;
     background: color-mix(in srgb, #d97706 8%, transparent);
-    border-radius: 10px;
+    border-radius: 0;
     color: var(--color-text-secondary);
     font-size: 0.8125rem;
     line-height: 1.45;

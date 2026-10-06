@@ -301,7 +301,7 @@
   .madhhab-pill {
     padding: 0.4375rem 0.6875rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     background: var(--color-bg-elevated);
     color: var(--color-text-secondary);
     font-size: 0.8125rem;
@@ -328,7 +328,7 @@
     padding: 0.25rem 0.625rem;
     border-radius: var(--radius-sm);
     background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     color: var(--color-text-secondary);
   }
 

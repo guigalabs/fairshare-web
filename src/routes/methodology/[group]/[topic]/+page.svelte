@@ -164,7 +164,7 @@
     padding: 0.75rem 1rem;
     border: 1px solid color-mix(in srgb, var(--color-warning, #d97706) 30%, transparent);
     background: color-mix(in srgb, var(--color-warning, #d97706) 8%, transparent);
-    border-radius: 0.5rem;
+    border-radius: 0;
     font-size: 0.875rem;
     color: var(--color-text-secondary);
   }

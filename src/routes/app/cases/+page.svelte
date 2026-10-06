@@ -104,7 +104,7 @@
   }
   .filters select {
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     color: var(--color-text);
@@ -122,7 +122,7 @@
     flex-direction: column;
     gap: 0.25rem;
     padding: 0.875rem 1rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg-elevated);
     text-decoration: none;

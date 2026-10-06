@@ -154,20 +154,26 @@
     letter-spacing: 0.04em;
     color: var(--color-text-muted);
   }
+  :global(html[dir="rtl"]) .caption {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+    font-size: 0.875rem;
+  }
   .tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.375rem;
     margin: 0.75rem 0 1.5rem;
   }
   .tab {
-    padding: 0.4375rem 0.75rem;
+    padding: 0.375rem 0.5625rem;
     border: 2px solid var(--color-edge);
     background: var(--color-bg);
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-text);
+    white-space: nowrap;
     cursor: pointer;
     transition:
       transform 90ms ease,

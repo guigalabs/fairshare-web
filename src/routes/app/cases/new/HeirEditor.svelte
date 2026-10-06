@@ -131,7 +131,7 @@
     gap: 0.75rem;
   }
   .row {
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     padding: 0.75rem 1rem;
     background: var(--color-bg-elevated);
@@ -151,7 +151,7 @@
   .row-main select,
   .row-main input[type="number"] {
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     background: var(--color-bg);
     color: var(--color-text);
@@ -159,7 +159,7 @@
   }
   .icon-btn {
     background: transparent;
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-edge);
     border-radius: var(--radius-md);
     padding: 0.5rem;
     cursor: pointer;

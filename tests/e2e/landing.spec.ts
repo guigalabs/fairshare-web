@@ -15,7 +15,7 @@ test("landing page surfaces a Pro CTA linking to /pricing", async ({ page }) => 
 
 test("hero ledger switches families and links into the calculator", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("tab", { name: /daughters only/i }).click();
+  await page.getByRole("tab", { name: /three daughters/i }).click();
   await expect(page.getByRole("tabpanel")).toContainText("'awl");
   const open = page.getByRole("link", { name: /open this family/i });
   await expect(open).toHaveAttribute("href", /^\/result\?case=/);
