@@ -49,3 +49,23 @@ export async function sendWaitlistAlert(
     throw new Error(`waitlist alert failed: ${res.status} ${await res.text()}`);
   }
 }
+
+/** Sends a sign-in code. Same Cloudflare Email Sending path as the waitlist alert. */
+export async function sendSignInCode(
+  token: string,
+  to: string,
+  email: { subject: string; text: string; html: string },
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const res = await fetcher(
+    `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/email/sending/send`,
+    {
+      method: "POST",
+      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+      body: JSON.stringify({ from: FROM, to, ...email }),
+    },
+  );
+  if (!res.ok) {
+    throw new Error(`sign-in code email failed: ${res.status} ${await res.text()}`);
+  }
+}

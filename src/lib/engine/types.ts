@@ -1,7 +1,7 @@
 // Domain types for the FairShare inheritance engine.
 //
-// 1:1 port of FairShareEngine/Sources/FairShareEngine/Types/*.swift. When the
-// Swift side changes, mirror it here and re-run the snapshot parity test.
+// Started as a 1:1 port of the retired iOS app's Swift engine. This file is now
+// the source of truth.
 
 export type Gender = "male" | "female";
 

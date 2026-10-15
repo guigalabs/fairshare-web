@@ -4,10 +4,9 @@ import { Fraction } from "./fraction";
 import { heirEntry, inheritanceCase } from "./types";
 import type { HeirShare } from "./result";
 
-// Curated regression set covering the classical Fara'id cases. Each
-// expectation comes from the canonical worked examples in the FairShareEngine
-// Swift test suite (FairShareEngineTests/) and must produce bit-identical
-// fractions on both sides, that's the parity contract.
+// Curated regression set covering the classical Fara'id cases. The
+// expectations came from the retired iOS engine's worked examples and pin the
+// exact fractions.
 
 function shareOf(shares: readonly HeirShare[], type: string): Fraction {
   const s = shares.find((x) => x.heirType === type);

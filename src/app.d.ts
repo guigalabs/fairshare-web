@@ -19,11 +19,7 @@ declare global {
       env: {
         DB: D1Database;
         AUTH_SECRET: string;
-        RESEND_API_KEY: string;
-        AUTH_EMAIL_FROM: string;
         CF_EMAIL_SEND_TOKEN?: string;
-        GOOGLE_CLIENT_ID: string;
-        GOOGLE_CLIENT_SECRET: string;
         STRIPE_SECRET_KEY: string;
         STRIPE_PUBLISHABLE_KEY: string;
         STRIPE_WEBHOOK_SECRET: string;

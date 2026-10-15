@@ -1,3 +1,4 @@
+import { building } from "$app/environment";
 import type { Handle } from "@sveltejs/kit";
 import { handle as authHandle } from "$lib/server/auth";
 import { localeFromPath } from "$lib/i18n/url";
@@ -18,6 +19,10 @@ const swapHtmlLang: Handle = ({ event, resolve }) => {
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
-  if (!event.platform?.env?.AUTH_SECRET) return swapHtmlLang({ event, resolve });
+  // Prerendered pages are public and must not touch secrets.
+  if (building) return swapHtmlLang({ event, resolve });
+  const env = event.platform?.env;
+  if (!env?.AUTH_SECRET) return swapHtmlLang({ event, resolve });
+
   return authHandle({ event, resolve: (e) => swapHtmlLang({ event: e, resolve }) });
 };

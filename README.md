@@ -1,7 +1,6 @@
 # fairshare-web
 
-Web port of [FairShare iOS](https://github.com/guigalabs/fairshare-ios) — an Islamic
-inheritance (Fara'id) calculator. Five madhabs, full Quranic citations, bilingual EN/AR
+An Islamic inheritance (Fara'id) calculator. Five madhabs, full Quranic citations, bilingual EN/AR
 with full RTL, family-tree visualization, PDF export. Free, offline-first, no accounts.
 
 Deployed at **https://fairshare.guigalabs.com**.
@@ -143,5 +142,4 @@ clean up once real Stripe webhooks start flowing.
 ## See also
 
 - Plan: `~/.claude/plans/twinkly-plotting-torvalds.md`
-- iOS source: `~/src/guigalabs/fairshare-ios`
-- Engine source-of-truth: `~/src/guigalabs/fairshare-ios/FairShareEngine/`
+- Engine source of truth: `src/lib/engine/`. It began as a port of the Swift engine from the iOS app, which was retired on 2026-10-15.
