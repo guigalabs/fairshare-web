@@ -24,8 +24,12 @@ export function buildSignInCodeEmail(args: { code: string; host: string }): Sign
 
 /** Six digits from a CSPRNG, zero-padded. */
 export function newSignInCode(): string {
-  const n = crypto.getRandomValues(new Uint32Array(1))[0] % 1_000_000;
-  return String(n).padStart(6, "0");
+  // Rejection sampling: 2^32 isn't a multiple of a million, so plain % would skew low codes.
+  const limit = 4_294_000_000;
+  const buf = new Uint32Array(1);
+  do crypto.getRandomValues(buf);
+  while (buf[0] >= limit);
+  return String(buf[0] % 1_000_000).padStart(6, "0");
 }
 
 export function isSignInCode(value: string): boolean {

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "6bf27478-8656-4453-95b5-4d68c7f74839",
+  "id": "2bbdbe32-0e2f-4497-aa72-62b3d5570725",
   "prevId": "cf4fe16f-f2ba-4ba4-9b4d-9d3ba45b7d83",
   "tables": {
     "account": {
@@ -554,10 +554,26 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": 0
         },
         "since": {
           "name": "since",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sends": {
+          "name": "sends",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "sends_since": {
+          "name": "sends_since",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,

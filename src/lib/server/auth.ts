@@ -6,6 +6,7 @@ import { makeDb } from "./db/client";
 import * as schema from "./db/schema";
 import { buildSignInCodeEmail, newSignInCode } from "./email";
 import { sendSignInCode } from "./notify";
+import { noteCodeSent } from "./signin-code";
 
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   const env = event.platform?.env;
@@ -37,6 +38,9 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
         generateVerificationToken: newSignInCode,
         sendVerificationRequest: async ({ identifier, token, url }) => {
           if (!env.CF_EMAIL_SEND_TOKEN) throw new Error("CF_EMAIL_SEND_TOKEN is not set");
+          if (!(await noteCodeSent(db, env.AUTH_SECRET, identifier, token))) {
+            throw new Error("Too many sign-in codes requested for this address");
+          }
           const email = buildSignInCodeEmail({ code: token, host: new URL(url).host });
           await sendSignInCode(env.CF_EMAIL_SEND_TOKEN, identifier, email);
         },

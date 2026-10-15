@@ -1,3 +1,4 @@
+import { isRedirect, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 import { signIn } from "$lib/server/auth";
 import { LOGIN_EMAIL_COOKIE, normalizeEmail } from "$lib/server/signin-code";
@@ -18,6 +19,13 @@ export const actions: Actions = {
         secure: event.url.protocol === "https:",
       });
     }
-    return signIn(event);
+    try {
+      return await signIn(event);
+    } catch (err) {
+      // A send refused for rate limits or a mail error gets the page's notice, not a 500.
+      if (isRedirect(err)) throw err;
+      console.error("sign-in code not sent", err);
+      redirect(303, "/login?error=EmailSignin");
+    }
   },
 };

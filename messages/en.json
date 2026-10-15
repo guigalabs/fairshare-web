@@ -286,6 +286,7 @@
   "login.emailLabel": "Email",
   "login.submit": "Email me a code",
   "login.legal": "By signing in you agree to the Terms and Privacy Policy.",
+  "login.sendFailed": "We couldn't send a code. If you asked for several already, wait an hour and try again.",
   "login.verify.kicker": "Sign in",
   "login.verify.title": "Enter your code",
   "login.verify.lede": "We sent a 6-digit code to {email}. It expires in 10 minutes.",

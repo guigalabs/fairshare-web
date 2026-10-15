@@ -5,7 +5,12 @@
   import { t } from "$lib/i18n/index.svelte";
 
   let emailSubmitting = $state(false);
-  const locked = $derived(page.url.searchParams.get("error") === "locked");
+  const notice = $derived(
+    {
+      locked: "login.locked",
+      EmailSignin: "login.sendFailed",
+    }[page.url.searchParams.get("error") ?? ""],
+  );
 
   function onEmailSubmit(e: SubmitEvent): void {
     if (emailSubmitting) {
@@ -24,8 +29,8 @@
 <section class="container">
   <ArticleHeader kicker={t("login.kicker")} title={t("login.title")} lede={t("login.lede")} />
 
-  {#if locked}
-    <Banner tone="warning">{t("login.locked")}</Banner>
+  {#if notice}
+    <Banner tone="warning">{t(notice)}</Banner>
   {/if}
 
   <form class="form" method="POST" onsubmit={onEmailSubmit}>
