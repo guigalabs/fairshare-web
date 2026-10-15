@@ -7,7 +7,6 @@
   let emailSubmitting = $state(false);
   const notice = $derived(
     {
-      locked: "login.locked",
       EmailSignin: "login.sendFailed",
     }[page.url.searchParams.get("error") ?? ""],
   );

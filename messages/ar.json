@@ -290,11 +290,10 @@
   "login.verify.kicker": "تسجيل الدخول",
   "login.verify.title": "أدخل الرمز",
   "login.verify.lede": "أرسلنا رمزًا من 6 أرقام إلى {email}. تنتهي صلاحيته خلال 10 دقائق.",
-  "login.locked": "عدد كبير من الرموز الخاطئة. انتظر 10 دقائق ثم اطلب رمزًا جديدًا.",
   "login.verify.ledeNoEmail": "ابدأ من جديد للحصول على رمز جديد.",
   "login.verify.codeLabel": "الرمز",
   "login.verify.submit": "تسجيل الدخول",
-  "login.verify.wrong": "الرمز غير صحيح. تحقق من أحدث رسالة وحاول مرة أخرى.",
+  "login.verify.wrong": "لم يعمل هذا الرمز. تحقق من أحدث رسالة، أو اطلب رمزًا جديدًا.",
   "login.verify.format": "الرمز مكوّن من 6 أرقام.",
   "login.verify.back": "استخدم بريدًا آخر",
 

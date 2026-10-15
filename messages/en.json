@@ -290,11 +290,10 @@
   "login.verify.kicker": "Sign in",
   "login.verify.title": "Enter your code",
   "login.verify.lede": "We sent a 6-digit code to {email}. It expires in 10 minutes.",
-  "login.locked": "Too many wrong codes. Wait 10 minutes, then ask for a new one.",
   "login.verify.ledeNoEmail": "Start again to get a new code.",
   "login.verify.codeLabel": "Code",
   "login.verify.submit": "Sign in",
-  "login.verify.wrong": "That code didn't match. Check the latest email and try again.",
+  "login.verify.wrong": "That code didn't work. Check the latest email, or ask for a new code.",
   "login.verify.format": "The code is 6 digits.",
   "login.verify.back": "Use a different email",
 

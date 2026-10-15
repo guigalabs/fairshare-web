@@ -8,11 +8,7 @@
   let submitting = $state(false);
 
   const error = $derived(
-    form?.error === "format"
-      ? "login.verify.format"
-      : data.error === "wrong"
-        ? "login.verify.wrong"
-        : null,
+    form?.error === "format" ? "login.verify.format" : data.error ? "login.verify.wrong" : null,
   );
 </script>
 

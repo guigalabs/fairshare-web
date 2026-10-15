@@ -1,11 +1,12 @@
-import { and, eq, gt, ne, sql } from "drizzle-orm";
+import { and, eq, ne, sql } from "drizzle-orm";
+import type { Adapter, VerificationToken } from "@auth/sveltekit/adapters";
 import type { makeDb } from "./db/client";
 import { loginAttempts, verificationTokens } from "./db/schema";
-import { isSignInCode } from "./email";
 
+/** Wrong guesses allowed per code. A new code resets the count. */
 export const MAX_FAILURES = 5;
-export const MAX_SENDS = 5;
-const WINDOW_MS = 10 * 60 * 1000;
+/** Code emails per address per hour. */
+export const MAX_SENDS = 10;
 const SEND_WINDOW_MS = 60 * 60 * 1000;
 
 type Db = ReturnType<typeof makeDb>;
@@ -19,69 +20,53 @@ export async function hashToken(token: string, secret: string): Promise<string> 
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export type CodeCheck = "ok" | "wrong" | "locked";
-
 /**
- * Runs before Auth.js sees the callback. The attempt is counted first, in one
- * atomic upsert, so parallel guesses can't all read the same count. Five
- * attempts per address per 10 minutes, then the pending codes are deleted.
+ * Wraps the adapter's token lookup, which is the one place Auth.js checks a
+ * code. Counting here means the limit sees exactly the email and token Auth.js
+ * sees, with no URL parsing of our own. Each attempt is counted first in one
+ * atomic upsert, so parallel guesses can't share a count. Only an exact,
+ * already-normalized email can match, so case tricks just open a counter that
+ * can never succeed.
  */
-export async function checkSignInCode(
-  db: Db,
-  secret: string,
-  email: string,
-  code: string,
-  now = Date.now(),
-): Promise<CodeCheck> {
-  const stale = now - WINDOW_MS;
-  const [row] = await db
-    .insert(loginAttempts)
-    .values({ identifier: email, failures: 1, since: now, sends: 0, sendsSince: now })
-    .onConflictDoUpdate({
-      target: loginAttempts.identifier,
-      set: {
-        failures: sql`CASE WHEN ${loginAttempts.since} < ${stale} THEN 1 ELSE ${loginAttempts.failures} + 1 END`,
-        since: sql`CASE WHEN ${loginAttempts.since} < ${stale} THEN ${now} ELSE ${loginAttempts.since} END`,
-      },
-    })
-    .returning({ failures: loginAttempts.failures });
-
-  const burn = () => db.delete(verificationTokens).where(eq(verificationTokens.identifier, email));
-  if (row.failures > MAX_FAILURES) {
-    await burn();
-    return "locked";
-  }
-
-  const valid =
-    isSignInCode(code) &&
-    (
-      await db
-        .select({ identifier: verificationTokens.identifier })
-        .from(verificationTokens)
-        .where(
-          and(
-            eq(verificationTokens.identifier, email),
-            eq(verificationTokens.token, await hashToken(code, secret)),
-            gt(verificationTokens.expires, new Date(now)),
-          ),
-        )
-    ).length > 0;
-
-  if (valid) {
-    await db.update(loginAttempts).set({ failures: 0 }).where(eq(loginAttempts.identifier, email));
-    return "ok";
-  }
-  if (row.failures >= MAX_FAILURES) {
-    await burn();
-    return "locked";
-  }
-  return "wrong";
+export function limitCodeGuesses(db: Db, base: Adapter): Adapter {
+  const use = base.useVerificationToken;
+  if (!use) throw new Error("adapter has no useVerificationToken");
+  return {
+    ...base,
+    useVerificationToken: async (params: { identifier: string; token: string }) => {
+      const { identifier } = params;
+      if (!identifier) return null;
+      const now = Date.now();
+      const [row] = await db
+        .insert(loginAttempts)
+        .values({ identifier, failures: 1, since: now, sends: 0, sendsSince: now })
+        .onConflictDoUpdate({
+          target: loginAttempts.identifier,
+          set: { failures: sql`${loginAttempts.failures} + 1` },
+        })
+        .returning({ failures: loginAttempts.failures });
+      if (row.failures > MAX_FAILURES) {
+        await db.delete(verificationTokens).where(eq(verificationTokens.identifier, identifier));
+        return null;
+      }
+      const found: VerificationToken | null = await use(params);
+      if (found) {
+        await db
+          .update(loginAttempts)
+          .set({ failures: 0 })
+          .where(eq(loginAttempts.identifier, identifier));
+      } else if (row.failures >= MAX_FAILURES) {
+        await db.delete(verificationTokens).where(eq(verificationTokens.identifier, identifier));
+      }
+      return found;
+    },
+  };
 }
 
 /**
- * Called as each code goes out. Only the newest code stays valid, so asking
- * for several doesn't multiply the odds of a guess, and an address gets at
- * most five code emails an hour. Returns false when over that limit.
+ * Called as each code goes out. Only the newest code stays valid, the guess
+ * count starts over, and an address gets at most ten code emails an hour.
+ * Returns false when over that limit.
  */
 export async function noteCodeSent(
   db: Db,
@@ -97,6 +82,8 @@ export async function noteCodeSent(
     .onConflictDoUpdate({
       target: loginAttempts.identifier,
       set: {
+        failures: 0,
+        since: now,
         sends: sql`CASE WHEN ${loginAttempts.sendsSince} < ${stale} THEN 1 ELSE ${loginAttempts.sends} + 1 END`,
         sendsSince: sql`CASE WHEN ${loginAttempts.sendsSince} < ${stale} THEN ${now} ELSE ${loginAttempts.sendsSince} END`,
       },

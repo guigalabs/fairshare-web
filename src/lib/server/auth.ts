@@ -6,7 +6,7 @@ import { makeDb } from "./db/client";
 import * as schema from "./db/schema";
 import { buildSignInCodeEmail, newSignInCode } from "./email";
 import { sendSignInCode } from "./notify";
-import { noteCodeSent } from "./signin-code";
+import { limitCodeGuesses, noteCodeSent } from "./signin-code";
 
 export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   const env = event.platform?.env;
@@ -17,17 +17,22 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
   const db = makeDb(env.DB);
 
   return {
-    adapter: DrizzleAdapter(db, {
-      usersTable: schema.users,
-      accountsTable: schema.accounts,
-      sessionsTable: schema.sessions,
-      verificationTokensTable: schema.verificationTokens,
-    }),
+    adapter: limitCodeGuesses(
+      db,
+      DrizzleAdapter(db, {
+        usersTable: schema.users,
+        accountsTable: schema.accounts,
+        sessionsTable: schema.sessions,
+        verificationTokensTable: schema.verificationTokens,
+      }),
+    ),
     secret: env.AUTH_SECRET,
     trustHost: true,
     pages: {
       signIn: "/login",
       verifyRequest: "/login/verify",
+      // A wrong or used-up code comes back here with ?error=Verification.
+      error: "/login/verify",
     },
     providers: [
       // Email code only: a 6-digit code typed on /login/verify, no links, no passwords.
