@@ -62,6 +62,13 @@ export const verificationTokens = sqliteTable(
   (vt) => [primaryKey({ columns: [vt.identifier, vt.token] })],
 );
 
+/** Wrong sign-in codes per email, so a 6-digit code can't be brute-forced. */
+export const loginAttempts = sqliteTable("login_attempt", {
+  identifier: text("identifier").primaryKey(),
+  failures: integer("failures").notNull(),
+  since: integer("since", { mode: "timestamp_ms" }).notNull(),
+});
+
 export const clients = sqliteTable("client", {
   id: text("id").primaryKey().$defaultFn(genId),
   userId: text("user_id")
