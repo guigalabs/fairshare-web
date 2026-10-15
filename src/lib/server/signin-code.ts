@@ -5,9 +5,12 @@ import { loginAttempts, verificationTokens } from "./db/schema";
 
 /** Wrong guesses allowed per code. A new code resets the count. */
 export const MAX_FAILURES = 5;
+/** Wrong guesses per address per day, across every code. New codes don't reset it. */
+export const MAX_DAY_FAILURES = 15;
 /** Code emails per address per hour. */
-export const MAX_SENDS = 10;
+export const MAX_SENDS = 5;
 const SEND_WINDOW_MS = 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 type Db = ReturnType<typeof makeDb>;
 
@@ -37,25 +40,39 @@ export function limitCodeGuesses(db: Db, base: Adapter): Adapter {
       const { identifier } = params;
       if (!identifier) return null;
       const now = Date.now();
+      const dayStale = now - DAY_MS;
       const [row] = await db
         .insert(loginAttempts)
-        .values({ identifier, failures: 1, since: now, sends: 0, sendsSince: now })
+        .values({
+          identifier,
+          failures: 1,
+          since: now,
+          sends: 0,
+          sendsSince: now,
+          dayFailures: 1,
+          daySince: now,
+        })
         .onConflictDoUpdate({
           target: loginAttempts.identifier,
-          set: { failures: sql`${loginAttempts.failures} + 1` },
+          set: {
+            failures: sql`${loginAttempts.failures} + 1`,
+            dayFailures: sql`CASE WHEN ${loginAttempts.daySince} < ${dayStale} THEN 1 ELSE ${loginAttempts.dayFailures} + 1 END`,
+            daySince: sql`CASE WHEN ${loginAttempts.daySince} < ${dayStale} THEN ${now} ELSE ${loginAttempts.daySince} END`,
+          },
         })
-        .returning({ failures: loginAttempts.failures });
-      if (row.failures > MAX_FAILURES) {
+        .returning({ failures: loginAttempts.failures, dayFailures: loginAttempts.dayFailures });
+      if (row.failures > MAX_FAILURES || row.dayFailures > MAX_DAY_FAILURES) {
         await db.delete(verificationTokens).where(eq(verificationTokens.identifier, identifier));
         return null;
       }
       const found: VerificationToken | null = await use(params);
       if (found) {
+        // Undo this attempt's count; a correct code isn't a failure.
         await db
           .update(loginAttempts)
-          .set({ failures: 0 })
+          .set({ failures: 0, dayFailures: sql`${loginAttempts.dayFailures} - 1` })
           .where(eq(loginAttempts.identifier, identifier));
-      } else if (row.failures >= MAX_FAILURES) {
+      } else if (row.failures >= MAX_FAILURES || row.dayFailures >= MAX_DAY_FAILURES) {
         await db.delete(verificationTokens).where(eq(verificationTokens.identifier, identifier));
       }
       return found;
@@ -64,8 +81,9 @@ export function limitCodeGuesses(db: Db, base: Adapter): Adapter {
 }
 
 /**
- * Called as each code goes out. Only the newest code stays valid, the guess
- * count starts over, and an address gets at most ten code emails an hour.
+ * Called as each code goes out. Only the newest code stays valid, the
+ * per-code guess count starts over (the daily one doesn't), and an address
+ * gets at most five code emails an hour.
  * Returns false when over that limit.
  */
 export async function noteCodeSent(
@@ -78,7 +96,15 @@ export async function noteCodeSent(
   const stale = now - SEND_WINDOW_MS;
   const [row] = await db
     .insert(loginAttempts)
-    .values({ identifier: email, failures: 0, since: now, sends: 1, sendsSince: now })
+    .values({
+      identifier: email,
+      failures: 0,
+      since: now,
+      sends: 1,
+      sendsSince: now,
+      dayFailures: 0,
+      daySince: now,
+    })
     .onConflictDoUpdate({
       target: loginAttempts.identifier,
       set: {

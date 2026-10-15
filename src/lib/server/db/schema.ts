@@ -69,6 +69,8 @@ export const loginAttempts = sqliteTable("login_attempt", {
   since: integer("since").notNull(),
   sends: integer("sends").notNull().default(0),
   sendsSince: integer("sends_since").notNull(),
+  dayFailures: integer("day_failures").notNull().default(0),
+  daySince: integer("day_since").notNull(),
 });
 
 export const clients = sqliteTable("client", {

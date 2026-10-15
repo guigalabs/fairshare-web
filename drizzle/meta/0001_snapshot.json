@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "2bbdbe32-0e2f-4497-aa72-62b3d5570725",
+  "id": "f2d237f4-2b50-4297-9430-7da8de7e46a9",
   "prevId": "cf4fe16f-f2ba-4ba4-9b4d-9d3ba45b7d83",
   "tables": {
     "account": {
@@ -574,6 +574,21 @@
         },
         "sends_since": {
           "name": "sends_since",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "day_failures": {
+          "name": "day_failures",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "day_since": {
+          "name": "day_since",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
